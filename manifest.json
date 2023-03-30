@@ -2,7 +2,7 @@
   "name": "@deskpro-apps/zoom",
   "title": "Zoom",
   "description": "My Deskpro app",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scope": "agent",
   "isSingleInstall": false,
   "hasDevMode": true,
@@ -40,6 +40,10 @@
     "whitelist": [{
       "url": "https://api.zoom.us/v2/.*",
       "methods": ["GET", "POST"],
+      "timeout": 20
+    }, {
+      "url": "https://zoom.us/oauth/.*",
+      "methods": ["POST"],
       "timeout": 20
     }]
   }
