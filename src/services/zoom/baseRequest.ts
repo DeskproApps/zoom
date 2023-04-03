@@ -26,7 +26,7 @@ const baseRequest: Request = async (client, {
         method,
         headers: {
             "Authorization": `Bearer ${TOKEN}`,
-            "X-Proxy-Origin": "",
+            "X-Proxy-Origin": "", // Empty value so as not to trigger Zoom's CORS response
             ...customHeaders,
         },
     };
