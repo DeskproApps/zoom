@@ -26,6 +26,7 @@ const baseRequest: Request = async (client, {
         method,
         headers: {
             "Authorization": `Bearer ${TOKEN}`,
+            "X-Proxy-Origin": "",
             ...customHeaders,
         },
     };
