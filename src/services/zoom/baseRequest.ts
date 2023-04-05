@@ -50,7 +50,11 @@ const baseRequest: Request = async (client, {
         });
     }
 
-    return await res.json();
+    try {
+      return await res.json();
+    } catch (e) {
+      return {};
+    }
 };
 
 export { baseRequest };

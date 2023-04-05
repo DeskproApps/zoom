@@ -1,11 +1,12 @@
 import { match, P } from "ts-pattern";
+import get from "lodash/get";
 import size from "lodash/size";
 import isNil from "lodash/isNil";
 import { Title } from "@deskpro/app-sdk";
 import { Container } from "../../common";
 import { Instant, Recurring, Scheduled, } from "./views";
 import type { FC } from "react";
-import type { Props } from "../types";
+import type { Props, MeetingProps } from "../types";
 import type { Meeting as TMeeting } from "../../../services/zoom/types";
 
 enum MeetingTypeMap {
@@ -26,10 +27,10 @@ const map = (type: TMeeting["type"]) => {
     .otherwise(() => null);
 };
 
-const MeetingView: FC<TMeeting> = (meeting) => {
-  const Meeting = map(meeting.type);
+const MeetingView: FC<MeetingProps> = ({ meeting }) => {
+  const Meeting = map(get(meeting, ["type"]));
 
-  return isNil(Meeting) ? null : <Meeting {...meeting} />;
+  return isNil(Meeting) ? null : <Meeting meeting={meeting} />;
 };
 
 const Meetings: FC<Pick<Props, "meetings">> = ({ meetings }) => {
@@ -43,7 +44,7 @@ const Meetings: FC<Pick<Props, "meetings">> = ({ meetings }) => {
         title={`Active meetings (${size(meetings)})`}
       />
       {(Array.isArray(meetings) ? meetings : []).map((meeting) => (
-        <MeetingView key={meeting.id} {...meeting} />
+        <MeetingView key={meeting.id} meeting={meeting} />
       ))}
     </Container>
   );

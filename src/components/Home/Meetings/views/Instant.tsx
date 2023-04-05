@@ -3,19 +3,24 @@ import { TwoProperties, ZoomLogo } from "../../../common";
 import { format } from "../../../../utils/date";
 import { DATETIME_FORMAT } from "../../../../constants";
 import type { FC } from "react";
-import type { Meeting } from "../../../../services/zoom/types";
+import type { MeetingProps } from "../../types";
 
-const Instant: FC<Meeting> = (m) => {
+const Instant: FC<MeetingProps> = ({ meeting }) => {
   return (
-    <>
-      <Title title={m.topic || m.id} icon={<ZoomLogo/>} link={m.join_url} />
+    <div style={{ marginBottom: 14 }}>
+      <Title
+        title={meeting.topic || meeting.id}
+        link={meeting.join_url}
+        icon={<ZoomLogo/>}
+        marginBottom={7}
+      />
       <TwoProperties
         leftLabel="Created"
-        leftText={format(m.created_at, DATETIME_FORMAT)}
+        leftText={format(meeting.created_at, DATETIME_FORMAT)}
         rightLabel="Type"
         rightText="Instant"
       />
-    </>
+    </div>
   );
 };
 

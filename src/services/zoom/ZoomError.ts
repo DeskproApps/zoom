@@ -5,7 +5,6 @@ export type InitData = {
 };
 
 class ZoomError extends Error {
-  /** @see https://docs.gitlab.com/ee/api/#status-codes */
   status: number;
   // eslint-disable-next-line
   data: any;

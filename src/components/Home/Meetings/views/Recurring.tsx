@@ -7,20 +7,25 @@ import { format } from "../../../../utils/date";
 import { DATETIME_FORMAT } from "../../../../constants";
 import { TwoProperties, ZoomLogo } from "../../../common";
 import type { FC } from "react";
-import type { Meeting } from "../../../../services/zoom/types";
+import type { MeetingProps } from "../../types";
 
-const Recurring: FC<Meeting> = (props) => {
+const Recurring: FC<MeetingProps> = ({ meeting }) => {
   const data = useQueryWithClient(
-    [QueryKey.MEETINGS, `${props.id}`],
-    (client) => getMeetingService(client, props.id),
+    [QueryKey.MEETINGS, `${meeting.id}`],
+    (client) => getMeetingService(client, meeting.id),
   );
 
   return (
     <div style={{ marginBottom: 14 }}>
-      <Title title={props.topic || props.id} marginBottom={7} icon={<ZoomLogo/>} link={props.join_url} />
+      <Title
+        title={meeting.topic || meeting.id}
+        link={meeting.join_url}
+        icon={<ZoomLogo/>}
+        marginBottom={7}
+      />
       <TwoProperties
         leftLabel="Created"
-        leftText={format(props.created_at, DATETIME_FORMAT)}
+        leftText={format(meeting.created_at, DATETIME_FORMAT)}
         rightLabel="Type"
         rightText="Recurring"
       />
@@ -28,7 +33,7 @@ const Recurring: FC<Meeting> = (props) => {
         leftLabel="Recurrence"
         leftText={getHumanReadableRecurrence(get(data, ["data", "recurrence"]))}
         rightLabel="Start time"
-        rightText={format(props.start_time, DATETIME_FORMAT)}
+        rightText={format(meeting.start_time, DATETIME_FORMAT)}
       />
     </div>
   );
