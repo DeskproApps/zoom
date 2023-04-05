@@ -30,3 +30,41 @@ export type User = {
   account_number: number,
   pmi: number,
 };
+
+export type Recurrence = {
+  type:
+    | 1 // Daily
+    | 2 // Weekly
+    | 3 // Monthly
+  repeat_interval: number,
+  end_date_time: DateTime,
+  weekly_days?: string,
+  monthly_day?: number,
+};
+
+export type MeetingType =
+  | 1 // Instant meeting.
+  | 2 // Scheduled meeting.
+  | 3 // Recurring meeting with no fixed time.
+  | 8 // Recurring meeting with a fixed time.
+;
+
+export type Meeting = {
+  uuid: string,
+  id: number,
+  host_id: string,
+  topic: string,
+  type: MeetingType,
+  start_time: DateTime,
+  duration: number,
+  timezone: string,
+  created_at: DateTime,
+  join_url: string,
+};
+
+export type Meetings = {
+  page_size: number,
+  total_records: number,
+  next_page_token: "",
+  meetings: Meeting[],
+};

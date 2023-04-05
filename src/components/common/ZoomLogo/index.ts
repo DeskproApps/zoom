@@ -1,0 +1,1 @@
+export { ZoomLogo } from "./ZoomLogo";
