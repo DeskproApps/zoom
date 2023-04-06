@@ -2,7 +2,7 @@ import { match, P } from "ts-pattern";
 import get from "lodash/get";
 import size from "lodash/size";
 import isNil from "lodash/isNil";
-import { Title } from "@deskpro/app-sdk";
+import { P5, Title } from "@deskpro/app-sdk";
 import { Container } from "../../common";
 import { Instant, Recurring, Scheduled, } from "./views";
 import type { FC } from "react";
@@ -34,18 +34,17 @@ const MeetingView: FC<MeetingProps> = ({ meeting }) => {
 };
 
 const Meetings: FC<Pick<Props, "meetings">> = ({ meetings }) => {
-  if (!size(meetings)) {
-    return null;
-  }
-
   return (
     <Container>
       <Title
         title={`Active meetings (${size(meetings)})`}
       />
-      {(Array.isArray(meetings) ? meetings : []).map((meeting) => (
-        <MeetingView key={meeting.id} meeting={meeting} />
-      ))}
+      {!size(meetings)
+        ? (<P5>No meetings found</P5>)
+        : (Array.isArray(meetings) ? meetings : []).map((meeting) => (
+          <MeetingView key={meeting.id} meeting={meeting} />
+        ))
+      }
     </Container>
   );
 };
