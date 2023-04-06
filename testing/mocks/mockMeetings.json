@@ -1,30 +1,41 @@
 {
-  "page_size": 30,
-  "total_records": 2,
+  "page_size": 100,
+  "total_records": 3,
   "next_page_token": "",
   "meetings": [
     {
-      "uuid": "NX+tbocZQJ+dhlstvLX9vw==",
-      "id": 84719928321,
+      "uuid": "iSAR313BTz6MEcACvlR8Eg==",
+      "id": 84350791442,
       "host_id": "FXFYY51ISoyjDR4j5k5uNQ",
-      "topic": "One more meeting for test",
-      "type": 2,
-      "start_time": "2023-04-01T09:00:00Z",
-      "duration": 60,
+      "topic": "Apps Stand Up",
+      "type": 8,
+      "start_time": "2023-07-17T08:30:00Z",
+      "duration": 30,
       "timezone": "Europe/Kiev",
-      "created_at": "2023-03-28T09:30:03Z",
-      "join_url": "https://us06web.zoom.us/j/84719928321?pwd=M3RLbGkzV3RUOC96ZjMrdHdmOHppUT09"
+      "created_at": "2023-04-04T17:00:41Z",
+      "join_url": "https://us06web.zoom.us/j/84350791442?pwd=OTNQMy8yaTdXSWhPNkZLM1p5b0dnUT09"
     },
     {
-      "uuid": "e3Z4K9cDR8CohISDKx/rQw==",
-      "id": 81544509620,
+      "uuid": "4PqAEy1nTa+/3U9TSBKvMA==",
+      "id": 87605567807,
       "host_id": "FXFYY51ISoyjDR4j5k5uNQ",
-      "topic": "Topic Meeting from Postman",
-      "type": 2,
-      "start_time": "2023-04-01T12:15:00Z",
+      "topic": "All-Hands Engineering Stand Up",
+      "type": 8,
+      "start_time": "2023-12-27T09:30:00Z",
       "duration": 60,
       "timezone": "Europe/Kiev",
-      "agenda": "Agenda Meeting from Postman",
+      "created_at": "2023-04-05T18:13:44Z",
+      "join_url": "https://us06web.zoom.us/j/87605567807?pwd=V2VjM0trcTVnS2QxNXdIOFNlNWVmZz09"
+    },
+    {
+      "uuid": "uWOaBXbQT+yohKN0HnKCYQ==",
+      "id": 81544509620,
+      "host_id": "FXFYY51ISoyjDR4j5k5uNQ",
+      "topic": "Retrospective Meeting",
+      "type": 2,
+      "start_time": "2023-04-09T12:15:00Z",
+      "duration": 60,
+      "timezone": "Europe/Kiev",
       "created_at": "2023-03-29T07:59:11Z",
       "join_url": "https://us06web.zoom.us/j/81544509620?pwd=UGE0ekg2UkwycmRxMUY4OXhtbGpBUT09"
     }
