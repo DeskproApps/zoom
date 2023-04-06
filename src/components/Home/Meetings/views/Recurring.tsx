@@ -10,7 +10,7 @@ import type { FC } from "react";
 import type { MeetingProps } from "../../types";
 
 const Recurring: FC<MeetingProps> = ({ meeting }) => {
-  const data = useQueryWithClient(
+  const meetingDetails = useQueryWithClient(
     [QueryKey.MEETINGS, `${meeting.id}`],
     (client) => getMeetingService(client, meeting.id),
   );
@@ -31,9 +31,12 @@ const Recurring: FC<MeetingProps> = ({ meeting }) => {
       />
       <TwoProperties
         leftLabel="Recurrence"
-        leftText={getHumanReadableRecurrence(get(data, ["data", "recurrence"]))}
+        leftText={getHumanReadableRecurrence(get(meetingDetails, ["data", "recurrence"]))}
         rightLabel="Start time"
-        rightText={format(meeting.start_time, DATETIME_FORMAT)}
+        rightText={format(
+          get(meetingDetails, ["data", "occurrences", 0, "start_time"]),
+          DATETIME_FORMAT,
+        )}
       />
     </div>
   );

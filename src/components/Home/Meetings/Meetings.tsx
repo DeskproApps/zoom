@@ -7,7 +7,7 @@ import { Container } from "../../common";
 import { Instant, Recurring, Scheduled, } from "./views";
 import type { FC } from "react";
 import type { Props, MeetingProps } from "../types";
-import type { Meeting as TMeeting } from "../../../services/zoom/types";
+import type { MeetingTypes } from "../../../services/zoom/types";
 
 enum MeetingTypeMap {
   INSTANT = 1,
@@ -16,7 +16,7 @@ enum MeetingTypeMap {
   RECURRING_WITH_FIXED_TIME = 8,
 }
 
-const map = (type: TMeeting["type"]) => {
+const map = (type: MeetingTypes) => {
   return match(type)
     .with(MeetingTypeMap.INSTANT, () => Instant)
     .with(MeetingTypeMap.SCHEDULED, () => Scheduled)

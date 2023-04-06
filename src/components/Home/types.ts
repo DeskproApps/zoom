@@ -1,9 +1,9 @@
-import type { Meeting } from "../../services/zoom/types";
+import type { MeetingItem } from "../../services/zoom/types";
 
 export type Props = {
-  meetings: Meeting[],
+  meetings: MeetingItem[],
 };
 
 export type MeetingProps = {
-  meeting: Meeting,
+  meeting: MeetingItem,
 };

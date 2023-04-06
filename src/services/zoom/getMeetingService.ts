@@ -1,12 +1,12 @@
 import { baseRequest } from "./baseRequest";
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { Meeting, Meetings } from "./types";
+import type { MeetingDetails } from "./types";
 
 const getMeetingService = (
   client: IDeskproClient,
-  meetingId: Meeting["id"],
+  meetingId: MeetingDetails["id"],
 ) => {
-  return baseRequest<Meetings>(client, {
+  return baseRequest<MeetingDetails>(client, {
     url: `/meetings/${meetingId}`,
   });
 };

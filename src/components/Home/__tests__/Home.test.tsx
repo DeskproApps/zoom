@@ -4,7 +4,7 @@ import { render } from "../../../../testing";
 import mockMeetings from "../../../../testing/mocks/mockMeetings.json";
 import mockMeeting84350791442 from "../../../../testing/mocks/mockMeeting84350791442.json";
 import mockMeeting87605567807 from "../../../../testing/mocks/mockMeeting87605567807.json";
-import type { Meeting } from "../../../services/zoom/types";
+import type { MeetingItem } from "../../../services/zoom/types";
 
 jest.mock("../../../services/zoom/getMeetingService");
 
@@ -15,7 +15,7 @@ describe("Home", () => {
       .mockResolvedValueOnce(mockMeeting87605567807);
 
     const { findByText } = render(
-      <Home meetings={mockMeetings.meetings as Meeting[]} />,
+      <Home meetings={mockMeetings.meetings as MeetingItem[]} />,
       { wrappers: { theme: true, query: true } },
     );
 
