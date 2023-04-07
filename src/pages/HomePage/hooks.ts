@@ -10,9 +10,17 @@ const useMeetings: UseMeetings = () => {
     (client) => getMeetingsService(client),
   );
 
+  const instantMeetings = useQueryWithClient(
+    [QueryKey.INSTANT_MEETINGS],
+    (client) => client.getUserState("zoom/meetings/*"),
+  );
+
   return {
-    isLoading: [meetings].every(({ isLoading }) => isLoading),
-    meetings: get(meetings, ["data", "meetings"], []),
+    isLoading: [meetings, instantMeetings].every(({ isLoading }) => isLoading),
+    meetings: [
+      ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data),
+      ...get(meetings, ["data", "meetings"], []),
+    ],
   };
 };
 

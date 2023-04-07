@@ -15,7 +15,10 @@ describe("Home", () => {
       .mockResolvedValueOnce(mockMeeting87605567807);
 
     const { findByText } = render(
-      <Home meetings={mockMeetings.meetings as MeetingItem[]} />,
+      <Home
+        meetings={mockMeetings.meetings as MeetingItem[]}
+        onCreateInstant={jest.fn()}
+      />,
       { wrappers: { theme: true, query: true } },
     );
 

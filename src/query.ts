@@ -13,6 +13,7 @@ const queryClient = new QueryClient({
 enum QueryKey {
   ME = "me",
   MEETINGS = "meetings",
+  INSTANT_MEETINGS = "instantMeetings",
 }
 
 export { queryClient, QueryKey };

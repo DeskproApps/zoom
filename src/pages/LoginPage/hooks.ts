@@ -50,7 +50,7 @@ const useLogin: UseLogin = () => {
     callback.poll()
       .then(({ token }) => getAccessTokenService(client, token, callback.callbackUrl))
       .then((data) => isAccessToken(data)
-        ? client.setState(TOKEN_PATH, data.access_token, { backend: true })
+        ? client.setUserState(TOKEN_PATH, data.access_token, { backend: true })
         : Promise.reject(isErrorMessage(data) ? data.errorMessage : defaultLoginError))
       .then(({ isSuccess, errors }) => isSuccess ? Promise.resolve() : Promise.reject(errors))
       .then(() => getCurrentUserService(client))

@@ -99,5 +99,4 @@ export type MeetingDetails = {
   settings: Dict< never>,
   recurrence: Recurrence,
   pre_schedule: boolean,
-}
-  ;
+};

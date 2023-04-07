@@ -1,5 +1,5 @@
 export const TOKEN_PATH = "oauth/global/access_token";
-export const TOKEN = `[[${TOKEN_PATH}]]`;
+export const TOKEN = `[user[${TOKEN_PATH}]]`;
 
 export const placeholders = {
   client_id: "__client_id__",
