@@ -6,3 +6,4 @@ export { isAccessToken, isErrorMessage } from "./utils";
 export { getMeetingsService } from "./getMeetingsService";
 export { getMeetingService } from "./getMeetingService";
 export { createMeetingService } from "./createMeetingService";
+export { deleteMeetingService } from "./deleteMeetingService";

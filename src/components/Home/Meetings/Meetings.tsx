@@ -27,13 +27,16 @@ const map = (type: MeetingTypes) => {
     .otherwise(() => null);
 };
 
-const MeetingView: FC<MeetingProps> = ({ meeting }) => {
+const MeetingView: FC<MeetingProps> = ({ meeting, onDelete }) => {
   const Meeting = map(get(meeting, ["type"]));
 
-  return isNil(Meeting) ? null : <Meeting meeting={meeting} />;
+  return isNil(Meeting) ? null : <Meeting meeting={meeting} onDelete={onDelete} />;
 };
 
-const Meetings: FC<Pick<Props, "meetings">> = ({ meetings }) => {
+const Meetings: FC<Pick<Props, "meetings"|"onDeleteMeeting">> = ({
+  meetings,
+  onDeleteMeeting,
+}) => {
   return (
     <Container>
       <Title
@@ -42,7 +45,7 @@ const Meetings: FC<Pick<Props, "meetings">> = ({ meetings }) => {
       {!size(meetings)
         ? (<P5>No meetings found</P5>)
         : (Array.isArray(meetings) ? meetings : []).map((meeting) => (
-          <MeetingView key={meeting.id} meeting={meeting} />
+          <MeetingView key={meeting.id} meeting={meeting} onDelete={onDeleteMeeting} />
         ))
       }
     </Container>

@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   useDeskproElements,
   useDeskproAppClient,
 } from "@deskpro/app-sdk";
 import { useSetTitle } from "../../hooks";
 import { createMeetingService } from "../../services/zoom";
-import { queryClient, QueryKey } from "../../query";
 import { getValues } from "../../components/InstantMeetingForm";
 import { InstantMeetingForm } from "../../components";
 import type { FC } from "react";
@@ -14,6 +14,7 @@ import type { Props as FormProps } from "../../components/InstantMeetingForm/typ
 
 export const CreateInstantMeetingPage: FC = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
   const [error, setError] = useState<string|string[]|null>(null);
 
@@ -27,13 +28,10 @@ export const CreateInstantMeetingPage: FC = () => {
     setError(null);
 
     return createMeetingService(client, getValues(values))
-      .then((meeting) => {
-        return client.setUserState(`zoom/meetings/${meeting.id}`, meeting);
-      })
+      .then((meeting) => client.setUserState(`zoom/meetings/${meeting.id}`, meeting))
       .then(({ isSuccess, errors }) => {
         if (isSuccess) {
-          queryClient.invalidateQueries([QueryKey.MEETINGS, QueryKey.INSTANT_MEETINGS])
-            .finally(() => navigate("/home"));
+          queryClient.invalidateQueries().finally(() => navigate("/home"));
         } else {
           setError(errors);
         }
@@ -43,7 +41,7 @@ export const CreateInstantMeetingPage: FC = () => {
         // eslint-disable-next-line no-console
         console.error("zoom create:", err);
       });
-  }, [client, navigate]);
+  }, [client, navigate, queryClient]);
 
   useSetTitle(" Create meeting");
 

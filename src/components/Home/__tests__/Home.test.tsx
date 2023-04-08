@@ -18,6 +18,7 @@ describe("Home", () => {
       <Home
         meetings={mockMeetings.meetings as MeetingItem[]}
         onCreateInstant={jest.fn()}
+        onDeleteMeeting={jest.fn()}
       />,
       { wrappers: { theme: true, query: true } },
     );
