@@ -13,6 +13,8 @@ const HomePage: FC = () => {
 
   const onCreateInstant = useCallback(() => navigate("/create-instant-meeting"), [navigate]);
 
+  const onCreateSchedule = useCallback(() => navigate("/create-schedule-meeting"), [navigate]);
+
   useSetTitle("Zoom Meetings");
 
   useDeskproElements(({ registerElement, clearElements }) => {
@@ -36,6 +38,7 @@ const HomePage: FC = () => {
     <Home
       meetings={meetings}
       onCreateInstant={onCreateInstant}
+      onCreateSchedule={onCreateSchedule}
       onDeleteMeeting={deleteMeeting}
     />
   );

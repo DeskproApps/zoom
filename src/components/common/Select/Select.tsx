@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { useState, useMemo } from "react";
 import get from "lodash/get";
 import toLower from "lodash/toLower";
 import {
@@ -6,30 +6,26 @@ import {
   faCaretDown,
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  LabelProps,
-  DivAsInput,
-  DivAsInputWithDisplayProps,
-} from "@deskpro/deskpro-ui";
-import {
-  Dropdown,
-  DropdownTargetProps,
-} from "@deskpro/app-sdk";
+import { DivAsInput } from "@deskpro/deskpro-ui";
+import { Dropdown } from "@deskpro/app-sdk";
+import type { ReactNode } from "react";
+import type { LabelProps, DivAsInputWithDisplayProps } from "@deskpro/deskpro-ui";
+import type { DropdownTargetProps } from "@deskpro/app-sdk";
 import type { Option } from "../../../types";
 
-type Props = {
+type Props<T> = {
   id: string,
   label?: string,
   error?: DivAsInputWithDisplayProps["error"],
-  value: Option<string>["value"],
-  options: Option<string>[],
-  onChange: (o: Option<string>) => void,
+  value: Option<T>["value"],
+  options: Option<T>[],
+  onChange: (o: Option<T>) => void,
   placeholder?: DivAsInputWithDisplayProps["placeholder"],
   showInternalSearch?: boolean,
   required?: LabelProps["required"],
 };
 
-const SingleSelect: FC<Props> = ({
+const Select = <T,>({
   id,
   label,
   error,
@@ -40,8 +36,17 @@ const SingleSelect: FC<Props> = ({
   placeholder,
   showInternalSearch,
   ...props
-}) => {
+}: Props<T>) => {
   const [input, setInput] = useState<string>("");
+
+  const displayValue = useMemo(() => {
+    if (Array.isArray(value)) {
+      return options.filter((o) => value.includes(o.value)).map((o) => o.description).join(", ");
+    } else {
+      const o = options.find((o) => o.value === value);
+      return get(o, ["label"], value);
+    }
+  }, [value, options]) as ReactNode;
 
   return (
     <Dropdown
@@ -64,7 +69,7 @@ const SingleSelect: FC<Props> = ({
       }}
       options={options
         .filter((o) => toLower(get(o, ["label"], "") as string).includes(input.toLowerCase()))
-        .map((o) => ({ ...o, selected: o.value === value }))
+        .map((o) => ({ ...o, selected: Array.isArray(value) ? value.includes(o.value) : o.value === value }))
       }
       containerMaxHeight={400}
       {...props}
@@ -79,7 +84,7 @@ const SingleSelect: FC<Props> = ({
               error={error}
               ref={targetRef}
               {...targetProps}
-              value={value}
+              value={displayValue}
               style={{ paddingRight: 0, cursor: "pointer" }}
             />
         )
@@ -88,4 +93,4 @@ const SingleSelect: FC<Props> = ({
   );
 };
 
-export { SingleSelect };
+export { Select };

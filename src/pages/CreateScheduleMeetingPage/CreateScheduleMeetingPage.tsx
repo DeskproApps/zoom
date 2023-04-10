@@ -7,12 +7,11 @@ import {
 } from "@deskpro/app-sdk";
 import { useSetTitle } from "../../hooks";
 import { createMeetingService } from "../../services/zoom";
-import { getInstantValues } from "../../components/MeetingForm";
-import { InstantMeetingForm } from "../../components";
+import { getScheduleValues } from "../../components/MeetingForm";
+import { ScheduleMeetingForm } from "../../components";
 import type { FC } from "react";
-import type { InstantFormProps } from "../../components/MeetingForm";
 
-export const CreateInstantMeetingPage: FC = () => {
+const CreateScheduleMeetingPage: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
@@ -20,28 +19,22 @@ export const CreateInstantMeetingPage: FC = () => {
 
   const onCancel = useCallback(() => navigate("/home"), [navigate]);
 
-  const onSubmit: InstantFormProps["onSubmit"] = useCallback((values) => {
+  const onSubmit = useCallback((values) => {
     if (!client) {
       return;
     }
 
     setError(null);
 
-    return createMeetingService(client, getInstantValues(values))
-      .then((meeting) => client.setUserState(`zoom/meetings/${meeting.id}`, meeting))
-      .then(({ isSuccess, errors }) => {
-        if (isSuccess) {
-          queryClient.invalidateQueries().finally(() => navigate("/home"));
-        } else {
-          setError(errors);
-        }
-      })
+    return createMeetingService(client, getScheduleValues(values))
+      .then(() => queryClient.invalidateQueries())
+      .then(() => navigate("/home"))
       .catch((err) => {
         // ToDo: handle error
         // eslint-disable-next-line no-console
         console.error("zoom create:", err);
-      });
-  }, [client, navigate, queryClient]);
+      })
+  }, [client, queryClient, navigate]);
 
   useSetTitle("Create meeting");
 
@@ -51,7 +44,7 @@ export const CreateInstantMeetingPage: FC = () => {
     registerElement("home", { type: "home_button", payload: { type: "changePage", path: "/home" } });
   });
 
-  return (
-    <InstantMeetingForm onSubmit={onSubmit} onCancel={onCancel} error={error} />
-  );
+  return (<ScheduleMeetingForm onSubmit={onSubmit} onCancel={onCancel} error={error} />);
 };
+
+export { CreateScheduleMeetingPage };

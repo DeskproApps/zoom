@@ -17,6 +17,7 @@ import {
   AdminPage,
   LoadingAppPage,
   CreateInstantMeetingPage,
+  CreateScheduleMeetingPage,
 } from "./pages";
 import { ErrorFallback } from "./components";
 import type { FC } from "react";
@@ -67,6 +68,7 @@ const App: FC = () => {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/home" element={<HomePage/>} />
           <Route path="/create-instant-meeting" element={<CreateInstantMeetingPage/>} />
+          <Route path="/create-schedule-meeting" element={<CreateScheduleMeetingPage/>} />
           <Route index element={<LoadingAppPage/>} />
         </Routes>
       </ErrorBoundary>

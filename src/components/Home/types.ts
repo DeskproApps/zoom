@@ -3,6 +3,7 @@ import type { MeetingItem } from "../../services/zoom/types";
 export type Props = {
   meetings: MeetingItem[],
   onCreateInstant: () => void,
+  onCreateSchedule: () => void,
   onDeleteMeeting: (meeting: MeetingItem) => Promise<void>,
 };
 

@@ -3,30 +3,29 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack } from "@deskpro/app-sdk";
 import { Input } from "@deskpro/deskpro-ui";
-import { getOption } from "../../utils";
-import { getInitValues, validationSchema } from "./utils";
+import { getTimeZoneOptions } from "../../utils";
+import { getInitInstantValues, instantValidationSchema } from "./utils";
 import { ErrorBlock } from "../Error";
 import {
   Label,
+  Select,
   Button,
   DateInput,
   Container,
-  SingleSelect,
 } from "../common";
-import timezones from "./timezones.json";
 import type { FC } from "react";
-import type { Props, FormValidationSchema } from "./types";
+import type { InstantFormProps, InstantFormValidationSchema } from "./types";
 
-const InstantMeetingForm: FC<Props> = ({ onSubmit, onCancel, error }) => {
+const InstantMeetingForm: FC<InstantFormProps> = ({ onSubmit, onCancel, error }) => {
   const {
     watch,
     register,
     setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormValidationSchema>({
-    defaultValues: getInitValues(),
-    resolver: zodResolver(validationSchema),
+  } = useForm<InstantFormValidationSchema>({
+    defaultValues: getInitInstantValues(),
+    resolver: zodResolver(instantValidationSchema),
   });
 
   const [topic, timezone] = watch(["topic", "timezone"]);
@@ -58,12 +57,12 @@ const InstantMeetingForm: FC<Props> = ({ onSubmit, onCancel, error }) => {
         </Label>
 
         <Label htmlFor="timezone" label="Time zone" required>
-          <SingleSelect
+          <Select
             id="timezone"
             value={timezone}
             showInternalSearch
             error={has(errors, ["timezone", "message"])}
-            options={timezones.map((zone) => getOption(zone, zone))}
+            options={getTimeZoneOptions()}
             onChange={(option) => setValue("timezone", option.value)}
           />
         </Label>

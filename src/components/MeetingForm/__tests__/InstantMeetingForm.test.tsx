@@ -21,4 +21,6 @@ describe("InstantMeetingForm", () => {
     expect(await findByText(/Date\/time/i)).toBeInTheDocument();
     expect(await findByText(/Time zone/i)).toBeInTheDocument();
   });
+
+  test.todo("Should show errors");
 });

@@ -1,22 +1,13 @@
 import { match } from "ts-pattern";
 import split from "lodash/split";
 import isEmpty from "lodash/isEmpty";
+import { DAYS } from "../constants";
 import type { Recurrence } from "../services/zoom/types";
 
 const TYPE = {
   DAILY: 1,
   WEEKLY: 2,
   MONTHLY: 3,
-};
-
-const DAYS = {
-  Sun: "1",
-  Mon: "2",
-  Tue: "3",
-  Wed: "4",
-  Thu: "5",
-  Fri: "6",
-  Sat: "7",
 };
 
 const getDay = (day: typeof DAYS[keyof typeof DAYS]) => {
@@ -30,7 +21,6 @@ const getDay = (day: typeof DAYS[keyof typeof DAYS]) => {
     .with(DAYS.Sun, () => "Sun")
     .otherwise(() => "");
 };
-
 
 const getHumanReadableRecurrence = (recurrence: Recurrence): string => {
   if (isEmpty(recurrence)) {

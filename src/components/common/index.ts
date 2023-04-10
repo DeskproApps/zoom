@@ -5,4 +5,4 @@ export { Property, TwoProperties } from "./Property";
 export { ZoomLogo } from "./ZoomLogo";
 export { Label } from "./Label";
 export { DateInput } from "./DateInput";
-export { SingleSelect } from "./SingleSelect";
+export { Select } from "./Select";
