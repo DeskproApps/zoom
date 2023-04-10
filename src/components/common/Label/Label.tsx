@@ -16,4 +16,4 @@ const Label: FC<Props> = styled(
   margin-bottom: ${({ marginBottom = 10 }: Props) => marginBottom}px;
 `;
 
-export {Label};
+export { Label };

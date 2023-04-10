@@ -14,7 +14,7 @@ export type MeetingValues = {
 };
 
 export type Props = {
-  error: string|string[]|null,
+  error?: string|string[]|null,
   onSubmit: SubmitHandler<FormValidationSchema>,
   onCancel: () => void,
 };

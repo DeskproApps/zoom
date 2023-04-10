@@ -24,4 +24,4 @@ const ErrorBlock: FC<Props> = ({ text = "An error occurred" }) => (
   </StyledErrorBlock>
 );
 
-export {ErrorBlock};
+export { ErrorBlock };
