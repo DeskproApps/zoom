@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import get from "lodash.get";
+import get from "lodash/get";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
 } from "@deskpro/app-sdk";
+import { setAccessTokenService } from "../../services/deskpro";
 import {
-  TOKEN_PATH,
   isAccessToken,
   isErrorMessage,
   getAccessTokenService,
@@ -50,7 +50,7 @@ const useLogin: UseLogin = () => {
     callback.poll()
       .then(({ token }) => getAccessTokenService(client, token, callback.callbackUrl))
       .then((data) => isAccessToken(data)
-        ? client.setUserState(TOKEN_PATH, data.access_token, { backend: true })
+        ? setAccessTokenService(client, data.access_token)
         : Promise.reject(isErrorMessage(data) ? data.errorMessage : defaultLoginError))
       .then(({ isSuccess, errors }) => isSuccess ? Promise.resolve() : Promise.reject(errors))
       .then(() => getCurrentUserService(client))

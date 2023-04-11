@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
-import { TOKEN_PATH } from "../services/zoom";
+import { deleteAccessTokenService } from "../services/deskpro";
 
 type UseLogout = () => {
     isLoading: boolean,
@@ -20,7 +20,7 @@ const useLogout: UseLogout = () => {
 
         setIsLoading(true);
 
-        client.deleteState(TOKEN_PATH)
+        deleteAccessTokenService(client)
           .then(() => navigate("/login"))
           .catch(() => navigate("/login"))
           .finally(() => setIsLoading(false));

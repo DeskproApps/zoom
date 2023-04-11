@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { act, cleanup, waitFor} from "@testing-library/react";
+import { act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { render } from "../../../../testing";
 import { CreateInstantMeetingPage } from "../CreateInstantMeetingPage";

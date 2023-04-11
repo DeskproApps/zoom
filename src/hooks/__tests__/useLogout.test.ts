@@ -1,8 +1,52 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { act, cleanup, waitFor, renderHook } from "@testing-library/react";
+import { useNavigate } from "react-router-dom";
+import { deleteAccessTokenService } from "../../services/deskpro";
 import { useLogout } from "../useLogout";
 
-describe("useLogout", () => {
-  test.todo("should navigate to login page if success logout");
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: jest.fn(),
+}));
 
-  test.todo("should navigate to login page if error logout");
+jest.mock("../../services/deskpro/deleteAccessTokenService", () => ({
+  deleteAccessTokenService: jest.fn(),
+}));
+
+describe("useLogout", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    cleanup();
+  });
+
+  test("should navigate to login page if success logout", async () => {
+    const navigate = jest.fn();
+    (useNavigate as jest.Mock).mockReturnValue(navigate);
+    (deleteAccessTokenService as jest.Mock).mockResolvedValueOnce(true);
+
+    const { result } = renderHook(() => useLogout());
+
+    await act(async () => {
+      result.current.logout();
+    });
+
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith("/login");
+    });
+  });
+
+  test("should navigate to login page if error logout", async () => {
+    const navigate = jest.fn();
+    (useNavigate as jest.Mock).mockReturnValue(navigate);
+    (deleteAccessTokenService as jest.Mock).mockRejectedValueOnce(new Error());
+
+    const { result } = renderHook(() => useLogout());
+
+    await act(async () => {
+      result.current.logout();
+    });
+
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith("/login");
+    });
+  });
 });
