@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import has from "lodash/has";
+import has from "lodash.has";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
 import { isInstantMeeting } from "../utils";

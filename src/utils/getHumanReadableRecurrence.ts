@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import split from "lodash/split";
-import isEmpty from "lodash/isEmpty";
+import split from "lodash.split";
+import isEmpty from "lodash.isempty";
 import type { Recurrence } from "../services/zoom/types";
 
 const TYPE = {

@@ -1,4 +1,4 @@
-import has from "lodash/has";
+import has from "lodash.has";
 import type { OAuthToken, ZoomRestError } from "./types";
 
 const isErrorMessage = (error: ZoomRestError): error is ZoomRestError => {

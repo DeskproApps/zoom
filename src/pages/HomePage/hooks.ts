@@ -1,4 +1,4 @@
-import get from "lodash/get";
+import get from "lodash.get";
 import { useQueryWithClient } from "@deskpro/app-sdk";
 import { getMeetingsService } from "../../services/zoom";
 import { QueryKey } from "../../query";

@@ -1,4 +1,4 @@
-import get from "lodash/get";
+import get from "lodash.get";
 import { z } from "zod";
 import type { FormValidationSchema, MeetingValues } from "./types";
 

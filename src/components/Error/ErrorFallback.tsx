@@ -14,7 +14,7 @@ const ErrorFallback: FC<Props> = ({ error }) => {
 
   if (error instanceof ZoomError) {
     /** ToDo: 401: {"code":124,"message":"Access token is expired."} */
-    /** ToDo: 404: {"code":3001,"message":"Конференция не найдена, или срок ее действия истек."} */
+    /** ToDo: 404: {"code":3001,"message":"..."} */
   }
 
   // eslint-disable-next-line no-console

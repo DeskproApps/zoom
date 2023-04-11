@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import get from "lodash/get";
+import get from "lodash.get";
 import { Stack, Title, useQueryWithClient } from "@deskpro/app-sdk";
 import { getMeetingService } from "../../../../services/zoom";
 import { QueryKey } from "../../../../query";
