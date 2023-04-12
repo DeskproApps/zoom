@@ -1,7 +1,7 @@
 import { createSearchParams } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
 import { proxyFetch } from "@deskpro/app-sdk";
-import { REST_URL, TOKEN } from "./constants";
+import { REST_URL, TOKEN } from "../../constants";
 import { ZoomError } from "./ZoomError";
 import type { ParamKeyValuePair } from "react-router-dom";
 import type { Request } from "../../types";
