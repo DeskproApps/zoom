@@ -1,8 +1,15 @@
-import { useDeskproElements } from "@deskpro/app-sdk";
+import {
+  LoadingSpinner,
+  useDeskproElements,
+} from "@deskpro/app-sdk";
 import { useSetTitle } from "../../hooks";
+import { useMeetings } from "./hooks";
+import { Home } from "../../components/Home";
 import type { FC } from "react";
 
 const HomePage: FC = () => {
+  const { isLoading, meetings } = useMeetings();
+
   useSetTitle("Zoom Meetings");
 
   useDeskproElements(({ registerElement, clearElements }) => {
@@ -16,10 +23,14 @@ const HomePage: FC = () => {
     });
   });
 
+  if (isLoading) {
+    return (
+      <LoadingSpinner/>
+    );
+  }
+
   return (
-    <>
-      HomePage
-    </>
+    <Home meetings={meetings} />
   );
 };
 

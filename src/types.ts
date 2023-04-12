@@ -12,7 +12,7 @@ export type Dict<T> = Record<string, T>;
 export type DateTime = string;
 
 /** Request types */
-export type ApiRequestMethod = "GET" | "POST" | "PUT";
+export type ApiRequestMethod = "GET" | "POST" | "DELETE";
 
 export type RequestParams = {
   url?: string,

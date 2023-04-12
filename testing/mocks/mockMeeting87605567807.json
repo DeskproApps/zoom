@@ -1,0 +1,410 @@
+{
+  "uuid": "4PqAEy1nTa+/3U9TSBKvMA==",
+  "id": 87605567807,
+  "host_id": "FXFYY51ISoyjDR4j5k5uNQ",
+  "host_email": "ilia.makarov@me.com",
+  "assistant_id": "",
+  "topic": "All-Hands Engineering Stand Up",
+  "type": 8,
+  "status": "waiting",
+  "timezone": "Europe/Kiev",
+  "agenda": "",
+  "created_at": "2023-04-05T18:13:44Z",
+  "start_url": "https://us06web.zoom.us/s/87605567807?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IkZYRllZNTFJU295akRSNGo1azV1TlEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNiIsImNsdCI6MCwibW51bSI6Ijg3NjA1NTY3ODA3IiwiZXhwIjoxNjgwNzI1OTc2LCJpYXQiOjE2ODA3MTg3NzYsImFpZCI6IjdmSFJtcF80UldxUDI2UktwQXI3ZFEiLCJjaWQiOiIifQ.4_Din0fMh34n4Xaspz74ryYAOIRmKGB217Tkpqf71OY",
+  "join_url": "https://us06web.zoom.us/j/87605567807?pwd=V2VjM0trcTVnS2QxNXdIOFNlNWVmZz09",
+  "password": "118364",
+  "h323_password": "118364",
+  "pstn_password": "118364",
+  "encrypted_password": "V2VjM0trcTVnS2QxNXdIOFNlNWVmZz09",
+  "occurrences": [
+    {
+      "occurrence_id": "1681288200000",
+      "start_time": "2023-04-12T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1681893000000",
+      "start_time": "2023-04-19T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1682497800000",
+      "start_time": "2023-04-26T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1683102600000",
+      "start_time": "2023-05-03T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1683707400000",
+      "start_time": "2023-05-10T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1684312200000",
+      "start_time": "2023-05-17T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1684917000000",
+      "start_time": "2023-05-24T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1685521800000",
+      "start_time": "2023-05-31T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1686126600000",
+      "start_time": "2023-06-07T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1686731400000",
+      "start_time": "2023-06-14T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1687336200000",
+      "start_time": "2023-06-21T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1687941000000",
+      "start_time": "2023-06-28T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1688545800000",
+      "start_time": "2023-07-05T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1689150600000",
+      "start_time": "2023-07-12T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1689755400000",
+      "start_time": "2023-07-19T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1690360200000",
+      "start_time": "2023-07-26T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1690965000000",
+      "start_time": "2023-08-02T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1691569800000",
+      "start_time": "2023-08-09T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1692174600000",
+      "start_time": "2023-08-16T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1692779400000",
+      "start_time": "2023-08-23T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1693384200000",
+      "start_time": "2023-08-30T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1693989000000",
+      "start_time": "2023-09-06T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1694593800000",
+      "start_time": "2023-09-13T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1695198600000",
+      "start_time": "2023-09-20T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1695803400000",
+      "start_time": "2023-09-27T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1696408200000",
+      "start_time": "2023-10-04T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1697013000000",
+      "start_time": "2023-10-11T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1697617800000",
+      "start_time": "2023-10-18T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1698222600000",
+      "start_time": "2023-10-25T08:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1698831000000",
+      "start_time": "2023-11-01T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1699435800000",
+      "start_time": "2023-11-08T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1700040600000",
+      "start_time": "2023-11-15T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1700645400000",
+      "start_time": "2023-11-22T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1701250200000",
+      "start_time": "2023-11-29T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1701855000000",
+      "start_time": "2023-12-06T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1702459800000",
+      "start_time": "2023-12-13T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1703064600000",
+      "start_time": "2023-12-20T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    },
+    {
+      "occurrence_id": "1703669400000",
+      "start_time": "2023-12-27T09:30:00Z",
+      "duration": 60,
+      "status": "available"
+    }
+  ],
+  "settings": {
+    "host_video": false,
+    "participant_video": false,
+    "cn_meeting": false,
+    "in_meeting": false,
+    "join_before_host": false,
+    "jbh_time": 0,
+    "mute_upon_entry": false,
+    "watermark": false,
+    "use_pmi": false,
+    "approval_type": 2,
+    "audio": "both",
+    "auto_recording": "none",
+    "enforce_login": false,
+    "enforce_login_domains": "",
+    "alternative_hosts": "",
+    "alternative_host_update_polls": false,
+    "close_registration": false,
+    "show_share_button": false,
+    "allow_multiple_devices": false,
+    "registrants_confirmation_email": true,
+    "waiting_room": false,
+    "request_permission_to_unmute_participants": false,
+    "global_dial_in_countries": [
+      "US"
+    ],
+    "global_dial_in_numbers": [
+      {
+        "country_name": "US",
+        "number": "+1 386 347 5053",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 507 473 4847",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 564 217 2000",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 646 931 3860",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 669 444 9171",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "San Jose",
+        "number": "+1 669 900 6833",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 689 278 1000",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 719 359 4580",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "New York",
+        "number": "+1 929 205 6099",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 253 205 0468",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "Tacoma",
+        "number": "+1 253 215 8782",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "Washington DC",
+        "number": "+1 301 715 8592",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 305 224 1968",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 309 205 3325",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "Chicago",
+        "number": "+1 312 626 6799",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "city": "Houston",
+        "number": "+1 346 248 7799",
+        "type": "toll",
+        "country": "US"
+      },
+      {
+        "country_name": "US",
+        "number": "+1 360 209 5623",
+        "type": "toll",
+        "country": "US"
+      }
+    ],
+    "registrants_email_notification": true,
+    "meeting_authentication": false,
+    "additional_data_center_regions": [],
+    "encryption_type": "enhanced_encryption",
+    "approved_or_denied_countries_or_regions": {
+      "enable": false
+    },
+    "breakout_room": {
+      "enable": false
+    },
+    "alternative_hosts_email_notification": true,
+    "device_testing": false,
+    "focus_mode": false,
+    "enable_dedicated_group_chat": false,
+    "private_meeting": false,
+    "email_notification": true,
+    "host_save_video_order": false
+  },
+  "recurrence": {
+    "type": 2,
+    "repeat_interval": 1,
+    "weekly_days": "4",
+    "end_date_time": "2023-12-31T21:59:00Z"
+  },
+  "pre_schedule": false
+}

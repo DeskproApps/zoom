@@ -10,12 +10,15 @@
     "serve": "vite preview",
     "lint": "eslint --max-warnings 0 --ext ts,tsx ./src",
     "test": "cross-env NODE_OPTIONS=--max-old-space-size=1024 jest --maxWorkers=75%",
+    "test:watch": "cross-env NODE_OPTIONS=--max-old-space-size=1024 jest --maxWorkers=75% --watch",
     "test:coverage": "cross-env NODE_OPTIONS=--max-old-space-size=1024 jest --maxWorkers=75% --coverage"
   },
   "dependencies": {
     "@deskpro/app-sdk": "1.2.13",
     "@deskpro/deskpro-ui": "4.7.0",
     "@heroicons/react": "1.0.6",
+    "@tanstack/react-query": "^4.28.0",
+    "date-fns": "^2.29.3",
     "iframe-resizer": "^4.3.6",
     "lodash": "^4.17.21",
     "polished": "^4.1.1",
