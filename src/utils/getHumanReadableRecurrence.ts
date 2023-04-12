@@ -10,8 +10,8 @@ const TYPE = {
   MONTHLY: 3,
 };
 
-const getDay = (day: typeof DAYS[keyof typeof DAYS]) => {
-  return match(day)
+const getDay = (day: string): string => {
+  return match(Number(day))
     .with(DAYS.Mon, () => "Mon")
     .with(DAYS.Tue, () => "Tue")
     .with(DAYS.Wed, () => "Wed")
@@ -27,12 +27,12 @@ const getHumanReadableRecurrence = (recurrence: Recurrence): string => {
     return "-";
   }
 
-  const { type, repeat_interval, weekly_days } = recurrence;
+  const { type, repeat_interval = 0, weekly_days } = recurrence;
 
   let message = "Every ";
   const isPlural = repeat_interval > 1;
 
-  message += match<typeof TYPE[keyof typeof TYPE]>(type)
+  message += match<typeof TYPE[keyof typeof TYPE]|undefined>(type)
     .with(TYPE.DAILY, () => `${!isPlural ? "day" : `${repeat_interval} days`}`)
     .with(TYPE.WEEKLY, () => `${!isPlural ? "week" : `${repeat_interval} weeks`}`)
     .with(TYPE.MONTHLY, () => `${!isPlural ? "month" : `${repeat_interval} months`}`)

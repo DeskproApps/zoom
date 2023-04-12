@@ -19,7 +19,9 @@ import {
   DateInput,
   Container,
 } from "../common";
+import { recurrence } from "./types";
 import type { FC } from "react";
+import type { RecurrenceTypes } from "../../services/zoom/types";
 import type { ScheduleFormProps, ScheduleFormValidationSchema } from "./types";
 
 const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error }) => {
@@ -105,9 +107,9 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
               value={recurringType}
               error={has(errors, ["recurringType", "message"])}
               options={[
-                getOption<number>(1, "Daily"),
-                getOption<number>(2, "Weekly"),
-                getOption<number>(3, "Monthly"),
+                getOption<RecurrenceTypes>(recurrence.DAILY, "Daily"),
+                getOption<RecurrenceTypes>(recurrence.WEEKLY, "Weekly"),
+                getOption<RecurrenceTypes>(recurrence.MONTHLY, "Monthly"),
               ]}
               onChange={(option) => setValue("recurringType", option.value)}
             />
@@ -120,21 +122,21 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
               id="repeatInterval"
               value={repeatInterval}
               error={has(errors, ["repeatInterval", "message"])}
-              options={getRepeatIntervalOptions(recurringType)}
+              options={getRepeatIntervalOptions(recurringType as RecurrenceTypes)}
               onChange={(option) => setValue("repeatInterval", option.value)}
             />
           </Label>
         )}
 
-        {recurring && (recurringType === 2) && (
+        {recurring && (recurringType === recurrence.WEEKLY) && (
           <Label htmlFor="occursWeekly" label="Occurs on">
-            <Select
+            <Select<number>
               id="occursWeekly"
               value={occursWeekly}
               closeOnSelect={false}
               error={has(errors, ["occursWeekly", "message"])}
               options={Object.keys(DAYS).map((day) => ({
-                ...getOption(DAYS[day], DAY_NAMES[day]),
+                ...getOption<number>(DAYS[day], DAY_NAMES[day]),
                 description: day,
               }))}
               onChange={(o) => {
@@ -151,7 +153,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
           </Label>
         )}
 
-        {recurring && (recurringType === 3) && (
+        {recurring && (recurringType === recurrence.MONTHLY) && (
           <Label id="occursMonthly" label="Occurs on day of the month">
             <Select
               id="occursMonthly"

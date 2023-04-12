@@ -10,6 +10,7 @@ import { createMeetingService } from "../../services/zoom";
 import { getScheduleValues } from "../../components/MeetingForm";
 import { ScheduleMeetingForm } from "../../components";
 import type { FC } from "react";
+import type { ScheduleFormProps } from "../../components/MeetingForm";
 
 const CreateScheduleMeetingPage: FC = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const CreateScheduleMeetingPage: FC = () => {
 
   const onCancel = useCallback(() => navigate("/home"), [navigate]);
 
-  const onSubmit = useCallback((values) => {
+  const onSubmit: ScheduleFormProps["onSubmit"] = useCallback((values) => {
     if (!client) {
       return;
     }

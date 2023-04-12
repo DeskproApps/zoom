@@ -73,9 +73,9 @@ export type OccurrenceItem = {
 };
 
 export type Recurrence = {
-  type: RecurrenceTypes,
-  repeat_interval: number,
-  end_date_time: DateTime,
+  type?: RecurrenceTypes,
+  repeat_interval?: number,
+  end_date_time?: DateTime,
   weekly_days?: string,
   monthly_day?: number,
 };

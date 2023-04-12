@@ -1,11 +1,13 @@
 import { baseRequest } from "./baseRequest";
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { User } from "./types";
+import type { User, MeetingItem, MeetingTypes, Recurrence } from "./types";
 
 type Data = {
-  topic: string,
-  timezone: string,
-  datetime: string,
+  type: MeetingTypes,
+  topic: MeetingItem["topic"],
+  timezone: MeetingItem["timezone"],
+  start_time: MeetingItem["start_time"],
+  recurrence?: Recurrence,
 };
 
 const createMeetingService = (client: IDeskproClient, data: Data) => {

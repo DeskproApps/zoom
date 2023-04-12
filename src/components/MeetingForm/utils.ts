@@ -1,6 +1,7 @@
 import get from "lodash/get";
 import range from "lodash/range";
 import size from "lodash/size";
+import isDate from "date-fns/isDate";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getOption } from "../../utils";
@@ -13,6 +14,7 @@ import type {
   InstantFormValidationSchema,
   ScheduleFormValidationSchema,
 } from "./types";
+import {RecurrenceTypes} from "../../services/zoom/types";
 
 const instantValidationSchema = z.object({
   topic: z.string().nonempty(),
@@ -36,23 +38,24 @@ const getInstantValues = (values: InstantFormValidationSchema): InstantMeetingVa
 
 ///
 
-const repeatIntervalValidator = (values): boolean => {
+const repeatIntervalValidator = <T>(values: T): boolean => {
   const repeatInterval = get(values, ["repeatInterval"]);
+
   return match(get(values, ["recurringType"]))
-    .with(1, () => repeatInterval >= 1 && repeatInterval <= 15)
-    .with(2, () => repeatInterval >= 1 && repeatInterval <= 12)
-    .with(3, () => repeatInterval >= 1 && repeatInterval <= 3)
+    .with(recurrence.DAILY, () => repeatInterval >= 1 && repeatInterval <= 15)
+    .with(recurrence.WEEKLY, () => repeatInterval >= 1 && repeatInterval <= 12)
+    .with(recurrence.MONTHLY, () => repeatInterval >= 1 && repeatInterval <= 3)
     .otherwise(() => true);
 };
 
-const endDatetimeValidator = (values): boolean => {
+const endDatetimeValidator = <T>(values: T): boolean => {
   const isRecurring = get(values, ["recurring"]);
   const endDatetime = get(values, ["endDatetime"]);
 
   return !isRecurring ? true : z.date().safeParse(endDatetime).success;
 };
 
-const occursWeeklyValidator = (values): boolean => {
+const occursWeeklyValidator = <T>(values: T): boolean => {
   const isRecurring = get(values, ["recurring"]);
   const isWeekly = get(values, ["recurringType"]) === 2;
 
@@ -60,10 +63,10 @@ const occursWeeklyValidator = (values): boolean => {
     return true;
   }
 
-  return size(get(values, ["occursWeekly"], [])) > 0;
+  return (size(get(values, ["occursWeekly"], [])) > 0);
 };
 
-const occursMonthlyValidator = (values): boolean => {
+const occursMonthlyValidator = <T>(values: T): boolean => {
   const isRecurring = get(values, ["recurring"]);
   const isMonthly = get(values, ["recurringType"]) === 3;
 
@@ -83,7 +86,7 @@ const scheduleValidationSchema = instantValidationSchema
     recurringType: z.number().min(1).max(3).optional(),
     repeatInterval: z.number().optional(),
     endDatetime: z.date().optional(),
-    occursWeekly: z.string().array().optional(),
+    occursWeekly: z.number().array().optional(),
     occursMonthly: z.number().optional(),
   })
   .refine(repeatIntervalValidator, { message: "Wrong interval", path: ["repeatInterval"] })
@@ -110,21 +113,21 @@ const getScheduleValues = (values: ScheduleFormValidationSchema): ScheduleMeetin
     start_time: values.datetime.toISOString(),
     ...(!values.recurring ? {} : {
       recurrence: {
-        type: values.recurringType,
-        end_date_time: values.endDatetime.toISOString(),
-        repeat_interval: values.repeatInterval,
-        ...((values.recurringType ===recurrence.WEEKLY) ? { weekly_days: values.occursWeekly?.join(",") } : {}),
-        ...((values.recurringType ===recurrence.MONTHLY) ? { monthly_day: values.occursMonthly } : {}),
+        type: get(values, ["recurringType"], recurrence.DAILY) as Recurrence["type"],
+        repeat_interval: get(values, ["repeatInterval"], 1),
+        ...(isDate(get(values, ["endDatetime"])) ? { end_date_time: (values.endDatetime as Date).toISOString() } : {}),
+        ...((values.recurringType === recurrence.WEEKLY) ? { weekly_days: values.occursWeekly?.join(",") } : {}),
+        ...((values.recurringType === recurrence.MONTHLY) ? { monthly_day: values.occursMonthly } : {}),
       },
     }),
   };
 };
 
-const getRepeatIntervalOptions = (recurringType: Recurrence["type"]): Array<Option<number>> => {
+const getRepeatIntervalOptions = (recurringType?: RecurrenceTypes): Array<Option<number>> => {
   return match(recurringType)
-    .with(1, () => range(1, 16).map((value) => getOption<number>(value, `${value} day(s)`)))
-    .with(2, () => range(1, 13).map((value) => getOption<number>(value, `${value} week(s)`)))
-    .with(3, () => range(1, 4).map((value) => getOption<number>(value, `${value} month(s)`)))
+    .with(recurrence.DAILY, () => range(1, 16).map((value) => getOption<number>(value, `${value} day(s)`)))
+    .with(recurrence.WEEKLY, () => range(1, 13).map((value) => getOption<number>(value, `${value} week(s)`)))
+    .with(recurrence.MONTHLY, () => range(1, 4).map((value) => getOption<number>(value, `${value} month(s)`)))
     .otherwise(() => []);
 };
 

@@ -10,14 +10,13 @@ import { DivAsInput } from "@deskpro/deskpro-ui";
 import { Dropdown } from "@deskpro/app-sdk";
 import type { ReactNode } from "react";
 import type { LabelProps, DivAsInputWithDisplayProps } from "@deskpro/deskpro-ui";
-import type { DropdownTargetProps } from "@deskpro/app-sdk";
+import type { DropdownTargetProps, DropdownProps } from "@deskpro/app-sdk";
 import type { Option } from "../../../types";
 
-type Props<T> = {
+type Props<T> = Pick<DropdownProps<T, HTMLElement>, "closeOnSelect"> & {
   id: string,
-  label?: string,
   error?: DivAsInputWithDisplayProps["error"],
-  value: Option<T>["value"],
+  value?: T|T[],
   options: Option<T>[],
   onChange: (o: Option<T>) => void,
   placeholder?: DivAsInputWithDisplayProps["placeholder"],
@@ -27,7 +26,6 @@ type Props<T> = {
 
 const Select = <T,>({
   id,
-  label,
   error,
   value,
   options,

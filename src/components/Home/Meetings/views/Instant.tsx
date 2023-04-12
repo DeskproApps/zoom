@@ -18,7 +18,6 @@ const Instant: FC<MeetingProps> = ({ meeting, onDelete }) => {
 
     onDelete(meeting)
       .finally(() => setIsLoading(false));
-
   }, [onDelete, meeting]);
 
   return (
