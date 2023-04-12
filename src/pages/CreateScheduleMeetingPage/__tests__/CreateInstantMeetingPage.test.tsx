@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { render } from "../../../../testing";
-import { CreateInstantMeetingPage } from "../CreateInstantMeetingPage";
+import { CreateScheduleMeetingPage } from "../CreateScheduleMeetingPage";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -22,7 +22,7 @@ describe("InstantMeetingForm", () => {
     (useNavigate as jest.Mock).mockReturnValue(navigate);
 
     const { findByRole } = render(
-      <CreateInstantMeetingPage />,
+      <CreateScheduleMeetingPage />,
       { wrappers: { theme: true, router: true, query: true } },
     );
 

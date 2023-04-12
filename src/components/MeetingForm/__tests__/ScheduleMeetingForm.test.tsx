@@ -1,8 +1,8 @@
 import { cleanup } from "@testing-library/react";
-import { InstantMeetingForm } from "../InstantMeetingForm";
+import { ScheduleMeetingForm} from "../ScheduleMeetingForm";
 import { render } from "../../../../testing";
 
-describe("InstantMeetingForm", () => {
+describe("ScheduleMeetingForm", () => {
   afterEach(() => {
     jest.clearAllMocks();
     cleanup();
@@ -10,7 +10,7 @@ describe("InstantMeetingForm", () => {
 
   test("render", async () => {
     const { findByText } = render(
-      <InstantMeetingForm
+      <ScheduleMeetingForm
         onSubmit={jest.fn()}
         onCancel={jest.fn()}
       />,

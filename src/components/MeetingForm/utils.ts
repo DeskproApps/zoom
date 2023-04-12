@@ -8,35 +8,11 @@ import { getOption } from "../../utils";
 import { recurrence, meeting } from "./types";
 import type { Recurrence } from "../../services/zoom/types";
 import type { Option } from "../../types";
+import type { RecurrenceTypes } from "../../services/zoom/types";
 import type {
-  InstantMeetingValues,
   ScheduleMeetingValues,
-  InstantFormValidationSchema,
   ScheduleFormValidationSchema,
 } from "./types";
-import {RecurrenceTypes} from "../../services/zoom/types";
-
-const instantValidationSchema = z.object({
-  topic: z.string().nonempty(),
-  timezone: z.string().nonempty(),
-  datetime: z.date(),
-});
-
-const getInitInstantValues = () => ({
-  topic: "",
-  timezone: "",
-});
-
-const getInstantValues = (values: InstantFormValidationSchema): InstantMeetingValues => {
-  return {
-    type: get(values, ["type"], 1),
-    topic: values.topic,
-    timezone: values.timezone,
-    start_time: values.datetime.toISOString(),
-  };
-};
-
-///
 
 const repeatIntervalValidator = <T>(values: T): boolean => {
   const repeatInterval = get(values, ["repeatInterval"]);
@@ -77,8 +53,7 @@ const occursMonthlyValidator = <T>(values: T): boolean => {
   return get(values, ["occursMonthly"]) > 0;
 };
 
-const scheduleValidationSchema = instantValidationSchema
-  .extend({
+const scheduleValidationSchema = z.object({
     topic: z.string().nonempty(),
     timezone: z.string().nonempty(),
     datetime: z.date(),
@@ -136,12 +111,9 @@ const getOccursMonthlyOptions = () => {
 };
 
 export {
-  instantValidationSchema,
-  getInitInstantValues,
-  getInstantValues,
-  scheduleValidationSchema,
-  getInitScheduleValues,
   getScheduleValues,
-  getRepeatIntervalOptions,
+  getInitScheduleValues,
   getOccursMonthlyOptions,
+  scheduleValidationSchema,
+  getRepeatIntervalOptions,
 };

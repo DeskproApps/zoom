@@ -23,7 +23,7 @@ const Instant: FC<MeetingProps> = ({ meeting, onDelete }) => {
   return (
     <div style={{ marginBottom: 14 }}>
       <Title
-        title={meeting.topic || meeting.id}
+        title={meeting.id}
         link={meeting.join_url}
         icon={<ZoomLogo/>}
         marginBottom={7}

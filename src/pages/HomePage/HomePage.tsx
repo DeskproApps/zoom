@@ -2,16 +2,15 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingSpinner, useDeskproElements } from "@deskpro/app-sdk";
 import { useSetTitle, useDeleteMeeting } from "../../hooks";
-import { useMeetings } from "./hooks";
+import { useMeetings, useCreateInstantMeeting } from "./hooks";
 import { Home } from "../../components";
 import type { FC } from "react";
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
   const { isLoading, meetings } = useMeetings();
+  const { createInstantMeeting, error } = useCreateInstantMeeting();
   const { deleteMeeting } = useDeleteMeeting();
-
-  const onCreateInstant = useCallback(() => navigate("/create-instant-meeting"), [navigate]);
 
   const onCreateSchedule = useCallback(() => navigate("/create-schedule-meeting"), [navigate]);
 
@@ -36,8 +35,9 @@ const HomePage: FC = () => {
 
   return (
     <Home
+      error={error}
       meetings={meetings}
-      onCreateInstant={onCreateInstant}
+      onCreateInstant={createInstantMeeting}
       onCreateSchedule={onCreateSchedule}
       onDeleteMeeting={deleteMeeting}
     />
