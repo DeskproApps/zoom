@@ -1,5 +1,5 @@
 import { createSearchParams } from "react-router-dom";
-import isEmpty from "lodash.isEmpty";
+import isEmpty from "lodash.isempty";
 import { proxyFetch } from "@deskpro/app-sdk";
 import { REST_URL, TOKEN } from "../../constants";
 import { ZoomError } from "./ZoomError";
