@@ -1,14 +1,18 @@
-import {
-  LoadingSpinner,
-  useDeskproElements,
-} from "@deskpro/app-sdk";
-import { useSetTitle } from "../../hooks";
-import { useMeetings } from "./hooks";
-import { Home } from "../../components/Home";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { LoadingSpinner, useDeskproElements } from "@deskpro/app-sdk";
+import { useSetTitle, useDeleteMeeting } from "../../hooks";
+import { useMeetings, useCreateInstantMeeting } from "./hooks";
+import { Home } from "../../components";
 import type { FC } from "react";
 
 const HomePage: FC = () => {
+  const navigate = useNavigate();
   const { isLoading, meetings } = useMeetings();
+  const { createInstantMeeting, error } = useCreateInstantMeeting();
+  const { deleteMeeting } = useDeleteMeeting();
+
+  const onCreateSchedule = useCallback(() => navigate("/create-schedule-meeting"), [navigate]);
 
   useSetTitle("Zoom Meetings");
 
@@ -30,7 +34,13 @@ const HomePage: FC = () => {
   }
 
   return (
-    <Home meetings={meetings} />
+    <Home
+      error={error}
+      meetings={meetings}
+      onCreateInstant={createInstantMeeting}
+      onCreateSchedule={onCreateSchedule}
+      onDeleteMeeting={deleteMeeting}
+    />
   );
 };
 

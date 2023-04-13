@@ -38,6 +38,12 @@ export type MeetingTypes =
   | 8 // Recurring meeting with a fixed time.
 ;
 
+export type RecurrenceTypes =
+  | 1 // Daily
+  | 2 // Weekly
+  | 3 // Monthly
+;
+
 export type MeetingItem = {
   uuid: string,
   id: number,
@@ -67,12 +73,9 @@ export type OccurrenceItem = {
 };
 
 export type Recurrence = {
-  type:
-    | 1 // Daily
-    | 2 // Weekly
-    | 3 // Monthly
-  repeat_interval: number,
-  end_date_time: DateTime,
+  type?: RecurrenceTypes,
+  repeat_interval?: number,
+  end_date_time?: DateTime,
   weekly_days?: string,
   monthly_day?: number,
 };
@@ -85,8 +88,8 @@ export type MeetingDetails = {
   assistant_id: User["id"],
   topic: string,
   type: MeetingTypes,
-  status: string, // "waiting",
-  timezone: DateTime,
+  status: string,
+  timezone: string,
   agenda: string,
   created_at: DateTime,
   start_url: string,
@@ -99,5 +102,4 @@ export type MeetingDetails = {
   settings: Dict< never>,
   recurrence: Recurrence,
   pre_schedule: boolean,
-}
-  ;
+};
