@@ -1,6 +1,6 @@
-import get from "lodash/get";
-import range from "lodash/range";
-import size from "lodash/size";
+import get from "lodash.get";
+import range from "lodash.range";
+import size from "lodash.size";
 import isDate from "date-fns/isDate";
 import { match } from "ts-pattern";
 import { z } from "zod";
@@ -40,8 +40,7 @@ const occursWeeklyValidator = <T>(values: T): boolean => {
     return true;
   }
 
-
-  return (size(weekly) > 0);
+  return size(weekly) > 0;
 };
 
 const occursMonthlyValidator = <T>(values: T): boolean => {
@@ -55,7 +54,8 @@ const occursMonthlyValidator = <T>(values: T): boolean => {
   return get(values, ["occursMonthly"]) > 0;
 };
 
-const scheduleValidationSchema = z.object({
+const scheduleValidationSchema = z
+  .object({
     topic: z.string().nonempty(),
     timezone: z.string().nonempty(),
     datetime: z.date(),
@@ -66,12 +66,22 @@ const scheduleValidationSchema = z.object({
     occursWeekly: z.number().array().optional(),
     occursMonthly: z.number().optional(),
   })
-  .refine(repeatIntervalValidator, { message: "Wrong interval", path: ["repeatInterval"] })
-  .refine(endDatetimeValidator, { message: "End Datetime require", path: ["endDatetime"] })
-  .refine(occursWeeklyValidator, { message: "Occurs require", path: ["occursWeekly"] })
-  .refine(occursMonthlyValidator, { message: "Occurs require", path: ["occursMonthly"] })
-;
-
+  .refine(repeatIntervalValidator, {
+    message: "Wrong interval",
+    path: ["repeatInterval"],
+  })
+  .refine(endDatetimeValidator, {
+    message: "End Datetime require",
+    path: ["endDatetime"],
+  })
+  .refine(occursWeeklyValidator, {
+    message: "Occurs require",
+    path: ["occursWeekly"],
+  })
+  .refine(occursMonthlyValidator, {
+    message: "Occurs require",
+    path: ["occursMonthly"],
+  });
 const getInitScheduleValues = () => ({
   topic: "",
   timezone: "",
@@ -82,29 +92,51 @@ const getInitScheduleValues = () => ({
   occursMonthly: 0,
 });
 
-const getScheduleValues = (values: ScheduleFormValidationSchema): ScheduleMeetingValues => {
+const getScheduleValues = (
+  values: ScheduleFormValidationSchema
+): ScheduleMeetingValues => {
   return {
     type: !values.recurring ? meeting.SCHEDULE : meeting.RECURRING,
     topic: values.topic,
     timezone: values.timezone,
     start_time: values.datetime.toISOString(),
-    ...(!values.recurring ? {} : {
-      recurrence: {
-        type: get(values, ["recurringType"], recurrence.DAILY) as Recurrence["type"],
-        repeat_interval: get(values, ["repeatInterval"], 1),
-        ...(isDate(get(values, ["endDatetime"])) ? { end_date_time: (values.endDatetime as Date).toISOString() } : {}),
-        ...((values.recurringType === recurrence.WEEKLY) ? { weekly_days: values.occursWeekly?.join(",") } : {}),
-        ...((values.recurringType === recurrence.MONTHLY) ? { monthly_day: values.occursMonthly } : {}),
-      },
-    }),
+    ...(!values.recurring
+      ? {}
+      : {
+          recurrence: {
+            type: get(
+              values,
+              ["recurringType"],
+              recurrence.DAILY
+            ) as Recurrence["type"],
+            repeat_interval: get(values, ["repeatInterval"], 1),
+            ...(isDate(get(values, ["endDatetime"]))
+              ? { end_date_time: (values.endDatetime as Date).toISOString() }
+              : {}),
+            ...(values.recurringType === recurrence.WEEKLY
+              ? { weekly_days: values.occursWeekly?.join(",") }
+              : {}),
+            ...(values.recurringType === recurrence.MONTHLY
+              ? { monthly_day: values.occursMonthly }
+              : {}),
+          },
+        }),
   };
 };
 
-const getRepeatIntervalOptions = (recurringType?: RecurrenceTypes): Array<Option<number>> => {
+const getRepeatIntervalOptions = (
+  recurringType?: RecurrenceTypes
+): Array<Option<number>> => {
   return match(recurringType)
-    .with(recurrence.DAILY, () => range(1, 16).map((value) => getOption<number>(value, `${value} day(s)`)))
-    .with(recurrence.WEEKLY, () => range(1, 13).map((value) => getOption<number>(value, `${value} week(s)`)))
-    .with(recurrence.MONTHLY, () => range(1, 4).map((value) => getOption<number>(value, `${value} month(s)`)))
+    .with(recurrence.DAILY, () =>
+      range(1, 16).map((value) => getOption<number>(value, `${value} day(s)`))
+    )
+    .with(recurrence.WEEKLY, () =>
+      range(1, 13).map((value) => getOption<number>(value, `${value} week(s)`))
+    )
+    .with(recurrence.MONTHLY, () =>
+      range(1, 4).map((value) => getOption<number>(value, `${value} month(s)`))
+    )
     .otherwise(() => []);
 };
 

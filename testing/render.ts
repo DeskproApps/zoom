@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import isString from "lodash/isString";
+import isString from "lodash.isString";
 import {
   RenderResult,
   render as testingLibraryRender,

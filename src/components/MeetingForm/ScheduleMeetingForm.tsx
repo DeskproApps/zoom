@@ -1,4 +1,4 @@
-import has from "lodash/has";
+import has from "lodash.has";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack } from "@deskpro/app-sdk";
@@ -12,19 +12,17 @@ import {
   getOccursMonthlyOptions,
 } from "./utils";
 import { ErrorBlock } from "../Error";
-import {
-  Label,
-  Select,
-  Button,
-  DateInput,
-  Container,
-} from "../common";
+import { Label, Select, Button, DateInput, Container } from "../common";
 import { recurrence } from "./types";
 import type { FC } from "react";
 import type { RecurrenceTypes } from "../../services/zoom/types";
 import type { ScheduleFormProps, ScheduleFormValidationSchema } from "./types";
 
-const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error }) => {
+const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
+  onSubmit,
+  onCancel,
+  error,
+}) => {
   const {
     watch,
     register,
@@ -76,7 +74,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
             id="datetime"
             placeholder="DD/MM/YYYY at HH:mm"
             error={has(errors, ["datetime", "message"])}
-            onChange={(date) => setValue('datetime', date[0])}
+            onChange={(date) => setValue("datetime", date[0])}
           />
         </Label>
 
@@ -122,13 +120,15 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
               id="repeatInterval"
               value={repeatInterval}
               error={has(errors, ["repeatInterval", "message"])}
-              options={getRepeatIntervalOptions(recurringType as RecurrenceTypes)}
+              options={getRepeatIntervalOptions(
+                recurringType as RecurrenceTypes
+              )}
               onChange={(option) => setValue("repeatInterval", option.value)}
             />
           </Label>
         )}
 
-        {recurring && (recurringType === recurrence.WEEKLY) && (
+        {recurring && recurringType === recurrence.WEEKLY && (
           <Label htmlFor="occursWeekly" label="Occurs on">
             <Select<number>
               id="occursWeekly"
@@ -141,7 +141,9 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
               }))}
               onChange={(o) => {
                 if (o.value) {
-                  const selectedLabels = Array.isArray(occursWeekly) ? occursWeekly : [];
+                  const selectedLabels = Array.isArray(occursWeekly)
+                    ? occursWeekly
+                    : [];
                   const newValue = selectedLabels.includes(o.value)
                     ? selectedLabels.filter((name) => name !== o.value)
                     : [...selectedLabels, o.value];
@@ -153,7 +155,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({ onSubmit, onCancel, error 
           </Label>
         )}
 
-        {recurring && (recurringType === recurrence.MONTHLY) && (
+        {recurring && recurringType === recurrence.MONTHLY && (
           <Label id="occursMonthly" label="Occurs on day of the month">
             <Select
               id="occursMonthly"

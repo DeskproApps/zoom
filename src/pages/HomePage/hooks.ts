@@ -1,28 +1,21 @@
 import { useState, useCallback } from "react";
-import get from "lodash/get";
+import get from "lodash.get";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  useQueryWithClient,
-  useDeskproAppClient,
-} from "@deskpro/app-sdk";
+import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import { setInstantMeetingService } from "../../services/deskpro";
-import {
-  getMeetingsService,
-  createMeetingService,
-} from "../../services/zoom";
+import { getMeetingsService, createMeetingService } from "../../services/zoom";
 import { meeting } from "../../components/MeetingForm/types";
 import { QueryKey } from "../../query";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
-  const meetings = useQueryWithClient(
-    [QueryKey.MEETINGS, "me"],
-    (client) => getMeetingsService(client),
+  const meetings = useQueryWithClient([QueryKey.MEETINGS, "me"], (client) =>
+    getMeetingsService(client)
   );
 
   const instantMeetings = useQueryWithClient(
     [QueryKey.INSTANT_MEETINGS],
-    (client) => client.getUserState("zoom/meetings/*"),
+    (client) => client.getUserState("zoom/meetings/*")
   );
 
   return {
@@ -37,7 +30,7 @@ const useMeetings: UseMeetings = () => {
 const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
   const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
-  const [error, setError] = useState<string|string[]|null>(null);
+  const [error, setError] = useState<string | string[] | null>(null);
 
   const createInstantMeeting = useCallback(() => {
     if (!client) {

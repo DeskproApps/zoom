@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import get from "lodash/get";
+import get from "lodash.get";
 import { Stack, Title, useQueryWithClient } from "@deskpro/app-sdk";
 import { getMeetingService } from "../../../../services/zoom";
 import { QueryKey } from "../../../../query";
@@ -14,14 +14,13 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const meetingDetails = useQueryWithClient(
     [QueryKey.MEETINGS, `${meeting.id}`],
-    (client) => getMeetingService(client, meeting.id),
+    (client) => getMeetingService(client, meeting.id)
   );
 
   const onDeleteMeeting = useCallback(() => {
     setIsLoading(true);
 
-    onDelete(meeting)
-      .finally(() => setIsLoading(false));
+    onDelete(meeting).finally(() => setIsLoading(false));
   }, [onDelete, meeting]);
 
   return (
@@ -29,7 +28,7 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete }) => {
       <Title
         title={meeting.topic || meeting.id}
         link={meeting.join_url}
-        icon={<ZoomLogo/>}
+        icon={<ZoomLogo />}
         marginBottom={7}
       />
       <TwoProperties
@@ -40,11 +39,13 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete }) => {
       />
       <TwoProperties
         leftLabel="Recurrence"
-        leftText={getHumanReadableRecurrence(get(meetingDetails, ["data", "recurrence"]))}
+        leftText={getHumanReadableRecurrence(
+          get(meetingDetails, ["data", "recurrence"])
+        )}
         rightLabel="Start time"
         rightText={format(
           get(meetingDetails, ["data", "occurrences", 0, "start_time"]),
-          DATETIME_FORMAT,
+          DATETIME_FORMAT
         )}
       />
       <Stack justify="space-between">
