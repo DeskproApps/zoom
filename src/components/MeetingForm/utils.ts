@@ -34,12 +34,14 @@ const endDatetimeValidator = <T>(values: T): boolean => {
 const occursWeeklyValidator = <T>(values: T): boolean => {
   const isRecurring = get(values, ["recurring"]);
   const isWeekly = get(values, ["recurringType"]) === 2;
+  const weekly = get(values, ["occursWeekly"], []);
 
   if (!isRecurring || !isWeekly) {
     return true;
   }
 
-  return (size(get(values, ["occursWeekly"], [])) > 0);
+
+  return (size(weekly) > 0);
 };
 
 const occursMonthlyValidator = <T>(values: T): boolean => {
@@ -112,7 +114,11 @@ const getOccursMonthlyOptions = () => {
 
 export {
   getScheduleValues,
+  endDatetimeValidator,
   getInitScheduleValues,
+  occursWeeklyValidator,
+  occursMonthlyValidator,
+  repeatIntervalValidator,
   getOccursMonthlyOptions,
   scheduleValidationSchema,
   getRepeatIntervalOptions,
