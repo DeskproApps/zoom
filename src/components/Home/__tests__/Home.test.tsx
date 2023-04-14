@@ -17,6 +17,7 @@ describe("Home", () => {
     const { findByText } = render(
       <Home
         meetings={mockMeetings.meetings as MeetingItem[]}
+        onInsertLink={jest.fn()}
         onCreateInstant={jest.fn()}
         onDeleteMeeting={jest.fn()}
         onCreateSchedule={jest.fn()}

@@ -19,7 +19,11 @@ describe("Recurring", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByText } = render(
-      <Recurring meeting={mockRecurringMeeting as never} onDelete={mockOnDelete}/>,
+      <Recurring
+        meeting={mockRecurringMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true, query: true } },
     );
 
@@ -34,7 +38,11 @@ describe("Recurring", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByRole } = render(
-      <Recurring meeting={mockRecurringMeeting as never} onDelete={mockOnDelete}/>,
+      <Recurring
+        meeting={mockRecurringMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true, query: true } },
     );
 

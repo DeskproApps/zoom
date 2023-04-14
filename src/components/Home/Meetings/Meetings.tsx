@@ -30,16 +30,17 @@ const map = (type: MeetingTypes) => {
     .otherwise(() => null);
 };
 
-const MeetingView: FC<MeetingProps> = ({ meeting, onDelete }) => {
+const MeetingView: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
   const Meeting = map(get(meeting, ["type"]));
 
   return isNil(Meeting) ? null : (
-    <Meeting meeting={meeting} onDelete={onDelete} />
+    <Meeting meeting={meeting} onDelete={onDelete} onInsertLink={onInsertLink} />
   );
 };
 
-const Meetings: FC<Pick<Props, "meetings" | "onDeleteMeeting">> = ({
+const Meetings: FC<Pick<Props, "meetings"|"onDeleteMeeting"|"onInsertLink">> = ({
   meetings,
+  onInsertLink,
   onDeleteMeeting,
 }) => {
   return (
@@ -53,6 +54,7 @@ const Meetings: FC<Pick<Props, "meetings" | "onDeleteMeeting">> = ({
             key={meeting.id}
             meeting={meeting}
             onDelete={onDeleteMeeting}
+            onInsertLink={onInsertLink}
           />
         ))
       )}

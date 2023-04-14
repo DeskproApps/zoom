@@ -5,10 +5,12 @@ export type Props = {
   onCreateInstant: () => Promise<void>,
   onCreateSchedule: () => void,
   onDeleteMeeting: (meeting: MeetingItem) => Promise<void>,
+  onInsertLink: (meeting: MeetingItem) => void,
   error?: string|string[]|null,
 };
 
 export type MeetingProps = {
   meeting: MeetingItem,
   onDelete: Props["onDeleteMeeting"],
+  onInsertLink: Props["onInsertLink"],
 };

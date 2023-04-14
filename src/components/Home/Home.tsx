@@ -5,7 +5,14 @@ import { ErrorBlock } from "../Error";
 import type { FC } from "react";
 import type { Props } from "./types";
 
-const Home: FC<Props> = ({ meetings, onCreateInstant, onCreateSchedule, onDeleteMeeting, error }) => {
+const Home: FC<Props> = ({
+  error,
+  meetings,
+  onInsertLink,
+  onCreateInstant,
+  onDeleteMeeting,
+  onCreateSchedule,
+}) => {
   return (
     <>
       {error && <ErrorBlock text={error} />}
@@ -14,7 +21,11 @@ const Home: FC<Props> = ({ meetings, onCreateInstant, onCreateSchedule, onDelete
         onCreateSchedule={onCreateSchedule}
       />
       <HorizontalDivider />
-      <Meetings meetings={meetings} onDeleteMeeting={onDeleteMeeting} />
+      <Meetings
+        meetings={meetings}
+        onInsertLink={onInsertLink}
+        onDeleteMeeting={onDeleteMeeting}
+      />
       <HorizontalDivider />
     </>
   );

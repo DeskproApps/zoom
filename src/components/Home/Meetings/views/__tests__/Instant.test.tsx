@@ -15,7 +15,11 @@ describe("Instant", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findAllByText, findByText } = render(
-      <Instant meeting={mockInstantMeeting as never} onDelete={mockOnDelete}/>,
+      <Instant
+        meeting={mockInstantMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -28,7 +32,11 @@ describe("Instant", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByRole } = render(
-      <Instant meeting={mockInstantMeeting as never} onDelete={mockOnDelete}/>,
+      <Instant
+        meeting={mockInstantMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 

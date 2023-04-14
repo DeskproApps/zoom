@@ -15,7 +15,11 @@ describe("Scheduled", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByText } = render(
-      <Scheduled meeting={mockScheduledMeeting as never} onDelete={mockOnDelete}/>,
+      <Scheduled
+        meeting={mockScheduledMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -30,7 +34,11 @@ describe("Scheduled", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByRole } = render(
-      <Scheduled meeting={mockScheduledMeeting as never} onDelete={mockOnDelete}/>,
+      <Scheduled
+        meeting={mockScheduledMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 

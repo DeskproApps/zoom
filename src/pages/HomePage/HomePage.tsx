@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingSpinner, useDeskproElements } from "@deskpro/app-sdk";
-import { useSetTitle, useDeleteMeeting } from "../../hooks";
+import { useSetTitle, useDeleteMeeting, useAppendToReplyBox } from "../../hooks";
 import { useMeetings, useCreateInstantMeeting } from "./hooks";
 import { Home } from "../../components";
 import type { FC } from "react";
@@ -11,6 +11,7 @@ const HomePage: FC = () => {
   const { isLoading, meetings } = useMeetings();
   const { createInstantMeeting, error } = useCreateInstantMeeting();
   const { deleteMeeting } = useDeleteMeeting();
+  const { insertInviteIntoReplyBox } = useAppendToReplyBox();
 
   const onCreateSchedule = useCallback(() => navigate("/create-schedule-meeting"), [navigate]);
 
@@ -37,6 +38,7 @@ const HomePage: FC = () => {
     <Home
       error={error}
       meetings={meetings}
+      onInsertLink={insertInviteIntoReplyBox}
       onCreateInstant={createInstantMeeting}
       onCreateSchedule={onCreateSchedule}
       onDeleteMeeting={deleteMeeting}
