@@ -56,4 +56,28 @@ describe("Recurring", () => {
       expect(mockOnDelete).toHaveBeenCalled();
     });
   });
+
+  test("should inserting invitation into reply box", async () => {
+    (getMeetingService as jest.Mock).mockResolvedValueOnce(mockRecurringMeeting);
+    const mockOnInsertLink = jest.fn();
+    const mockOnDelete = jest.fn();
+    mockOnDelete.mockResolvedValue(true);
+
+    const { findByRole } = render(
+      <Recurring
+        meeting={mockRecurringMeeting as never}
+        onInsertLink={mockOnInsertLink}
+        onDelete={mockOnDelete}
+      />,
+      { wrappers: { theme: true, query: true } },
+    );
+
+    const insertButton = await findByRole("button", { name: "Insert Link" });
+
+    await userEvent.click(insertButton);
+
+    await waitFor(() => {
+      expect(mockOnInsertLink).toHaveBeenCalled();
+    });
+  });
 });
