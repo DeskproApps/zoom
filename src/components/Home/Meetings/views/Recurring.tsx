@@ -10,8 +10,8 @@ import { Button, TwoProperties, ZoomLogo } from "../../../common";
 import type { FC } from "react";
 import type { MeetingProps } from "../../types";
 
-const Recurring: FC<MeetingProps> = ({ meeting, onDelete }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const meetingDetails = useQueryWithClient(
     [QueryKey.MEETINGS, `${meeting.id}`],
     (client) => getMeetingService(client, meeting.id)
@@ -49,6 +49,13 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete }) => {
         )}
       />
       <Stack justify="space-between">
+        <Button
+          type="button"
+          text="Insert Link"
+          intent="secondary"
+          onClick={() => onInsertLink(meeting)}
+        />
+
         <Button
           type="button"
           text="Delete"

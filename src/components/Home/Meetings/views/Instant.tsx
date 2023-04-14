@@ -10,8 +10,8 @@ import { DATETIME_FORMAT } from "../../../../constants";
 import type { FC } from "react";
 import type { MeetingProps } from "../../types";
 
-const Instant: FC<MeetingProps> = ({ meeting, onDelete }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const Instant: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onDeleteMeeting = useCallback(() => {
     setIsLoading(true);
@@ -35,6 +35,13 @@ const Instant: FC<MeetingProps> = ({ meeting, onDelete }) => {
         rightText="Instant"
       />
       <Stack justify="space-between">
+        <Button
+          type="button"
+          text="Insert Link"
+          intent="secondary"
+          onClick={() => onInsertLink(meeting)}
+        />
+
         <Button
           type="button"
           text="Delete"

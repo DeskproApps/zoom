@@ -15,7 +15,11 @@ describe("Instant", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findAllByText, findByText } = render(
-      <Instant meeting={mockInstantMeeting as never} onDelete={mockOnDelete}/>,
+      <Instant
+        meeting={mockInstantMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -28,7 +32,11 @@ describe("Instant", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByRole } = render(
-      <Instant meeting={mockInstantMeeting as never} onDelete={mockOnDelete}/>,
+      <Instant
+        meeting={mockInstantMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -40,6 +48,32 @@ describe("Instant", () => {
 
     await waitFor(() => {
       expect(mockOnDelete).toHaveBeenCalled();
+    });
+  });
+
+  test("should inserting invitation into reply box", async () => {
+    const mockOnDelete = jest.fn();
+    mockOnDelete.mockResolvedValue(true);
+    const mockOnInsertLink = jest.fn();
+    mockOnInsertLink.mockResolvedValue(true);
+
+    const { findByRole } = render(
+      <Instant
+        meeting={mockInstantMeeting as never}
+        onInsertLink={mockOnInsertLink}
+        onDelete={mockOnDelete}
+      />,
+      { wrappers: { theme: true } },
+    );
+
+    const insertButton = await findByRole("button", { name: "Insert Link" });
+
+    await act(async () => {
+      await userEvent.click(insertButton);
+    });
+
+    await waitFor(() => {
+      expect(mockOnInsertLink).toHaveBeenCalled();
     });
   });
 });

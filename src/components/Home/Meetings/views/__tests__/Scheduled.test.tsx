@@ -15,7 +15,11 @@ describe("Scheduled", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByText } = render(
-      <Scheduled meeting={mockScheduledMeeting as never} onDelete={mockOnDelete}/>,
+      <Scheduled
+        meeting={mockScheduledMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -30,7 +34,11 @@ describe("Scheduled", () => {
     mockOnDelete.mockResolvedValue(true);
 
     const { findByRole } = render(
-      <Scheduled meeting={mockScheduledMeeting as never} onDelete={mockOnDelete}/>,
+      <Scheduled
+        meeting={mockScheduledMeeting as never}
+        onInsertLink={jest.fn()}
+        onDelete={mockOnDelete}
+      />,
       { wrappers: { theme: true } },
     );
 
@@ -42,6 +50,29 @@ describe("Scheduled", () => {
 
     await waitFor(() => {
       expect(mockOnDelete).toHaveBeenCalled();
+    });
+  });
+
+  test("should inserting invitation into reply box", async () => {
+    const mockOnInsertLink = jest.fn();
+    const mockOnDelete = jest.fn();
+    mockOnDelete.mockResolvedValue(true);
+
+    const { findByRole } = render(
+      <Scheduled
+        meeting={mockScheduledMeeting as never}
+        onInsertLink={mockOnInsertLink}
+        onDelete={mockOnDelete}
+      />,
+      { wrappers: { theme: true } },
+    );
+
+    const insertButton = await findByRole("button", { name: "Insert Link" });
+
+    await userEvent.click(insertButton);
+
+    await waitFor(() => {
+      expect(mockOnInsertLink).toHaveBeenCalled();
     });
   });
 });

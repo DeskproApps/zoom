@@ -11,7 +11,7 @@ import {
 import type { FC } from "react";
 import type { MeetingProps } from "../../types";
 
-const Scheduled: FC<MeetingProps> = ({ meeting, onDelete }) => {
+const Scheduled: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onDeleteMeeting = useCallback(() => {
@@ -41,6 +41,13 @@ const Scheduled: FC<MeetingProps> = ({ meeting, onDelete }) => {
         text={format(meeting.start_time, DATETIME_FORMAT)}
       />
       <Stack justify="space-between">
+        <Button
+          type="button"
+          text="Insert Link"
+          intent="secondary"
+          onClick={() => onInsertLink(meeting)}
+        />
+
         <Button
           type="button"
           text="Delete"
