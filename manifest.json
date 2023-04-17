@@ -2,14 +2,11 @@
   "name": "@deskpro-apps/zoom",
   "title": "Zoom",
   "description": "Create instant meetings and schedule future meetings with your users.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scope": "agent",
   "isSingleInstall": false,
   "hasDevMode": true,
-  "targets": [{
-    "target": "ticket_sidebar",
-    "entrypoint": "index.html"
-  }],
+  "targets": [{ "target": "ticket_sidebar", "entrypoint": "index.html" }],
   "settings": {
     "client_id": {
       "title": "Client ID",
@@ -28,23 +25,20 @@
     "callback_url": {
       "title": "Callback URL",
       "type": "app_embedded",
-      "options": {
-        "entrypoint": "#/admin/callback"
-      },
+      "options": { "entrypoint": "#/admin/callback" },
       "isRequired": false,
       "isBackendOnly": true,
       "order": 30
     }
   },
   "proxy": {
-    "whitelist": [{
-      "url": "https://api.zoom.us/v2/.*",
-      "methods": ["GET", "POST", "DELETE"],
-      "timeout": 20
-    }, {
-      "url": "https://zoom.us/oauth/.*",
-      "methods": ["POST"],
-      "timeout": 20
-    }]
+    "whitelist": [
+      {
+        "url": "https://api.zoom.us/v2/.*",
+        "methods": ["GET", "POST", "DELETE"],
+        "timeout": 20
+      },
+      { "url": "https://zoom.us/oauth/.*", "methods": ["POST"], "timeout": 20 }
+    ]
   }
 }
