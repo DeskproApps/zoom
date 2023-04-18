@@ -1,15 +1,19 @@
 export type InitData = {
   status: number,
-  // eslint-disable-next-line
-  data: any,
+  data: {
+    code: number,
+    message: string,
+  },
 };
 
 class ZoomError extends Error {
   status: number;
-  // eslint-disable-next-line
-  data: any;
+  data: {
+    code: number,
+    message: string,
+  };
 
-  constructor({status, data}: InitData) {
+  constructor({ status, data }: InitData) {
     const message = "Zoom Api Error";
     super(message);
 

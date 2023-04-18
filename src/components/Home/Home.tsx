@@ -1,12 +1,10 @@
 import { HorizontalDivider } from "@deskpro/app-sdk";
 import { Meetings } from "./Meetings";
 import { CreateMeeting } from "./CreateMeeting";
-import { ErrorBlock } from "../Error";
 import type { FC } from "react";
 import type { Props } from "./types";
 
 const Home: FC<Props> = ({
-  error,
   meetings,
   onInsertLink,
   onCreateInstant,
@@ -15,7 +13,6 @@ const Home: FC<Props> = ({
 }) => {
   return (
     <>
-      {error && <ErrorBlock text={error} />}
       <CreateMeeting
         onCreateInstant={onCreateInstant}
         onCreateSchedule={onCreateSchedule}

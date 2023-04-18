@@ -5,7 +5,7 @@ import {
   useDeskproElements,
   useDeskproAppClient,
 } from "@deskpro/app-sdk";
-import { useSetTitle } from "../../hooks";
+import { useSetTitle, useAsyncError } from "../../hooks";
 import { createMeetingService } from "../../services/zoom";
 import { getScheduleValues } from "../../components/MeetingForm";
 import { ScheduleMeetingForm } from "../../components";
@@ -16,6 +16,7 @@ const CreateScheduleMeetingPage: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
+  const { asyncErrorHandler } = useAsyncError();
   const [error, setError] = useState<string|string[]|null>(null);
 
   const onCancel = useCallback(() => navigate("/home"), [navigate]);
@@ -30,12 +31,8 @@ const CreateScheduleMeetingPage: FC = () => {
     return createMeetingService(client, getScheduleValues(values))
       .then(() => queryClient.invalidateQueries())
       .then(() => navigate("/home"))
-      .catch((err) => {
-        // ToDo: handle error
-        // eslint-disable-next-line no-console
-        console.error("zoom create:", err);
-      })
-  }, [client, queryClient, navigate]);
+      .catch(asyncErrorHandler)
+  }, [client, queryClient, navigate, asyncErrorHandler]);
 
   useSetTitle("Create meeting");
 

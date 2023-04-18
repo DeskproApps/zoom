@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import get from "lodash.get";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import { setInstantMeetingService } from "../../services/deskpro";
 import { getMeetingsService, createMeetingService } from "../../services/zoom";
+import { useAsyncError } from "../../hooks";
 import { meeting } from "../../components/MeetingForm/types";
 import { QueryKey } from "../../query";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
@@ -30,14 +31,12 @@ const useMeetings: UseMeetings = () => {
 const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
   const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
-  const [error, setError] = useState<string | string[] | null>(null);
+  const { asyncErrorHandler } = useAsyncError();
 
   const createInstantMeeting = useCallback(() => {
     if (!client) {
       return Promise.resolve();
     }
-
-    setError(null);
 
     return createMeetingService(client, { type: meeting.INSTANT })
       .then((meeting) => setInstantMeetingService(client, meeting))
@@ -45,18 +44,13 @@ const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
         if (isSuccess) {
           return queryClient.invalidateQueries();
         } else {
-          setError(errors);
-          return Promise.resolve();
+          throw new Error(get(errors, [0]));
         }
       })
-      .catch((err) => {
-        // ToDo: handle error
-        // eslint-disable-next-line no-console
-        console.error("zoom create:", err);
-      });
-  }, [client, queryClient]);
+      .catch(asyncErrorHandler);
+  }, [client, queryClient, asyncErrorHandler]);
 
-  return { error, createInstantMeeting };
+  return { createInstantMeeting };
 };
 
 export { useMeetings, useCreateInstantMeeting };

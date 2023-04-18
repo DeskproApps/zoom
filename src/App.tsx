@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 import { match } from "ts-pattern";
 import {
@@ -24,6 +25,7 @@ import type { EventPayload } from "./types";
 
 const App: FC = () => {
   const navigate = useNavigate();
+  const { reset } = useQueryErrorResetBoundary();
   const { client } = useDeskproAppClient();
   const { isLoading: isLoadingLogout, logout } = useLogout();
 
@@ -61,7 +63,7 @@ const App: FC = () => {
 
   return (
     <Suspense fallback={<LoadingSpinner/>}>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
         <Routes>
           <Route path="/admin/callback" element={<AdminPage/>} />
           <Route path="/login" element={<LoginPage/>} />

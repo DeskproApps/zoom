@@ -6,6 +6,5 @@ export type UseMeetings = () => {
 };
 
 export type UseCreateInstantMeeting = () => {
-  error: string|string[]|null,
   createInstantMeeting: () => Promise<void>,
 };
