@@ -13,6 +13,7 @@ specifiers:
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^14.4.3
   '@types/jest': ^27.4.0
+  '@types/lodash.concat': ^4.5.7
   '@types/lodash.get': ^4.4.7
   '@types/lodash.has': ^4.5.7
   '@types/lodash.isempty': ^4.4.7
@@ -43,6 +44,7 @@ specifiers:
   iframe-resizer: ^4.3.6
   jest: ^29.5.0
   jest-environment-jsdom: ^29.3.1
+  lodash.concat: ^4.5.0
   lodash.get: ^4.4.2
   lodash.has: ^4.5.2
   lodash.isempty: ^4.4.0
@@ -83,6 +85,7 @@ dependencies:
   date-fns: 2.29.3
   flatpickr: 4.6.13
   iframe-resizer: 4.3.6
+  lodash.concat: 4.5.0
   lodash.get: 4.4.2
   lodash.has: 4.5.2
   lodash.isempty: 4.4.0
@@ -114,6 +117,7 @@ devDependencies:
   '@testing-library/react': 13.4.0_react-dom@18.2.0+react@18.2.0
   '@testing-library/user-event': 14.4.3
   '@types/jest': 27.5.2
+  '@types/lodash.concat': 4.5.7
   '@types/lodash.get': 4.4.7
   '@types/lodash.has': 4.5.7
   '@types/lodash.isempty': 4.4.7
@@ -1522,6 +1526,12 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash.concat/4.5.7:
+    resolution: {integrity: sha512-qgF1loqQByL+CW9UbSU1lTLOZmjnIdxQYn3EQsFpGaE/eZyIoOGdACM4jsG6WIAv8WZkto6QhvtAgl3v1wn3WQ==}
+    dependencies:
+      '@types/lodash': 4.14.192
     dev: true
 
   /@types/lodash.get/4.4.7:
@@ -4132,6 +4142,10 @@ packages:
 
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
+  /lodash.concat/4.5.0:
+    resolution: {integrity: sha512-US6b1Nqek3shg2qmv1IjTN5P7tPL1RKu77VpdGtVprxmnTI/HlsHGqI2Oa5Irznk0ZB5IXHwocMeMZK8vf4+CA==}
     dev: false
 
   /lodash.debounce/4.0.8:

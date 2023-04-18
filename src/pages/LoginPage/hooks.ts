@@ -2,11 +2,12 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import get from "lodash.get";
+import concat from "lodash.concat";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
 } from "@deskpro/app-sdk";
-import { setAccessTokenService } from "../../services/deskpro";
+import { setAccessTokenService, setRefreshTokenService } from "../../services/deskpro";
 import {
   isAccessToken,
   isErrorMessage,
@@ -53,22 +54,16 @@ const useLogin: UseLogin = () => {
 
     callback
       .poll()
-      .then(({ token }) =>
-        getAccessTokenService(client, token, callback.callbackUrl)
+      .then(({ token }) => getAccessTokenService(client, token, callback.callbackUrl))
+      .then((data) => isAccessToken(data)
+        ? Promise.all([setAccessTokenService(client, data), setRefreshTokenService(client, data)])
+        : Promise.reject(isErrorMessage(data) ? data.errorMessage : defaultLoginError)
       )
-      .then((data) =>
-        isAccessToken(data)
-          ? setAccessTokenService(client, data.access_token)
-          : Promise.reject(
-              isErrorMessage(data) ? data.errorMessage : defaultLoginError
-            )
-      )
-      .then(({ isSuccess, errors }) =>
-        isSuccess ? Promise.resolve() : Promise.reject(errors)
-      )
+      .then(([access, refresh]) => access.isSuccess && refresh.isSuccess
+        ? Promise.resolve()
+        : Promise.reject(concat(access.errors, refresh.errors)))
       .then(() => getCurrentUserService(client))
-      .then((user) =>
-        get(user, ["id"], null)
+      .then((user) => get(user, ["id"], null)
           ? setIsAuth(true)
           : setError(new Error("Can't find current user"))
       )

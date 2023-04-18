@@ -1,7 +1,9 @@
 import { createSearchParams } from "react-router-dom";
 import isEmpty from "lodash.isempty";
 import { proxyFetch } from "@deskpro/app-sdk";
-import { REST_URL, TOKEN } from "../../constants";
+import { refreshTokenService } from "./refreshTokenService";
+import { REST_URL, ACCESS_TOKEN } from "../../constants";
+import { setAccessTokenService, setRefreshTokenService } from "../deskpro";
 import { ZoomError } from "./ZoomError";
 import type { ParamKeyValuePair } from "react-router-dom";
 import type { Request } from "../../types";
@@ -25,7 +27,7 @@ const baseRequest: Request = async (client, {
     const options: RequestInit = {
         method,
         headers: {
-            "Authorization": `Bearer ${TOKEN}`,
+            "Authorization": `Bearer ${ACCESS_TOKEN}`,
             "X-Proxy-Origin": "", // Empty value so as not to trigger Zoom's CORS response
             ...customHeaders,
         },
@@ -41,7 +43,16 @@ const baseRequest: Request = async (client, {
         };
     }
 
-    const res = await dpFetch(requestUrl, options);
+    let res = await dpFetch(requestUrl, options);
+
+    if (res.status === 401) {
+      const data = await refreshTokenService(client);
+
+      await setAccessTokenService(client, data);
+      await setRefreshTokenService(client, data);
+
+      res = await dpFetch(requestUrl, options);
+    }
 
     if (res.status < 200 || res.status > 399) {
         throw new ZoomError({

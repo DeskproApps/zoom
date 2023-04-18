@@ -9,8 +9,10 @@ export const TIME_FORMAT = "H:mm";
 export const DATETIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
 
 /** Deskpro */
-export const TOKEN_PATH = "oauth/global/access_token";
-export const TOKEN = `[user[${TOKEN_PATH}]]`;
+export const ACCESS_TOKEN_PATH = "oauth/global/access_token";
+export const ACCESS_TOKEN = `[user[${ACCESS_TOKEN_PATH}]]`;
+export const REFRESH_TOKEN_PATH = "oauth/global/refresh_token";
+export const REFRESH_TOKEN = `[user[${REFRESH_TOKEN_PATH}]]`;
 
 export const placeholders = {
   client_id: "__client_id__",
