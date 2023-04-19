@@ -2,6 +2,7 @@ import get from "lodash.get";
 import range from "lodash.range";
 import size from "lodash.size";
 import isDate from "date-fns/isDate";
+import format from "date-fns/format";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getOption } from "../../utils";
@@ -82,6 +83,7 @@ const scheduleValidationSchema = z
     message: "Occurs require",
     path: ["occursMonthly"],
   });
+
 const getInitScheduleValues = () => ({
   topic: "",
   timezone: "",
@@ -99,7 +101,8 @@ const getScheduleValues = (
     type: !values.recurring ? meeting.SCHEDULE : meeting.RECURRING,
     topic: values.topic,
     timezone: values.timezone,
-    start_time: values.datetime.toISOString(),
+    /** Setting the date as it is to account for time zone dependence `yyyy-MM-ddTHH:mm:ssZ` */
+    start_time: `${format(values.datetime, "yyyy-MM-dd")}T${format(values.datetime, "HH:mm:ss")}.000Z`,
     ...(!values.recurring
       ? {}
       : {
