@@ -1,12 +1,21 @@
 import { useCallback } from "react";
 import get from "lodash.get";
+import size from "lodash.size";
+import isEmpty from "lodash.isempty";
+import isBefore from "date-fns/isBefore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import { setInstantMeetingService } from "../../services/deskpro";
-import { getMeetingsService, createMeetingService } from "../../services/zoom";
-import { useAsyncError } from "../../hooks";
-import { meeting } from "../../components/MeetingForm/types";
+import {
+  getMeetingService,
+  getMeetingsService,
+  createMeetingService,
+} from "../../services/zoom";
+import { useAsyncError, useQueriesWithClient } from "../../hooks";
+import { MeetingTypeMap } from "../../services/zoom/types";
 import { QueryKey } from "../../query";
+import type { IDeskproClient } from "@deskpro/app-sdk";
+import type { MeetingItem } from "../../services/zoom/types";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
@@ -19,11 +28,33 @@ const useMeetings: UseMeetings = () => {
     (client) => client.getUserState("zoom/meetings/*")
   );
 
+  const scheduleMeetings = (get(meetings, ["data", "meetings"], []))
+    .filter((m: MeetingItem) => m.type === MeetingTypeMap.SCHEDULE);
+
+  const recurrenceMeetingIds = (get(meetings, ["data", "meetings"], []))
+    .filter((m: MeetingItem) => m.type === MeetingTypeMap.RECURRING)
+    .map((m: MeetingItem) => m.id);
+
+  const recurrenceMeetings = useQueriesWithClient(recurrenceMeetingIds.map((id: MeetingItem["id"]) => ({
+    queryKey: [QueryKey.MEETINGS, id],
+    queryFn: (client: IDeskproClient) => getMeetingService(client, id),
+    enabled: size(recurrenceMeetingIds) > 0,
+
+  })));
+
   return {
-    isLoading: [meetings, instantMeetings].every(({ isLoading }) => isLoading),
+    isLoading: [meetings, instantMeetings, ...recurrenceMeetings].every(({ isLoading }) => isLoading),
     meetings: [
       ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data),
-      ...get(meetings, ["data", "meetings"], []),
+      ...[
+        ...scheduleMeetings,
+        ...recurrenceMeetings.map((m) => get(m, ["data"])).filter((m) => !isEmpty(m)),
+      ].sort((a, b) => {
+        const aStart = get(a, ["occurrences", 0, "start_time"]) || a.start_time;
+        const bStart = get(b, ["occurrences", 0, "start_time"]) || b.start_time;
+
+        return isBefore(new Date(aStart), new Date(bStart)) ? -1 : 1;
+      }),
     ],
   };
 };
@@ -38,7 +69,7 @@ const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
       return Promise.resolve();
     }
 
-    return createMeetingService(client, { type: meeting.INSTANT })
+    return createMeetingService(client, { type: MeetingTypeMap.INSTANT })
       .then((meeting) => setInstantMeetingService(client, meeting))
       .then(({ isSuccess, errors }) => {
         if (isSuccess) {

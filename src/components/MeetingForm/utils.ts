@@ -6,7 +6,8 @@ import format from "date-fns/format";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getOption } from "../../utils";
-import { recurrence, meeting } from "./types";
+import { MeetingTypeMap } from "../../services/zoom/types";
+import { recurrence } from "./types";
 import type { Recurrence } from "../../services/zoom/types";
 import type { Option } from "../../types";
 import type { RecurrenceTypes } from "../../services/zoom/types";
@@ -98,7 +99,7 @@ const getScheduleValues = (
   values: ScheduleFormValidationSchema
 ): ScheduleMeetingValues => {
   return {
-    type: !values.recurring ? meeting.SCHEDULE : meeting.RECURRING,
+    type: !values.recurring ? MeetingTypeMap.SCHEDULE : MeetingTypeMap.RECURRING,
     topic: values.topic,
     timezone: values.timezone,
     /** Setting the date as it is to account for time zone dependence `yyyy-MM-ddTHH:mm:ssZ` */
