@@ -50,7 +50,7 @@ const wrap = <P>(node: ReactElement<P>, options?: WrapperOptions): ReactElement<
   let children = node;
 
   if (options?.appSdk) {
-    children = createElement(deskproAppProvider.component) as ReactElement;
+    children = createElement(deskproAppProvider.component, { children }) as ReactElement;
   }
 
   if (options?.theme) {
@@ -76,4 +76,4 @@ const render = (node: ReactElement, options?: RenderOptions): RenderResult => {
   return testingLibraryRender(wrap(node, options?.wrappers), options);
 };
 
-export { render };
+export { render, wrap };

@@ -1,4 +1,4 @@
-import { act, cleanup, waitFor } from "@testing-library/react";
+import { cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { getMeetingService } from "../../../../../services/zoom";
 import { Recurring } from "../Recurring";
@@ -48,9 +48,7 @@ describe("Recurring", () => {
 
     const deleteButton = await findByRole("button", { name: "Delete" });
 
-    await act(async () => {
-      await userEvent.click(deleteButton);
-    });
+    await userEvent.click(deleteButton);
 
     await waitFor(() => {
       expect(mockOnDelete).toHaveBeenCalled();

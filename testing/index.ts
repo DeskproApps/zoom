@@ -1,2 +1,2 @@
-export { render } from "./render";
+export { render, wrap } from "./render";
 export { mockClient } from "./mockClient";

@@ -6,7 +6,7 @@ import { isInstantMeeting } from "../utils";
 import { deleteInstantMeetingService } from "../services/deskpro";
 import { deleteMeetingService } from "../services/zoom";
 import { queryClient } from "../query";
-import type { MeetingItem } from "../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
 
 type useDeleteMeeting = () => {
   deleteMeeting: () => Promise<void>;
@@ -17,7 +17,7 @@ const useDeleteMeeting = () => {
   const { client } = useDeskproAppClient();
 
   const deleteMeeting = useCallback(
-    (meeting: MeetingItem): Promise<void> => {
+    (meeting: MeetingItem|MeetingDetails): Promise<void> => {
       if (!client || !has(meeting, ["id"])) {
         return Promise.reject();
       }

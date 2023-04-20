@@ -4,3 +4,4 @@ export { getOption } from "./getOption";
 export { isInstantMeeting } from "./isInstantMeeting";
 export { getTimeZoneOptions } from "./getTimeZoneOptions";
 export { getQueryParams } from "./getQueryParams";
+export { getSortedMeetings } from "./getSortedMeetings";
