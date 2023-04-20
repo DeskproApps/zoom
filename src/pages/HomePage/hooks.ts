@@ -1,11 +1,24 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import get from "lodash.get";
+import size from "lodash.size";
+import isEmpty from "lodash.isempty";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
-import { setInstantMeetingService } from "../../services/deskpro";
-import { getMeetingsService, createMeetingService } from "../../services/zoom";
-import { meeting } from "../../components/MeetingForm/types";
+import {
+  setInstantMeetingService,
+  getInstantMeetingsService,
+} from "../../services/deskpro";
+import {
+  getMeetingService,
+  getMeetingsService,
+  createMeetingService,
+} from "../../services/zoom";
+import { useAsyncError, useQueriesWithClient } from "../../hooks";
+import { getSortedMeetings } from "../../utils";
+import { MeetingDetails, MeetingTypeMap } from "../../services/zoom/types";
 import { QueryKey } from "../../query";
+import type { IDeskproClient } from "@deskpro/app-sdk";
+import type { MeetingItem } from "../../services/zoom/types";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
@@ -15,14 +28,33 @@ const useMeetings: UseMeetings = () => {
 
   const instantMeetings = useQueryWithClient(
     [QueryKey.INSTANT_MEETINGS],
-    (client) => client.getUserState("zoom/meetings/*")
+    (client) => getInstantMeetingsService(client),
   );
 
+  const scheduleMeetings = (get(meetings, ["data", "meetings"], []))
+    .filter((m: MeetingItem) => m.type === MeetingTypeMap.SCHEDULE);
+
+  const recurrenceMeetingIds = (get(meetings, ["data", "meetings"], []))
+    .filter((m: MeetingItem) => m.type === MeetingTypeMap.RECURRING)
+    .map((m: MeetingItem) => m.id);
+
+  const recurrenceMeetings = useQueriesWithClient(recurrenceMeetingIds.map((id: MeetingItem["id"]) => ({
+    queryKey: [QueryKey.MEETINGS, id],
+    queryFn: (client: IDeskproClient) => getMeetingService(client, id),
+    enabled: size(recurrenceMeetingIds) > 0,
+
+  })));
+
   return {
-    isLoading: [meetings, instantMeetings].every(({ isLoading }) => isLoading),
+    isLoading: [meetings, instantMeetings, ...recurrenceMeetings].every(({ isLoading }) => isLoading),
     meetings: [
-      ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data),
-      ...get(meetings, ["data", "meetings"], []),
+      ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data) as MeetingItem[],
+      ...getSortedMeetings(
+        scheduleMeetings,
+        recurrenceMeetings
+          .map<MeetingDetails>((m) => get(m as never, ["data"]))
+          .filter((m?: MeetingDetails) => !isEmpty(m))
+      ),
     ],
   };
 };
@@ -30,33 +62,26 @@ const useMeetings: UseMeetings = () => {
 const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
   const queryClient = useQueryClient();
   const { client } = useDeskproAppClient();
-  const [error, setError] = useState<string | string[] | null>(null);
+  const { asyncErrorHandler } = useAsyncError();
 
   const createInstantMeeting = useCallback(() => {
     if (!client) {
       return Promise.resolve();
     }
 
-    setError(null);
-
-    return createMeetingService(client, { type: meeting.INSTANT })
+    return createMeetingService(client, { type: MeetingTypeMap.INSTANT })
       .then((meeting) => setInstantMeetingService(client, meeting))
       .then(({ isSuccess, errors }) => {
         if (isSuccess) {
           return queryClient.invalidateQueries();
         } else {
-          setError(errors);
-          return Promise.resolve();
+          throw new Error(get(errors, [0]));
         }
       })
-      .catch((err) => {
-        // ToDo: handle error
-        // eslint-disable-next-line no-console
-        console.error("zoom create:", err);
-      });
-  }, [client, queryClient]);
+      .catch(asyncErrorHandler);
+  }, [client, queryClient, asyncErrorHandler]);
 
-  return { error, createInstantMeeting };
+  return { createInstantMeeting };
 };
 
 export { useMeetings, useCreateInstantMeeting };

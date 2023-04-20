@@ -1,16 +1,16 @@
-import type { MeetingItem } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
 
 export type Props = {
-  meetings: MeetingItem[],
+  meetings: Array<MeetingItem|MeetingDetails>,
   onCreateInstant: () => Promise<void>,
   onCreateSchedule: () => void,
-  onDeleteMeeting: (meeting: MeetingItem) => Promise<void>,
-  onInsertLink: (meeting: MeetingItem) => void,
+  onDeleteMeeting: (meeting: MeetingItem|MeetingDetails) => Promise<void>,
+  onInsertLink: (meeting: MeetingItem|MeetingDetails) => void,
   error?: string|string[]|null,
 };
 
 export type MeetingProps = {
-  meeting: MeetingItem,
+  meeting: MeetingItem|MeetingDetails,
   onDelete: Props["onDeleteMeeting"],
   onInsertLink: Props["onInsertLink"],
 };

@@ -2,11 +2,14 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import get from "lodash.get";
+import has from "lodash.has";
+import concat from "lodash.concat";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
 } from "@deskpro/app-sdk";
-import { setAccessTokenService } from "../../services/deskpro";
+import { useAsyncError } from "../../hooks";
+import { setAccessTokenService, setRefreshTokenService } from "../../services/deskpro";
 import {
   isAccessToken,
   isErrorMessage,
@@ -15,14 +18,13 @@ import {
 } from "../../services/zoom";
 import { defaultLoginError } from "./constants";
 import type { OAuth2StaticCallbackUrl } from "@deskpro/app-sdk";
-import type { Maybe, TicketContext } from "../../types";
+import type { TicketContext } from "../../types";
 
 type UseLogin = () => {
   isAuth: boolean;
   authLink: string;
   isLoading: boolean;
   onSignIn: () => void;
-  error: Maybe<Error>;
 };
 
 const useLogin: UseLogin = () => {
@@ -31,6 +33,7 @@ const useLogin: UseLogin = () => {
   const { context } = useDeskproLatestAppContext() as {
     context: TicketContext;
   };
+  const { asyncErrorHandler } = useAsyncError();
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [authLink, setAuthLink] = useState<string>("");
@@ -38,8 +41,6 @@ const useLogin: UseLogin = () => {
   const [callback, setCallback] = useState<
     OAuth2StaticCallbackUrl | undefined
   >();
-  const [error, setError] = useState<Maybe<Error>>(null);
-
   const clientId = get(context, ["settings", "client_id"]);
   const callbackUrl = get(callback, ["callbackUrl"]);
 
@@ -48,33 +49,28 @@ const useLogin: UseLogin = () => {
       return;
     }
 
-    setError(null);
     setTimeout(() => setIsLoading(true), 1000);
 
     callback
       .poll()
-      .then(({ token }) =>
-        getAccessTokenService(client, token, callback.callbackUrl)
+      .then(({ token }) => getAccessTokenService(client, token, callback.callbackUrl))
+      .then((data) => isAccessToken(data)
+        ? Promise.all([setAccessTokenService(client, data), setRefreshTokenService(client, data)])
+        : Promise.reject(isErrorMessage(data) ? data.errorMessage : defaultLoginError)
       )
-      .then((data) =>
-        isAccessToken(data)
-          ? setAccessTokenService(client, data.access_token)
-          : Promise.reject(
-              isErrorMessage(data) ? data.errorMessage : defaultLoginError
-            )
-      )
-      .then(({ isSuccess, errors }) =>
-        isSuccess ? Promise.resolve() : Promise.reject(errors)
-      )
+      .then(([access, refresh]) => access.isSuccess && refresh.isSuccess
+        ? Promise.resolve()
+        : Promise.reject(concat(access.errors, refresh.errors)))
       .then(() => getCurrentUserService(client))
-      .then((user) =>
-        get(user, ["id"], null)
-          ? setIsAuth(true)
-          : setError(new Error("Can't find current user"))
-      )
-      .catch((err) => setError(err))
+      .then((user) => {
+        if (!has(user, ["id"])) {
+          throw new Error("Can't find current user");
+        }
+          setIsAuth(true);
+      })
+      .catch(asyncErrorHandler)
       .finally(() => setIsLoading(false));
-  }, [callback, client, setIsLoading]);
+  }, [callback, client, setIsLoading, asyncErrorHandler]);
 
   /** set callback */
   useEffect(() => {
@@ -108,7 +104,7 @@ const useLogin: UseLogin = () => {
     }
   }, [key, callbackUrl, clientId]);
 
-  return { isAuth, error, authLink, onSignIn, isLoading };
+  return { isAuth, authLink, onSignIn, isLoading };
 };
 
 export { useLogin };

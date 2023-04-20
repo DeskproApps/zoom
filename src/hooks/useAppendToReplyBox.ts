@@ -1,16 +1,16 @@
 import { useCallback } from "react";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
 import { nbsp } from "../constants";
-import type { MeetingItem } from "../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
 
 type UseAppendToReplyBox = () => {
-  insertInviteIntoReplyBox: (meeting: MeetingItem) => Promise<void>,
+  insertInviteIntoReplyBox: (meeting: MeetingItem|MeetingDetails) => Promise<void>,
 };
 
 const useAppendToReplyBox: UseAppendToReplyBox = () => {
   const { client } = useDeskproAppClient();
 
-  const insertInviteIntoReplyBox = useCallback((meeting: MeetingItem) => {
+  const insertInviteIntoReplyBox = useCallback((meeting: MeetingItem|MeetingDetails) => {
     if (!client) {
       return Promise.resolve();
     }

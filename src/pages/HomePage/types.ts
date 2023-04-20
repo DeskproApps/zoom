@@ -1,11 +1,10 @@
-import type { Meetings } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
 
 export type UseMeetings = () => {
   isLoading: boolean,
-  meetings: Meetings["meetings"],
+  meetings: Array<MeetingItem|MeetingDetails>,
 };
 
 export type UseCreateInstantMeeting = () => {
-  error: string|string[]|null,
   createInstantMeeting: () => Promise<void>,
 };

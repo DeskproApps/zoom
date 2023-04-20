@@ -9,7 +9,7 @@ import type { FC } from "react";
 const HomePage: FC = () => {
   const navigate = useNavigate();
   const { isLoading, meetings } = useMeetings();
-  const { createInstantMeeting, error } = useCreateInstantMeeting();
+  const { createInstantMeeting } = useCreateInstantMeeting();
   const { deleteMeeting } = useDeleteMeeting();
   const { insertInviteIntoReplyBox } = useAppendToReplyBox();
 
@@ -36,7 +36,6 @@ const HomePage: FC = () => {
 
   return (
     <Home
-      error={error}
       meetings={meetings}
       onInsertLink={insertInviteIntoReplyBox}
       onCreateInstant={createInstantMeeting}

@@ -1,22 +1,23 @@
 import { useCallback } from "react";
 import has from "lodash.has";
-import { useQueryClient } from "@tanstack/react-query";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
+import { useAsyncError } from "../hooks";
 import { isInstantMeeting } from "../utils";
 import { deleteInstantMeetingService } from "../services/deskpro";
 import { deleteMeetingService } from "../services/zoom";
-import type { MeetingItem } from "../services/zoom/types";
+import { queryClient } from "../query";
+import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
 
 type useDeleteMeeting = () => {
   deleteMeeting: () => Promise<void>;
 };
 
 const useDeleteMeeting = () => {
-  const queryClient = useQueryClient();
+  const { asyncErrorHandler } = useAsyncError();
   const { client } = useDeskproAppClient();
 
   const deleteMeeting = useCallback(
-    (meeting: MeetingItem): Promise<void> => {
+    (meeting: MeetingItem|MeetingDetails): Promise<void> => {
       if (!client || !has(meeting, ["id"])) {
         return Promise.reject();
       }
@@ -30,13 +31,9 @@ const useDeleteMeeting = () => {
       )
         .then(() => deleteMeetingService(client, meeting.id))
         .then(() => queryClient.invalidateQueries())
-        .catch((err) => {
-          // ToDo: handle error and write tests
-          // eslint-disable-next-line no-console
-          console.error("zoom create:", err);
-        });
+        .catch(asyncErrorHandler);
     },
-    [client, queryClient]
+    [client, asyncErrorHandler]
   );
 
   return { deleteMeeting };

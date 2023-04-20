@@ -4,11 +4,7 @@ import type { SubmitHandler } from "react-hook-form";
 import type { DateTime } from "../../types";
 import type { MeetingTypes, MeetingDetails, Recurrence } from "../../services/zoom/types";
 
-export enum meeting {
-  INSTANT = 1,
-  SCHEDULE = 2,
-  RECURRING = 8,
-}
+export { MeetingTypeMap } from "../../services/zoom/types";
 
 export enum recurrence {
   DAILY = 1,

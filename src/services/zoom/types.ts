@@ -31,6 +31,12 @@ export type User = {
   pmi: number,
 };
 
+export enum MeetingTypeMap {
+  INSTANT = 1,
+  SCHEDULE = 2,
+  RECURRING = 8,
+}
+
 export type MeetingTypes =
   | 1 // Instant meeting.
   | 2 // Scheduled meeting.

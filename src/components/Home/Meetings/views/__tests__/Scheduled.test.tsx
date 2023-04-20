@@ -1,4 +1,4 @@
-import { act, cleanup, waitFor } from "@testing-library/react";
+import { cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Scheduled } from "../Scheduled";
 import { render } from "../../../../../../testing";
@@ -44,9 +44,7 @@ describe("Scheduled", () => {
 
     const deleteButton = await findByRole("button", { name: "Delete" });
 
-    await act(async () => {
-      await userEvent.click(deleteButton);
-    });
+    await userEvent.click(deleteButton);
 
     await waitFor(() => {
       expect(mockOnDelete).toHaveBeenCalled();

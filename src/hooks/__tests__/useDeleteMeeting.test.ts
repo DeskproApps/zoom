@@ -5,13 +5,6 @@ import { useDeleteMeeting } from "../useDeleteMeeting";
 import mockInstantMeeting from "../../../testing/mocks/mockInstantMeeting.json";
 import mockScheduledMeeting from "../../../testing/mocks/mockScheduledMeeting.json";
 
-jest.mock("@tanstack/react-query", () => ({
-  ...jest.requireActual("@tanstack/react-query"),
-  useQueryClient: jest.fn().mockImplementation(() => ({
-    invalidateQueries: Promise.resolve(),
-  })),
-}));
-
 jest.mock("../../services/deskpro/deleteInstantMeetingService", () => ({
   deleteInstantMeetingService: jest.fn(),
 }));

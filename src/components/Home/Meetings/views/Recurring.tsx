@@ -1,8 +1,6 @@
 import { useState, useCallback } from "react";
 import get from "lodash.get";
-import { Stack, Title, useQueryWithClient } from "@deskpro/app-sdk";
-import { getMeetingService } from "../../../../services/zoom";
-import { QueryKey } from "../../../../query";
+import { Stack, Title } from "@deskpro/app-sdk";
 import { getHumanReadableRecurrence } from "../../../../utils";
 import { format } from "../../../../utils/date";
 import { DATETIME_FORMAT } from "../../../../constants";
@@ -12,10 +10,6 @@ import type { MeetingProps } from "../../types";
 
 const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const meetingDetails = useQueryWithClient(
-    [QueryKey.MEETINGS, `${meeting.id}`],
-    (client) => getMeetingService(client, meeting.id)
-  );
 
   const onDeleteMeeting = useCallback(() => {
     setIsLoading(true);
@@ -40,11 +34,11 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
       <TwoProperties
         leftLabel="Recurrence"
         leftText={getHumanReadableRecurrence(
-          get(meetingDetails, ["data", "recurrence"])
+          get(meeting, ["recurrence"])
         )}
         rightLabel="Start time"
         rightText={format(
-          get(meetingDetails, ["data", "occurrences", 0, "start_time"]),
+          get(meeting, ["occurrences", 0, "start_time"]),
           DATETIME_FORMAT
         )}
       />
