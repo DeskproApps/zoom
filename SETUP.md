@@ -52,6 +52,6 @@ Ok, head back to Deskpro and enter your Client ID and Client secret into the app
 
 [![](./docs/assets/setup/zoom-setup-06.png)](/docs/assets/setup/zoom-setup-06.png)
 
-Click on the "Permissions" tab and select the users/groups that you'd like to have access to the GitLab app.
+Click on the "Permissions" tab and select the users/groups that you'd like to have access to the Zoom app.
 
 When you're happy - click __Install__.
