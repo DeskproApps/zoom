@@ -2,7 +2,7 @@
   "name": "@deskpro-apps/zoom",
   "title": "Zoom",
   "description": "Create instant meetings and schedule future meetings with your users.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scope": "agent",
   "isSingleInstall": false,
   "hasDevMode": true,
