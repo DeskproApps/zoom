@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FallbackProps } from "react-error-boundary";
-import get from "lodash.get";
+import { get } from "lodash";
 import { Stack } from "@deskpro/app-sdk";
 import { ZoomError } from "../../services/zoom";
 import { ErrorBlock } from "./ErrorBlock";

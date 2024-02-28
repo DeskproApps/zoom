@@ -1,6 +1,5 @@
 import { match } from "ts-pattern";
-import split from "lodash.split";
-import isEmpty from "lodash.isempty";
+import { split, isEmpty } from "lodash";
 import { DAYS } from "../constants";
 import type { Recurrence } from "../services/zoom/types";
 

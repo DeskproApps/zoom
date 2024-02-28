@@ -1,9 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import get from "lodash.get";
-import has from "lodash.has";
-import concat from "lodash.concat";
+import { get, has, concat } from "lodash";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,

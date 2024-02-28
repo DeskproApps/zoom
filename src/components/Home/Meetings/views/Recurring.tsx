@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import get from "lodash.get";
+import { get } from "lodash";
 import { Stack, Title } from "@deskpro/app-sdk";
 import { getHumanReadableRecurrence } from "../../../../utils";
 import { format } from "../../../../utils/date";

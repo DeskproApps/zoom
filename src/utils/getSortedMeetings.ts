@@ -1,4 +1,4 @@
-import get from "lodash.get";
+import { get } from "lodash";
 import isBefore from "date-fns/isBefore";
 import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
 

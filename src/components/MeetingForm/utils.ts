@@ -1,6 +1,4 @@
-import get from "lodash.get";
-import range from "lodash.range";
-import size from "lodash.size";
+import { get, range, size } from "lodash";
 import isDate from "date-fns/isDate";
 import format from "date-fns/format";
 import { match } from "ts-pattern";
