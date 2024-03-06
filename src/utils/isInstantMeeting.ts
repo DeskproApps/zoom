@@ -1,4 +1,4 @@
-import get from "lodash.get";
+import { get } from "lodash";
 import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
 
 const isInstantMeeting = (meeting?: MeetingItem|MeetingDetails): boolean => {

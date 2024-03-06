@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import has from "lodash.has";
+import { has } from "lodash";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
 import { useAsyncError } from "../hooks";
 import { isInstantMeeting } from "../utils";

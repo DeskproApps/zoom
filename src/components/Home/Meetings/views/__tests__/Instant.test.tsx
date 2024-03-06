@@ -41,7 +41,10 @@ describe("Instant", () => {
     );
 
     const deleteButton = await findByRole("button", { name: "Delete" });
-    await userEvent.click(deleteButton);
+
+    await act(async () => {
+      await userEvent.click(deleteButton);
+    });
 
     await waitFor(() => {
       expect(mockOnDelete).toHaveBeenCalled();

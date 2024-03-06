@@ -1,7 +1,5 @@
 import { useCallback } from "react";
-import get from "lodash.get";
-import size from "lodash.size";
-import isEmpty from "lodash.isempty";
+import { get, size, isEmpty } from "lodash";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import {

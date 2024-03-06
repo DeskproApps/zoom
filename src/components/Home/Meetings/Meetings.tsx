@@ -1,7 +1,5 @@
 import { match } from "ts-pattern";
-import get from "lodash.get";
-import size from "lodash.size";
-import isNil from "lodash.isnil";
+import { get, size, isNil } from "lodash";
 import { P5, Title } from "@deskpro/app-sdk";
 import { Container } from "../../common";
 import { Instant, Recurring, Scheduled } from "./views";
