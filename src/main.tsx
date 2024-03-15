@@ -4,14 +4,10 @@ import { HashRouter } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { DeskproAppProvider } from "@deskpro/app-sdk";
 import { queryClient } from "./query";
-
 import App from "./App";
-
-import "iframe-resizer/js/iframeResizer.contentWindow";
 import "flatpickr/dist/themes/light.css";
 import "tippy.js/dist/tippy.css";
 import "simplebar/dist/simplebar.min.css";
-
 import "@deskpro/deskpro-ui/dist/deskpro-ui.css";
 import "@deskpro/deskpro-ui/dist/deskpro-custom-icons.css";
 

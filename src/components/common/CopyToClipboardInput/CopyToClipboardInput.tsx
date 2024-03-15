@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { Input, IconButton } from "@deskpro/app-sdk";
+import { Input, IconButton } from "@deskpro/deskpro-ui";
 import type { FC } from "react";
 
 type Props = {

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FallbackProps } from "react-error-boundary";
 import { get } from "lodash";
-import { Stack } from "@deskpro/app-sdk";
+import { Stack } from "@deskpro/deskpro-ui";
 import { ZoomError } from "../../services/zoom";
 import { ErrorBlock } from "./ErrorBlock";
 import { Container, Button } from "../common";

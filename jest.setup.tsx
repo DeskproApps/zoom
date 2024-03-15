@@ -55,4 +55,6 @@ jest.mock("@deskpro/app-sdk", () => ({
   },
   useDeskproAppTheme: () => ({ theme: lightTheme }),
   proxyFetch: async () => fetch,
+  ExternalIconLink: () => <>ExternalIconLink</>,
+  HorizontalDivider: () => <>---</>,
 }));

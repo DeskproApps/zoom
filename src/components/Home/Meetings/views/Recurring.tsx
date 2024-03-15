@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { get } from "lodash";
-import { Stack, Title } from "@deskpro/app-sdk";
+import { Stack } from "@deskpro/deskpro-ui";
+import { Title } from "@deskpro/app-sdk";
 import { getHumanReadableRecurrence } from "../../../../utils";
 import { format } from "../../../../utils/date";
 import { DATETIME_FORMAT } from "../../../../constants";
@@ -33,9 +34,7 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
       />
       <TwoProperties
         leftLabel="Recurrence"
-        leftText={getHumanReadableRecurrence(
-          get(meeting, ["recurrence"])
-        )}
+        leftText={getHumanReadableRecurrence(get(meeting, ["recurrence"]))}
         rightLabel="Start time"
         rightText={format(
           get(meeting, ["occurrences", 0, "start_time"]),

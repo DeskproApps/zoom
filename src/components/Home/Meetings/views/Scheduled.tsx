@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { get } from "lodash";
-import { Stack, Title } from "@deskpro/app-sdk";
+import { Stack } from "@deskpro/deskpro-ui";
+import { Title } from "@deskpro/app-sdk";
 import { format } from "../../../../utils/date";
 import { DATETIME_FORMAT } from "../../../../constants";
 import {

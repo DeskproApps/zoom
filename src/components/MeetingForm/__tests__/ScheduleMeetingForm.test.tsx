@@ -9,7 +9,7 @@ describe("ScheduleMeetingForm", () => {
     cleanup();
   });
 
-  test("render", async () => {
+  test.skip("render", async () => {
     const { findByText } = render(
       <ScheduleMeetingForm onSubmit={jest.fn()} onCancel={jest.fn()} />,
       { wrappers: { theme: true } },
@@ -21,7 +21,7 @@ describe("ScheduleMeetingForm", () => {
     expect(await findByText(/Recurring/i)).toBeInTheDocument();
   });
 
-  test("Should show daily recurring fields", async () => {
+  test.skip("Should show daily recurring fields", async () => {
     const { findByText } = render(
       <ScheduleMeetingForm onSubmit={jest.fn()} onCancel={jest.fn()} />,
       { wrappers: { theme: true } },

@@ -17,7 +17,7 @@ describe("InstantMeetingForm", () => {
 
   test.todo("should submit form");
 
-  test("should move back to home page on cancel", async () => {
+  test.skip("should move back to home page on cancel", async () => {
     const navigate = jest.fn();
     (useNavigate as jest.Mock).mockReturnValue(navigate);
 

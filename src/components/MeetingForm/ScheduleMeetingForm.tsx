@@ -1,8 +1,8 @@
 import { has } from "lodash";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Stack } from "@deskpro/app-sdk";
-import { Input, Checkbox } from "@deskpro/deskpro-ui";
+import { Stack, Input, Checkbox } from "@deskpro/deskpro-ui";
+import { DateInput } from "@deskpro/app-sdk";
 import { DAYS, DAY_NAMES } from "../../constants";
 import { getTimeZoneOptions, getOption } from "../../utils";
 import {
@@ -12,7 +12,7 @@ import {
   getOccursMonthlyOptions,
 } from "./utils";
 import { ErrorBlock } from "../Error";
-import { Label, Select, Button, DateInput, Container } from "../common";
+import { Label, Select, Button, Container } from "../common";
 import { recurrence } from "./types";
 import type { FC } from "react";
 import type { RecurrenceTypes } from "../../services/zoom/types";
@@ -71,6 +71,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
 
         <Label htmlFor="datetime" label="Date/time" required>
           <DateInput
+            enableTime
             id="datetime"
             placeholder="DD/MM/YYYY at HH:mm"
             error={has(errors, ["datetime", "message"])}
@@ -105,9 +106,9 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
               value={recurringType}
               error={has(errors, ["recurringType", "message"])}
               options={[
-                getOption<RecurrenceTypes>(recurrence.DAILY, "Daily"),
-                getOption<RecurrenceTypes>(recurrence.WEEKLY, "Weekly"),
-                getOption<RecurrenceTypes>(recurrence.MONTHLY, "Monthly"),
+                getOption<number/*RecurrenceTypes*/>(recurrence.DAILY, "Daily"),
+                getOption<number/*RecurrenceTypes*/>(recurrence.WEEKLY, "Weekly"),
+                getOption<number/*RecurrenceTypes*/>(recurrence.MONTHLY, "Monthly"),
               ]}
               onChange={(option) => setValue("recurringType", option.value)}
             />

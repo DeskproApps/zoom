@@ -1,6 +1,7 @@
 import { match } from "ts-pattern";
 import { get, size, isNil } from "lodash";
-import { P5, Title } from "@deskpro/app-sdk";
+import { P5 } from "@deskpro/deskpro-ui";
+import { Title } from "@deskpro/app-sdk";
 import { Container } from "../../common";
 import { Instant, Recurring, Scheduled } from "./views";
 import { MeetingTypeMap } from "../../../services/zoom/types";

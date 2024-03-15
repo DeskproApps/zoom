@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
-import { Stack, Title } from "@deskpro/app-sdk";
+import { Stack } from "@deskpro/deskpro-ui";
+import { Title } from "@deskpro/app-sdk";
 import {
   Button,
   ZoomLogo,
