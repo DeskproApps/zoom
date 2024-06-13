@@ -40,7 +40,7 @@ const useMeetings: UseMeetings = () => {
     queryKey: [QueryKey.MEETINGS, id],
     queryFn: (client: IDeskproClient) => getMeetingService(client, id),
     enabled: size(recurrenceMeetingIds) > 0,
-
+    useErrorBoundary: false,
   })));
 
   return {
