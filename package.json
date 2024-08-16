@@ -15,13 +15,14 @@
     "bumpManifestVer": "node ./bin/bumpManifestVer.js"
   },
   "dependencies": {
-    "@deskpro/app-sdk": "^2.1.14",
+    "@deskpro/app-sdk": "2.1.12",
     "@deskpro/deskpro-ui": "^7.18.4",
     "@heroicons/react": "1.0.6",
     "@hookform/resolvers": "^3.0.1",
     "@tanstack/react-query": "^4.36.1",
     "date-fns": "^2.29.3",
     "flatpickr": "^4.6.13",
+    "iframe-resizer": "^4.3.11",
     "lodash": "^4.17.21",
     "polished": "^4.1.1",
     "react": "^18.2.0",
