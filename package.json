@@ -1,5 +1,5 @@
 {
-  "name": "horizon-vite-app-template",
+  "name": "@deskpro-apps/zoom",
   "version": "0.0.0",
   "license": "BSD-3-Clause",
   "scripts": {
@@ -22,7 +22,6 @@
     "@tanstack/react-query": "^4.36.1",
     "date-fns": "^2.29.3",
     "flatpickr": "^4.6.13",
-    "iframe-resizer": "^4.3.11",
     "lodash": "^4.17.21",
     "polished": "^4.1.1",
     "react": "^18.2.0",
