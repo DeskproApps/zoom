@@ -10,8 +10,8 @@ const getSortedMeetings = (
     ...scheduleMeetings || [],
     ...recurrenceMeetings || [],
   ].sort((a, b) => {
-    const aStart = get(a, ["occurrences", 0, "start_time"], get(a, ["start_time"]));
-    const bStart = get(b, ["occurrences", 0, "start_time"], get(b, ["start_time"]));
+    const aStart = get(a, ["start_time"], get(a, ["start_time"]));
+    const bStart = get(b, ["start_time"], get(b, ["start_time"]));
 
     return isBefore(new Date(aStart), new Date(bStart)) ? -1 : 1;
   });

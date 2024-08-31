@@ -36,10 +36,7 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
         leftLabel="Recurrence"
         leftText={getHumanReadableRecurrence(get(meeting, ["recurrence"]))}
         rightLabel="Start time"
-        rightText={format(
-          get(meeting, ["occurrences", 0, "start_time"]),
-          DATETIME_FORMAT
-        )}
+        rightText={format(get(meeting, ["start_time"]), DATETIME_FORMAT)}
       />
       <Stack justify="space-between">
         <Button

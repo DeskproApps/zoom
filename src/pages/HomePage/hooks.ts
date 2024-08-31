@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import { get, size, isEmpty } from "lodash";
+import { useMemo, useCallback } from "react";
+import { get, size, isEmpty, uniq, flatten } from "lodash";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import {
@@ -13,10 +13,10 @@ import {
 } from "../../services/zoom";
 import { useAsyncError, useQueriesWithClient } from "../../hooks";
 import { getSortedMeetings } from "../../utils";
-import { MeetingDetails, MeetingTypeMap } from "../../services/zoom/types";
+import { MeetingTypeMap } from "../../services/zoom/types";
 import { QueryKey } from "../../query";
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { MeetingItem } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
@@ -32,26 +32,34 @@ const useMeetings: UseMeetings = () => {
   const scheduleMeetings = (get(meetings, ["data", "meetings"], []))
     .filter((m: MeetingItem) => m.type === MeetingTypeMap.SCHEDULE);
 
-  const recurrenceMeetingIds = (get(meetings, ["data", "meetings"], []))
+  const recurrenceMeetingIds = uniq((get(meetings, ["data", "meetings"], []))
     .filter((m: MeetingItem) => m.type === MeetingTypeMap.RECURRING)
-    .map((m: MeetingItem) => m.id);
+    .map((m: MeetingItem) => m.id));
 
-  const recurrenceMeetings = useQueriesWithClient(recurrenceMeetingIds.map((id: MeetingItem["id"]) => ({
+  const recurrenceMeetingsData = useQueriesWithClient(recurrenceMeetingIds.map((id: MeetingItem["id"]) => ({
     queryKey: [QueryKey.MEETINGS, id],
     queryFn: (client: IDeskproClient) => getMeetingService(client, id),
     enabled: size(recurrenceMeetingIds) > 0,
     useErrorBoundary: false,
   })));
 
+  const recurrenceMeetings: MeetingDetails[] = useMemo(() => flatten(recurrenceMeetingsData
+    .map<MeetingDetails>((m) => get(m as never, ["data"]))
+    .filter((m?: MeetingDetails) => !isEmpty(m))
+    .map((m) => m?.occurrences?.map((o) => ({
+        ...m,
+        id: Number(o.occurrence_id),
+        start_time: o.start_time,
+      }))
+    )), [recurrenceMeetingsData]);
+
   return {
-    isLoading: [meetings, instantMeetings, ...recurrenceMeetings].every(({ isLoading }) => isLoading),
+    isLoading: [meetings, instantMeetings, ...recurrenceMeetingsData].every(({ isLoading }) => isLoading),
     meetings: [
       ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data) as MeetingItem[],
       ...getSortedMeetings(
         scheduleMeetings,
-        recurrenceMeetings
-          .map<MeetingDetails>((m) => get(m as never, ["data"]))
-          .filter((m?: MeetingDetails) => !isEmpty(m))
+        recurrenceMeetings,
       ),
     ],
   };
