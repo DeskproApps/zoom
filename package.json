@@ -19,7 +19,7 @@
     "@deskpro/deskpro-ui": "^7.18.4",
     "@heroicons/react": "1.0.6",
     "@hookform/resolvers": "^3.0.1",
-    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query": "^5.55.0",
     "date-fns": "^2.29.3",
     "flatpickr": "^4.6.13",
     "lodash": "^4.17.21",
