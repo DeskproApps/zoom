@@ -21,7 +21,6 @@ const Scheduled: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
 
     onDelete(meeting)
       .finally(() => setIsLoading(false));
-
   }, [onDelete, meeting]);
 
   return (

@@ -4,7 +4,11 @@ import type { Meetings } from "./types";
 
 const getMeetingsService = (client: IDeskproClient) => {
   return baseRequest<Meetings>(client, {
-    url: `/users/me/meetings?page_size=100`,
+    url: `/users/me/meetings`,
+    queryParams: {
+      page_size: "100",
+      type: "upcoming",
+    },
   });
 };
 

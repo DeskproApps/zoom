@@ -6,9 +6,8 @@ import { z } from "zod";
 import { getOption } from "../../utils";
 import { MeetingTypeMap } from "../../services/zoom/types";
 import { recurrence } from "./types";
-import type { Recurrence } from "../../services/zoom/types";
 import type { Option } from "../../types";
-import type { RecurrenceTypes } from "../../services/zoom/types";
+import type { Recurrence, RecurrenceTypes } from "../../services/zoom/types";
 import type {
   ScheduleMeetingValues,
   ScheduleFormValidationSchema,
