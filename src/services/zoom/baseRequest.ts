@@ -1,4 +1,4 @@
-import { proxyFetch } from "@deskpro/app-sdk";
+import { V2ProxyRequestInit, proxyFetch } from "@deskpro/app-sdk";
 import { refreshTokenService } from "./refreshTokenService";
 import { REST_URL, ACCESS_TOKEN } from "../../constants";
 import { getQueryParams } from "../../utils";
@@ -20,7 +20,7 @@ const baseRequest: Request = async (client, {
   const params = getQueryParams(queryParams);
 
   const requestUrl = `${baseUrl}${params}`;
-  const options: RequestInit = {
+  const options: V2ProxyRequestInit = {
     method,
     headers: {
       "Authorization": `Bearer ${ACCESS_TOKEN}`,
