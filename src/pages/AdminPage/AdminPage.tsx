@@ -6,7 +6,7 @@ import {
   LoadingSpinner,
   useInitialisedDeskproAppClient,
 } from "@deskpro/app-sdk";
-import { CopyToClipboardInput } from "../../components/common";
+import { CopyToClipboardInput } from "@/components/common";
 import type { FC } from "react";
 
 const Description = styled(P1)`

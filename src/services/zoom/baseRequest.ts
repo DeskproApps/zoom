@@ -1,10 +1,10 @@
 import { proxyFetch } from "@deskpro/app-sdk";
 import { refreshTokenService } from "./refreshTokenService";
-import { REST_URL, ACCESS_TOKEN } from "../../constants";
-import { getQueryParams } from "../../utils";
-import { setAccessTokenService, setRefreshTokenService } from "../deskpro";
+import { REST_URL, ACCESS_TOKEN } from "@/constants";
+import { getQueryParams } from "@/utils";
+import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
 import { ZoomError } from "./ZoomError";
-import type { Request } from "../../types";
+import type { Request } from "@/types";
 
 const baseRequest: Request = async (client, {
   url,

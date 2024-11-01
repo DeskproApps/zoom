@@ -1,7 +1,7 @@
 import { isInstantMeeting } from "../isInstantMeeting";
-import mockInstantMeeting from "../../../testing/mocks/mockInstantMeeting.json";
-import mockScheduledMeeting from "../../../testing/mocks/mockScheduledMeeting.json";
-import mockRecurringMeeting from "../../../testing/mocks/mockRecurringMeeting84350791442.json";
+import mockInstantMeeting from "@/testing/mocks/mockInstantMeeting.json";
+import mockScheduledMeeting from "@/testing/mocks/mockScheduledMeeting.json";
+import mockRecurringMeeting from "@/testing/mocks/mockRecurringMeeting84350791442.json";
 
 describe("getOption", () => {
   test("should truthy if instant meeting", () => {

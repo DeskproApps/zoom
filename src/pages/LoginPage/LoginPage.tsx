@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { H3 } from "@deskpro/deskpro-ui";
 import { Title, useDeskproElements } from "@deskpro/app-sdk";
-import { useSetTitle } from "../../hooks";
+import { useSetTitle } from "@/hooks";
 import { useLogin } from "./hooks";
-import { Container, AnchorButton } from "../../components/common";
+import { Container, AnchorButton } from "@/components/common";
 import type { FC } from "react";
 
 const LoginPage: FC = () => {

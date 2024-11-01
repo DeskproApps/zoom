@@ -2,14 +2,14 @@ import { occursMonthlyValidator } from "../utils";
 
 describe("endDatetimeValidator", () => {
   test("should validation successfully", () => {
-    expect(occursMonthlyValidator({ recurring: false, recurringType: 3 })).toBeTruthy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 1 })).toBeTruthy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 2 })).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: false, recurringType: 3 } as any)).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 1 } as any)).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 2 } as any)).toBeTruthy();
     expect(occursMonthlyValidator({
       recurring: true,
       recurringType: 3,
       occursMonthly: 1,
-    })).toBeTruthy();
+    } as any)).toBeTruthy();
   });
 
   test("should validation failed", () => {
@@ -17,7 +17,7 @@ describe("endDatetimeValidator", () => {
       recurring: true,
       recurringType: 3,
       occursMonthly: 0,
-    })).toBeFalsy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 3 })).toBeFalsy();
+    } as any)).toBeFalsy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 3 } as any)).toBeFalsy();
   });
 });

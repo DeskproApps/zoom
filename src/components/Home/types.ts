@@ -1,4 +1,4 @@
-import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 
 export type Props = {
   meetings: Array<MeetingItem|MeetingDetails>,
