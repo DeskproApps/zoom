@@ -65,7 +65,7 @@ const scheduleValidationSchemaRaw = z
     occursMonthly: z.number().optional(),
   });
 
-const scheduleValidationSchema = 
+const scheduleValidationSchema =
   scheduleValidationSchemaRaw
   .refine(repeatIntervalValidator, {
     message: "Wrong interval",
@@ -107,7 +107,7 @@ const getScheduleValues = (
       ? {}
       : {
           recurrence: {
-            type: values?.recurringType ?? recurrence.DAILY as Recurrence["type"],
+            type: (values?.recurringType ?? recurrence.DAILY) as Recurrence["type"],
             repeat_interval: values?.repeatInterval ?? 1,
             ...(isDate(values?.endDatetime)
               ? { end_date_time: (values.endDatetime as Date).toISOString() }
@@ -119,7 +119,8 @@ const getScheduleValues = (
               ? { monthly_day: values.occursMonthly }
               : {}),
           },
-        }),
+        }
+      ),
   };
 };
 

@@ -45,11 +45,11 @@ const useMeetings: UseMeetings = () => {
   const recurrenceMeetings = recurrenceMeetingsData
     .map((meeting) => meeting?.data)
     .filter((meeting) => meeting !== undefined)
-    .map((meeting) => meeting?.occurrences?.map((o) => ({
+    .map((meeting) => (meeting?.occurrences ?? []).map((o) => ({
       ...meeting,
       id: Number(o.occurrence_id),
       start_time: o.start_time,
-    }) ?? []))
+    })))
     .flat() as MeetingDetails[];
 
   return {
