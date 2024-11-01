@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
-import { useAsyncError } from "../hooks";
-import { isInstantMeeting } from "../utils";
-import { deleteInstantMeetingService } from "../services/deskpro";
-import { deleteMeetingService } from "../services/zoom";
-import { queryClient } from "../query";
-import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
+import { useAsyncError } from "@/hooks";
+import { isInstantMeeting } from "@/utils";
+import { deleteInstantMeetingService } from "@/services/deskpro";
+import { deleteMeetingService } from "@/services/zoom";
+import { queryClient } from "@/query";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 
 type useDeleteMeeting = () => {
   deleteMeeting: () => Promise<void>;

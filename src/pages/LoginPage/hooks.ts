@@ -5,17 +5,17 @@ import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
 } from "@deskpro/app-sdk";
-import { useAsyncError } from "../../hooks";
-import { setAccessTokenService, setRefreshTokenService } from "../../services/deskpro";
+import { useAsyncError } from "@/hooks";
+import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
 import {
   isAccessToken,
   isErrorMessage,
   getAccessTokenService,
   getCurrentUserService,
-} from "../../services/zoom";
+} from "@/services/zoom";
 import { defaultLoginError } from "./constants";
 import type { OAuth2StaticCallbackUrl } from "@deskpro/app-sdk";
-import type { TicketContext } from "../../types";
+import type { TicketContext } from "@/types";
 
 type UseLogin = () => {
   isAuth: boolean;

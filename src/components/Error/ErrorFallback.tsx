@@ -2,9 +2,9 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FallbackProps } from "react-error-boundary";
 import { Stack } from "@deskpro/deskpro-ui";
-import { ZoomError } from "../../services/zoom";
-import { ErrorBlock } from "./ErrorBlock";
-import { Container, Button } from "../common";
+import { ZoomError } from "@/services/zoom";
+import { ErrorBlock } from "@/components/Error/ErrorBlock";
+import { Container, Button } from "@/components/common";
 import type { FC } from "react";
 
 type Props = Omit<FallbackProps, "error"> & {

@@ -1,4 +1,4 @@
-import type { Dict, DateTime } from "../../types";
+import type { Dict, DateTime } from "@/types";
 
 export type OAuthToken = {
   token_type: "bearer",

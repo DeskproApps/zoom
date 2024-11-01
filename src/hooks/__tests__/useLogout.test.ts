@@ -1,6 +1,6 @@
 import { act, cleanup, waitFor, renderHook } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
-import { deleteAccessTokenService } from "../../services/deskpro";
+import { deleteAccessTokenService } from "@/services/deskpro";
 import { useLogout } from "../useLogout";
 
 jest.mock("react-router-dom", () => ({
@@ -8,7 +8,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-jest.mock("../../services/deskpro/deleteAccessTokenService", () => ({
+jest.mock("@/services/deskpro/deleteAccessTokenService", () => ({
   deleteAccessTokenService: jest.fn(),
 }));
 

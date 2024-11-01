@@ -2,11 +2,11 @@ import isDate from "date-fns/isDate";
 import format from "date-fns/format";
 import { match } from "ts-pattern";
 import { z } from "zod";
-import { getOption } from "../../utils";
-import { MeetingTypeMap } from "../../services/zoom/types";
+import { getOption } from "@/utils";
+import { MeetingTypeMap } from "@/services/zoom/types";
 import { recurrence } from "./types";
-import type { Option } from "../../types";
-import type { Recurrence, RecurrenceTypes } from "../../services/zoom/types";
+import type { Option } from "@/types";
+import type { Recurrence, RecurrenceTypes } from "@/services/zoom/types";
 import type {
   ScheduleMeetingValues,
   ScheduleFormValidationSchema,

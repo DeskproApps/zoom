@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import { DAYS } from "../constants";
-import type { Recurrence } from "../services/zoom/types";
+import { DAYS } from "@/constants";
+import type { Recurrence } from "@/services/zoom/types";
 
 const TYPE = {
   DAILY: 1,

@@ -1,12 +1,12 @@
 import { match } from "ts-pattern";
 import { P5 } from "@deskpro/deskpro-ui";
 import { Title } from "@deskpro/app-sdk";
-import { Container } from "../../common";
+import { Container } from "@/components/common";
 import { Instant, Recurring, Scheduled } from "./views";
-import { MeetingTypeMap } from "../../../services/zoom/types";
+import { MeetingTypeMap } from "@/services/zoom/types";
 import type { FC } from "react";
-import type { Props, MeetingProps } from "../types";
-import type { MeetingTypes } from "../../../services/zoom/types";
+import type { Props, MeetingProps } from "@/components/Home/types";
+import type { MeetingTypes } from "@/services/zoom/types";
 
 const map = (type: MeetingTypes) => {
   return match(type)

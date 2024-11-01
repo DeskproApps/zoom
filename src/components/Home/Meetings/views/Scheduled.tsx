@@ -1,16 +1,16 @@
 import { useState, useCallback } from "react";
 import { Stack } from "@deskpro/deskpro-ui";
 import { Title } from "@deskpro/app-sdk";
-import { format } from "../../../../utils/date";
-import { DATETIME_FORMAT } from "../../../../constants";
+import { format } from "@/utils/date";
+import { DATETIME_FORMAT } from "@/constants";
 import {
   Button,
   ZoomLogo,
   Property,
   TwoProperties,
-} from "../../../common";
+} from "@/components/common";
 import type { FC } from "react";
-import type { MeetingProps } from "../../types";
+import type { MeetingProps } from "@/components/Home/types";
 
 const Scheduled: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
   const [isLoading, setIsLoading] = useState(false);

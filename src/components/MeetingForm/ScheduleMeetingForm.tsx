@@ -2,19 +2,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack, Input, Checkbox } from "@deskpro/deskpro-ui";
 import { DateInput } from "@deskpro/app-sdk";
-import { DAYS, DAY_NAMES } from "../../constants";
-import { getTimeZoneOptions, getOption } from "../../utils";
+import { DAYS, DAY_NAMES } from "@/constants";
+import { getTimeZoneOptions, getOption } from "@/utils";
 import {
   getInitScheduleValues,
   scheduleValidationSchema,
   getRepeatIntervalOptions,
   getOccursMonthlyOptions,
 } from "./utils";
-import { ErrorBlock } from "../Error";
-import { Label, Select, Button, Container } from "../common";
+import { ErrorBlock } from "@/components/Error";
+import { Label, Select, Button, Container } from "@/components/common";
 import { recurrence } from "./types";
 import type { FC } from "react";
-import type { RecurrenceTypes } from "../../services/zoom/types";
+import type { RecurrenceTypes } from "@/services/zoom/types";
 import type { ScheduleFormProps, ScheduleFormValidationSchema } from "./types";
 
 const ScheduleMeetingForm: FC<ScheduleFormProps> = ({

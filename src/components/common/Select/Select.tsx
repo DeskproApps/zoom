@@ -12,7 +12,7 @@ import type {
   DropdownTargetProps,
   DivAsInputWithDisplayProps,
 } from "@deskpro/deskpro-ui";
-import type { Option } from "../../../types";
+import type { Option } from "@/types";
 
 type Props<T> = Pick<DropdownProps<T, HTMLElement>, "closeOnSelect"> & {
   id: string;

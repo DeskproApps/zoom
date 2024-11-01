@@ -4,18 +4,18 @@ import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import {
   setInstantMeetingService,
   getInstantMeetingsService,
-} from "../../services/deskpro";
+} from "@/services/deskpro";
 import {
   getMeetingService,
   getMeetingsService,
   createMeetingService,
-} from "../../services/zoom";
-import { useAsyncError, useQueriesWithClient } from "../../hooks";
-import { getSortedMeetings } from "../../utils";
-import { MeetingTypeMap } from "../../services/zoom/types";
-import { QueryKey } from "../../query";
+} from "@/services/zoom";
+import { useAsyncError, useQueriesWithClient } from "@/hooks";
+import { getSortedMeetings } from "@/utils";
+import { MeetingTypeMap } from "@/services/zoom/types";
+import { QueryKey } from "@/query";
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
@@ -51,7 +51,7 @@ const useMeetings: UseMeetings = () => {
         id: Number(o.occurrence_id),
         start_time: o.start_time,
       }))
-    )), [recurrenceMeetingsData]);
+    ), [recurrenceMeetingsData]);
 
   return {
     isLoading: [meetings, instantMeetings, ...recurrenceMeetingsData].every(({ isLoading }) => isLoading),

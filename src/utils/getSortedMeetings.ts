@@ -1,5 +1,5 @@
 import isBefore from "date-fns/isBefore";
-import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 
 const getSortedMeetings = (
   scheduleMeetings?: MeetingItem[],
