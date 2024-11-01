@@ -42,21 +42,20 @@ const useMeetings: UseMeetings = () => {
     useErrorBoundary: false,
   })));
 
-  const recurrenceMeetings: MeetingDetails[] = useMemo(() => recurrenceMeetingsData
-    .flat()
-    .map((m) => m?.data)
-    .filter((m?: MeetingDetails) => m !== undefined)
-    .map((m) => m?.occurrences?.map((o) => ({
-        ...m,
-        id: Number(o.occurrence_id),
-        start_time: o.start_time,
-      }))
-    ), [recurrenceMeetingsData]);
+  const recurrenceMeetings = recurrenceMeetingsData
+    .map((meeting) => meeting?.data)
+    .filter((meeting) => meeting !== undefined)
+    .map((meeting) => meeting?.occurrences?.map((o) => ({
+      ...meeting,
+      id: Number(o.occurrence_id),
+      start_time: o.start_time,
+    }) ?? []))
+    .flat() as MeetingDetails[];
 
   return {
     isLoading: [meetings, instantMeetings, ...recurrenceMeetingsData].every(({ isLoading }) => isLoading),
     meetings: [
-      ...instantMeetings?.data ?? [].map((meeting) => meeting.data) as MeetingItem[],
+      ...(instantMeetings?.data ?? []).map((meeting) => meeting.data) as MeetingItem[],
       ...getSortedMeetings(
         scheduleMeetings,
         recurrenceMeetings,

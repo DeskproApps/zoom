@@ -7,7 +7,7 @@ const isErrorMessage = (error: ZoomRestError|undefined): error is ZoomRestError 
 const isAccessToken = (
   payload: OAuthToken | ZoomRestError
 ): payload is OAuthToken => {
-  return Boolean(payload?.access_token);
+  return Object.hasOwn(payload, 'access_token');
 };
 
 export { isAccessToken, isErrorMessage };

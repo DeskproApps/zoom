@@ -20,8 +20,8 @@ const getDay = (day: string): string => {
     .otherwise(() => "");
 };
 
-const getHumanReadableRecurrence = (recurrence: Recurrence): string => {
-  if (Object.values(recurrence).filter((value) => value !== undefined).length === 0) {
+const getHumanReadableRecurrence = (recurrence?: Recurrence): string => {
+  if (recurrence === undefined || Object.values(recurrence).filter((value) => value !== undefined).length === 0) {
     return "-";
   }
 

@@ -33,7 +33,7 @@ const Recurring: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
       />
       <TwoProperties
         leftLabel="Recurrence"
-        leftText={getHumanReadableRecurrence(meeting.recurrence)}
+        leftText={getHumanReadableRecurrence(meeting?.recurrence)}
         rightLabel="Start time"
         rightText={format(meeting.start_time, DATETIME_FORMAT)}
       />
