@@ -12,8 +12,8 @@ import type {
   ScheduleFormValidationSchema,
 } from "./types";
 
-const repeatIntervalValidator = <T>(values: T): boolean => {
-  const repeatInterval = values.repeatInterval;
+const repeatIntervalValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
+  const repeatInterval = values.repeatInterval ?? 0;
 
   return match(values?.recurringType)
     .with(recurrence.DAILY, () => repeatInterval >= 1 && repeatInterval <= 15)
@@ -22,14 +22,14 @@ const repeatIntervalValidator = <T>(values: T): boolean => {
     .otherwise(() => true);
 };
 
-const endDatetimeValidator = <T>(values: T): boolean => {
+const endDatetimeValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
   const isRecurring = values?.recurring;
   const endDatetime = values?.endDatetime;
 
   return !isRecurring ? true : z.date().safeParse(endDatetime).success;
 };
 
-const occursWeeklyValidator = <T>(values: T): boolean => {
+const occursWeeklyValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
   const isRecurring = values.recurring;
   const isWeekly = values.recurringType === 2;
   const weekly = values.occursWeekly ?? [];
@@ -41,7 +41,7 @@ const occursWeeklyValidator = <T>(values: T): boolean => {
   return weekly.length > 0;
 };
 
-const occursMonthlyValidator = <T>(values: T): boolean => {
+const occursMonthlyValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
   const isRecurring = values?.recurring;
   const isMonthly = values?.recurringType === 3;
 
@@ -49,10 +49,10 @@ const occursMonthlyValidator = <T>(values: T): boolean => {
     return true;
   }
 
-  return values?.occursMonthly > 0;
+  return (values?.occursMonthly ?? 0) > 0;
 };
 
-const scheduleValidationSchema = z
+const scheduleValidationSchemaRaw = z
   .object({
     topic: z.string().nonempty(),
     timezone: z.string().nonempty(),
@@ -63,7 +63,10 @@ const scheduleValidationSchema = z
     endDatetime: z.date().optional(),
     occursWeekly: z.number().array().optional(),
     occursMonthly: z.number().optional(),
-  })
+  });
+
+const scheduleValidationSchema = 
+  scheduleValidationSchemaRaw
   .refine(repeatIntervalValidator, {
     message: "Wrong interval",
     path: ["repeatInterval"],
@@ -95,7 +98,7 @@ const getScheduleValues = (
   values: ScheduleFormValidationSchema
 ): ScheduleMeetingValues => {
   return {
-    type: !values.recurring ? MeetingTypeMap.SCHEDULE : MeetingTypeMap.RECURRING,
+    type: values.recurring ? MeetingTypeMap.RECURRING : MeetingTypeMap.SCHEDULE,
     topic: values.topic,
     timezone: values.timezone,
     /** Setting the date as it is to account for time zone dependence `yyyy-MM-ddTHH:mm:ssZ` */
@@ -110,7 +113,7 @@ const getScheduleValues = (
               ? { end_date_time: (values.endDatetime as Date).toISOString() }
               : {}),
             ...(values.recurringType === recurrence.WEEKLY
-              ? { weekly_days: values.occursWeekly?.join(",") }
+              ? { weekly_days: values.occursWeekly!.join(",") }
               : {}),
             ...(values.recurringType === recurrence.MONTHLY
               ? { monthly_day: values.occursMonthly }

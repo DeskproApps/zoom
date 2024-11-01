@@ -2,15 +2,15 @@ import { occursWeeklyValidator } from "../utils";
 
 describe("endDatetimeValidator", () => {
   test("should validation successfully", () => {
-    expect(occursWeeklyValidator({})).toBeTruthy();
-    expect(occursWeeklyValidator({ recurring: false, recurringType: 2 })).toBeTruthy();
-    expect(occursWeeklyValidator({ recurring: true, recurringType: 1 })).toBeTruthy();
-    expect(occursWeeklyValidator({ recurring: true, recurringType: 3 })).toBeTruthy();
+    expect(occursWeeklyValidator({} as any)).toBeTruthy();
+    expect(occursWeeklyValidator({ recurring: false, recurringType: 2 } as any)).toBeTruthy();
+    expect(occursWeeklyValidator({ recurring: true, recurringType: 1 } as any)).toBeTruthy();
+    expect(occursWeeklyValidator({ recurring: true, recurringType: 3 } as any)).toBeTruthy();
     expect(occursWeeklyValidator({
       recurring: true,
       recurringType: 2,
       occursWeekly: [1],
-    })).toBeTruthy();
+    } as any)).toBeTruthy();
   });
 
   test("should validation failed", () => {
@@ -18,6 +18,6 @@ describe("endDatetimeValidator", () => {
       recurring: true,
       recurringType: 2,
       occursWeekly: [],
-    })).toBeFalsy();
+    } as any)).toBeFalsy();
   });
 });
