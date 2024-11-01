@@ -1,5 +1,4 @@
 import { match } from "ts-pattern";
-import { get, size, isNil } from "lodash";
 import { P5 } from "@deskpro/deskpro-ui";
 import { Title } from "@deskpro/app-sdk";
 import { Container } from "../../common";
@@ -18,9 +17,9 @@ const map = (type: MeetingTypes) => {
 };
 
 const MeetingView: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
-  const Meeting = map(get(meeting, ["type"]));
+  const Meeting = map(meeting.type);
 
-  return isNil(Meeting) ? null : (
+  return Meeting === null ? null : (
     <Meeting meeting={meeting} onDelete={onDelete} onInsertLink={onInsertLink} />
   );
 };
@@ -32,8 +31,8 @@ const Meetings: FC<Pick<Props, "meetings"|"onDeleteMeeting"|"onInsertLink">> = (
 }) => {
   return (
     <Container>
-      <Title title={`Active meetings (${size(meetings)})`} />
-      {!size(meetings) ? (
+      <Title title={`Active meetings (${meetings.length})`} />
+      {meetings.length === 0 ? (
         <P5>No meetings found</P5>
       ) : (
         (Array.isArray(meetings) ? meetings : []).map((meeting) => (

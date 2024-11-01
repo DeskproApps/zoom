@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FallbackProps } from "react-error-boundary";
-import { get } from "lodash";
 import { Stack } from "@deskpro/deskpro-ui";
 import { ZoomError } from "../../services/zoom";
 import { ErrorBlock } from "./ErrorBlock";
@@ -29,14 +28,14 @@ const ErrorFallback: FC<Props> = ({ resetErrorBoundary, error }) => {
 
     switch (status) {
       case 400:
-        message = get(data, ["message"], "There was an error!");
+        message = data?.message ?? 'There was an error!';
         break;
       case 401:
         message = "Authentication information is not valid or is missing";
         button = <Button text="Log In" intent="secondary" onClick={toLogin} />;
         break;
       default:
-        message = "There was an error!";
+        message = 'There was an error!';
     }
   }
 

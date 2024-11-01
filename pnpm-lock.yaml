@@ -29,9 +29,6 @@ importers:
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       polished:
         specifier: ^4.1.1
         version: 4.3.1

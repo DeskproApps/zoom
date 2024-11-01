@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { get, has, concat } from "lodash";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
@@ -39,8 +38,8 @@ const useLogin: UseLogin = () => {
   const [callback, setCallback] = useState<
     OAuth2StaticCallbackUrl | undefined
   >();
-  const clientId = get(context, ["settings", "client_id"]);
-  const callbackUrl = get(callback, ["callbackUrl"]);
+  const clientId = context?.settings?.client_id;
+  const callbackUrl = callback?.callbackUrl;
 
   const onSignIn = useCallback(() => {
     if (!client || !callback?.poll || !callback.callbackUrl) {
@@ -58,10 +57,10 @@ const useLogin: UseLogin = () => {
       )
       .then(([access, refresh]) => access.isSuccess && refresh.isSuccess
         ? Promise.resolve()
-        : Promise.reject(concat(access.errors, refresh.errors)))
+        : Promise.reject(([] as string[]).concat(access.errors, refresh.errors)))
       .then(() => getCurrentUserService(client))
       .then((user) => {
-        if (!has(user, ["id"])) {
+        if (!Boolean(user?.id)) {
           throw new Error("Can't find current user");
         }
           setIsAuth(true);

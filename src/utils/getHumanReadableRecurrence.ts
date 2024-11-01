@@ -1,5 +1,4 @@
 import { match } from "ts-pattern";
-import { split, isEmpty } from "lodash";
 import { DAYS } from "../constants";
 import type { Recurrence } from "../services/zoom/types";
 
@@ -7,7 +6,7 @@ const TYPE = {
   DAILY: 1,
   WEEKLY: 2,
   MONTHLY: 3,
-};
+} as const;
 
 const getDay = (day: string): string => {
   return match(Number(day))
@@ -22,7 +21,7 @@ const getDay = (day: string): string => {
 };
 
 const getHumanReadableRecurrence = (recurrence: Recurrence): string => {
-  if (isEmpty(recurrence)) {
+  if (Object.values(recurrence).filter((value) => value !== undefined).length === 0) {
     return "-";
   }
 
@@ -37,10 +36,10 @@ const getHumanReadableRecurrence = (recurrence: Recurrence): string => {
     .with(TYPE.MONTHLY, () => `${!isPlural ? "month" : `${repeat_interval} months`}`)
     .run();
 
-  if (type === TYPE.WEEKLY && !isEmpty(weekly_days)) {
-    const days = split(weekly_days, ",").map(getDay).filter(Boolean).join(", ");
+  if (type === TYPE.WEEKLY && weekly_days !== undefined) {
+    const days = weekly_days?.split(",").map(getDay).filter(Boolean).join(", ");
 
-    if (!isEmpty(days)) {
+    if (days !== undefined) {
       message += ` on ${days}`;
     }
   }

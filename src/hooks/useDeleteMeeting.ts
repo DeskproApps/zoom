@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { has } from "lodash";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
 import { useAsyncError } from "../hooks";
 import { isInstantMeeting } from "../utils";
@@ -17,8 +16,8 @@ const useDeleteMeeting = () => {
   const { client } = useDeskproAppClient();
 
   const deleteMeeting = useCallback(
-    (meeting: MeetingItem|MeetingDetails): Promise<void> => {
-      if (!client || !has(meeting, ["id"])) {
+    (meeting?: MeetingItem|MeetingDetails): Promise<void> => {
+      if (!client || meeting === undefined) {
         return Promise.reject();
       }
 
