@@ -4,7 +4,7 @@ import { REST_URL, ACCESS_TOKEN } from "../../constants";
 import { getQueryParams } from "../../utils";
 import { setAccessTokenService, setRefreshTokenService } from "../deskpro";
 import { ZoomError } from "./ZoomError";
-import type { Request } from "../../types";
+import type { Request, FetchOptions } from "../../types";
 
 const baseRequest: Request = async (client, {
   url,
@@ -20,11 +20,10 @@ const baseRequest: Request = async (client, {
   const params = getQueryParams(queryParams);
 
   const requestUrl = `${baseUrl}${params}`;
-  const options: RequestInit = {
+  const options: FetchOptions = {
     method,
     headers: {
       "Authorization": `Bearer ${ACCESS_TOKEN}`,
-      "X-Proxy-Origin": "", // Empty value so as not to trigger Zoom's CORS response
       ...customHeaders,
     },
   };
