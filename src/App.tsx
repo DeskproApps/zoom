@@ -33,11 +33,7 @@ const App: FC = () => {
 
   const debounceElementEvent = useDebouncedCallback((_, __, payload: EventPayload) => {
     match(payload.type)
-      .with("changePage", () => {
-        if (isNavigatePayload(payload)) {
-          navigate(payload.path);
-        }
-      })
+      .with("changePage", () => (isNavigatePayload(payload) && navigate(payload.path)))
       .with("logout", logout)
       .run();
   }, 500);
