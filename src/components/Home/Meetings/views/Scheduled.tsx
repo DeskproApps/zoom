@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { get } from "lodash";
 import { Stack } from "@deskpro/deskpro-ui";
 import { Title } from "@deskpro/app-sdk";
 import { format } from "../../../../utils/date";
@@ -39,7 +38,7 @@ const Scheduled: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
       />
       <Property
         label="Start time"
-        text={format(get(meeting, ["start_time"]), DATETIME_FORMAT)}
+        text={format(meeting.start_time, DATETIME_FORMAT)}
       />
       <Stack justify="space-between">
         <Button
