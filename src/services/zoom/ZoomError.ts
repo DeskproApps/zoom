@@ -1,17 +1,16 @@
 export type InitData = {
   status: number,
   data: {
-    code: number,
-    message: string,
+    code?: number,
+    message?: string,
+    reason?: string,
+    error?: string,
   },
 };
 
 class ZoomError extends Error {
-  status: number;
-  data: {
-    code: number,
-    message: string,
-  };
+  status: InitData["status"];
+  data: InitData["data"];
 
   constructor({ status, data }: InitData) {
     const message = "Zoom Api Error";
