@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import {

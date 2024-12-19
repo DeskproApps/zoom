@@ -60,7 +60,7 @@ const useLogin: UseLogin = () => {
         : Promise.reject(([] as string[]).concat(access.errors, refresh.errors)))
       .then(() => getCurrentUserService(client))
       .then((user) => {
-        if (!Boolean(user?.id)) {
+        if (!user?.id) {
           throw new Error("Can't find current user");
         }
           setIsAuth(true);

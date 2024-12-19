@@ -4,7 +4,7 @@ import { REST_URL, ACCESS_TOKEN } from "@/constants";
 import { getQueryParams } from "@/utils";
 import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
 import { ZoomError } from "./ZoomError";
-import type { Request } from "@/types";
+import type { Request, FetchOptions } from "@/types";
 
 const baseRequest: Request = async (client, {
   url,

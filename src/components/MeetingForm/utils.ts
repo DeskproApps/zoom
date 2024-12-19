@@ -8,11 +8,12 @@ import { recurrence } from "./types";
 import type { Option } from "@/types";
 import type { Recurrence, RecurrenceTypes } from "@/services/zoom/types";
 import type {
+  FormValues,
   ScheduleMeetingValues,
   ScheduleFormValidationSchema,
 } from "./types";
 
-const repeatIntervalValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
+const repeatIntervalValidator = (values: Partial<FormValues>): boolean => {
   const repeatInterval = values.repeatInterval ?? 0;
 
   return match(values?.recurringType)
@@ -22,14 +23,14 @@ const repeatIntervalValidator = (values: z.infer<typeof scheduleValidationSchema
     .otherwise(() => true);
 };
 
-const endDatetimeValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
+const endDatetimeValidator = (values: Partial<FormValues>): boolean => {
   const isRecurring = values?.recurring;
   const endDatetime = values?.endDatetime;
 
   return !isRecurring ? true : z.date().safeParse(endDatetime).success;
 };
 
-const occursWeeklyValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
+const occursWeeklyValidator = (values: Partial<FormValues>): boolean => {
   const isRecurring = values.recurring;
   const isWeekly = values.recurringType === 2;
   const weekly = values.occursWeekly ?? [];
@@ -41,7 +42,7 @@ const occursWeeklyValidator = (values: z.infer<typeof scheduleValidationSchemaRa
   return weekly.length > 0;
 };
 
-const occursMonthlyValidator = (values: z.infer<typeof scheduleValidationSchemaRaw>): boolean => {
+const occursMonthlyValidator = (values: Partial<FormValues>): boolean => {
   const isRecurring = values?.recurring;
   const isMonthly = values?.recurringType === 3;
 
@@ -52,7 +53,7 @@ const occursMonthlyValidator = (values: z.infer<typeof scheduleValidationSchemaR
   return (values?.occursMonthly ?? 0) > 0;
 };
 
-const scheduleValidationSchemaRaw = z
+export const scheduleValidationSchemaRaw = z
   .object({
     topic: z.string().nonempty(),
     timezone: z.string().nonempty(),
