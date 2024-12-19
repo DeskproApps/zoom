@@ -20,11 +20,10 @@ const baseRequest: Request = async (client, {
   const params = getQueryParams(queryParams);
 
   const requestUrl = `${baseUrl}${params}`;
-  const options: RequestInit = {
+  const options: FetchOptions = {
     method,
     headers: {
       "Authorization": `Bearer ${ACCESS_TOKEN}`,
-      "X-Proxy-Origin": "", // Empty value so as not to trigger Zoom's CORS response
       ...customHeaders,
     },
   };

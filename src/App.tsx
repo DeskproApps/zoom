@@ -72,7 +72,6 @@ const App: FC = () => {
           <Route index element={<LoadingAppPage/>} />
         </Routes>
       </ErrorBoundary>
-      <br/><br/><br/>
     </Suspense>
   );
 }

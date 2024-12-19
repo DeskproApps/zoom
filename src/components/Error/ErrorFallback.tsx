@@ -35,7 +35,10 @@ const ErrorFallback: FC<Props> = ({ resetErrorBoundary, error }) => {
         button = <Button text="Log In" intent="secondary" onClick={toLogin} />;
         break;
       default:
-        message = 'There was an error!';
+        message = data?.message
+          || data?.reason
+          || data?.error
+          || "There was an error!";
     }
   }
 

@@ -3,7 +3,7 @@
   "title": "Zoom",
   "description": "Create instant meetings and schedule future meetings with your users.",
   "appStoreUrl": "https://www.deskpro.com/product-embed/apps/zoom",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "scope": "agent",
   "isSingleInstall": false,
   "hasDevMode": true,
@@ -27,7 +27,7 @@
     "callback_url": {
       "title": "Callback URL",
       "type": "app_embedded",
-      "options": { "entrypoint": "#/admin/callback" },
+      "options": { "entrypoint": "#/admin/callback", "height": "75px" },
       "isRequired": false,
       "isBackendOnly": true,
       "order": 30
