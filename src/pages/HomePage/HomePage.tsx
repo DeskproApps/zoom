@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingSpinner, useDeskproElements } from "@deskpro/app-sdk";
-import { useSetTitle, useDeleteMeeting, useAppendToReplyBox } from "../../hooks";
+import { useSetTitle, useDeleteMeeting, useAppendToReplyBox } from "@/hooks";
 import { useMeetings, useCreateInstantMeeting } from "./hooks";
-import { Home } from "../../components";
+import { Home } from "@/components";
 import type { FC } from "react";
 
 const HomePage: FC = () => {

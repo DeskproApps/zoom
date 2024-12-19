@@ -1,12 +1,12 @@
-import { Home } from "../Home";
-import { getMeetingService } from "../../../services/zoom";
-import { render } from "../../../../testing";
-import mockMeetings from "../../../../testing/mocks/mockMeetings.json";
-import mockMeeting84350791442 from "../../../../testing/mocks/mockRecurringMeeting84350791442.json";
-import mockMeeting87605567807 from "../../../../testing/mocks/mockRecurringMeeting87605567807.json";
-import type { MeetingItem } from "../../../services/zoom/types";
+import { Home } from "@/components/Home";
+import { getMeetingService } from "@/services/zoom";
+import { render } from "@/testing/index";
+import mockMeetings from "@/testing/mocks/mockMeetings.json";
+import mockMeeting84350791442 from "@/testing/mocks/mockRecurringMeeting84350791442.json";
+import mockMeeting87605567807 from "@/testing/mocks/mockRecurringMeeting87605567807.json";
+import type { MeetingItem } from "@/services/zoom/types";
 
-jest.mock("../../../services/zoom/getMeetingService");
+jest.mock("@/services/zoom/getMeetingService");
 
 describe("Home", () => {
   test.skip("render", async () => {

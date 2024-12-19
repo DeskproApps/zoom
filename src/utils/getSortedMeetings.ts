@@ -1,6 +1,5 @@
-import { get } from "lodash";
 import isBefore from "date-fns/isBefore";
-import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 
 const getSortedMeetings = (
   scheduleMeetings?: MeetingItem[],
@@ -10,8 +9,8 @@ const getSortedMeetings = (
     ...scheduleMeetings || [],
     ...recurrenceMeetings || [],
   ].sort((a, b) => {
-    const aStart = get(a, ["start_time"], get(a, ["start_time"]));
-    const bStart = get(b, ["start_time"], get(b, ["start_time"]));
+    const aStart = a?.start_time;
+    const bStart = b?.start_time;
 
     return isBefore(new Date(aStart), new Date(bStart)) ? -1 : 1;
   });

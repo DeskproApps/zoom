@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Stack } from "@deskpro/deskpro-ui";
 import { Title } from "@deskpro/app-sdk";
-import { Button, Container } from "../common";
+import { Button, Container } from "@/components/common";
 import type { FC } from "react";
 import type { Props } from "./types";
 

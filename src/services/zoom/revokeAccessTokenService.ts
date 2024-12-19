@@ -1,5 +1,5 @@
 import { baseRequest } from "./baseRequest";
-import { ACCESS_TOKEN } from "../../constants";
+import { ACCESS_TOKEN } from "@/constants";
 import type { IDeskproClient } from "@deskpro/app-sdk";
 
 const revokeAccessTokenService = (client: IDeskproClient) => {

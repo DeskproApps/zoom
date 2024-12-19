@@ -1,8 +1,8 @@
 import { act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Instant } from "../Instant";
-import { render } from "../../../../../../testing";
-import mockInstantMeeting from "../../../../../../testing/mocks/mockInstantMeeting.json";
+import { render } from "@/testing/index";
+import mockInstantMeeting from "@/testing/mocks/mockInstantMeeting.json";
 
 describe("Instant", () => {
   afterEach(() => {

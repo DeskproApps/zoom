@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInitialisedDeskproAppClient } from "@deskpro/app-sdk";
-import { getCurrentUserService } from "../../services/zoom";
-import { useLogout } from "../../hooks";
+import { getCurrentUserService } from "@/services/zoom";
+import { useLogout } from "@/hooks";
 
 type UseCheckIsAuth = () => void;
 
