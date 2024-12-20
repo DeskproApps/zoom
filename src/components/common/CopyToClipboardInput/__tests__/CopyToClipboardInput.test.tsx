@@ -1,7 +1,7 @@
 import { cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CopyToClipboardInput } from "@/components/common/CopyToClipboardInput";
-import { render } from "@/testing/index";
+import { render } from "@/testing";
 
 describe("CopyToClipboardInput", () => {
   document.execCommand = jest.fn().mockReturnValue(true);

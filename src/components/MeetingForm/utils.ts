@@ -114,7 +114,7 @@ const getScheduleValues = (
               ? { end_date_time: (values.endDatetime as Date).toISOString() }
               : {}),
             ...(values.recurringType === recurrence.WEEKLY
-              ? { weekly_days: values.occursWeekly!.join(",") }
+              ? { weekly_days: values.occursWeekly?.join(",") }
               : {}),
             ...(values.recurringType === recurrence.MONTHLY
               ? { monthly_day: values.occursMonthly }

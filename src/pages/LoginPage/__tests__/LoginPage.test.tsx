@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { act, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { LoginPage } from "../LoginPage";
-import { render } from "@/testing/index";
+import { render } from "@/testing";
 import { useLogin } from "../hooks";
 
 jest.mock("react-router-dom", () => ({

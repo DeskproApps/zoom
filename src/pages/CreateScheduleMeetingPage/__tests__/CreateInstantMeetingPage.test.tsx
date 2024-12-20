@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { render } from "@/testing/index";
+import { render } from "@/testing";
 import { CreateScheduleMeetingPage } from "../CreateScheduleMeetingPage";
 
 jest.mock("react-router-dom", () => ({

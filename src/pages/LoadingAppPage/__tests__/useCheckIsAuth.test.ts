@@ -3,7 +3,7 @@ import { waitFor, renderHook } from "@testing-library/react";
 import { useCheckIsAuth } from "../hooks";
 import { getCurrentUserService } from "@/services/zoom";
 import { useLogout } from "@/hooks";
-import mockCurrentUser from "@/testing/mocks/mockCurrentUser.json";
+import { mockCurrentUser } from "@/testing";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

@@ -1,8 +1,7 @@
 import { act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Scheduled } from "../Scheduled";
-import { render } from "@/testing/index";
-import mockScheduledMeeting from "@/testing/mocks/mockScheduledMeeting.json";
+import { render, mockScheduledMeeting } from "@/testing";
 
 describe("Scheduled", () => {
   afterEach(() => {

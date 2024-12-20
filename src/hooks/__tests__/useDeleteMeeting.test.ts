@@ -1,9 +1,8 @@
 import { act, cleanup, waitFor, renderHook } from "@testing-library/react";
 import { deleteInstantMeetingService } from "@/services/deskpro";
 import { deleteMeetingService } from "@/services/zoom";
+import { mockInstantMeeting, mockScheduledMeeting } from "@/testing";
 import { useDeleteMeeting } from "../useDeleteMeeting";
-import mockInstantMeeting from "@/testing/mocks/mockInstantMeeting.json";
-import mockScheduledMeeting from "@/testing/mocks/mockScheduledMeeting.json";
 
 jest.mock("@/services/deskpro/deleteInstantMeetingService", () => ({
   deleteInstantMeetingService: jest.fn(),
