@@ -20,20 +20,20 @@ export default defineConfig({
   build: {
     rollupOptions: {
       onwarn(warning, warn) {
-        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
           return;
         }
         warn(warning);
       },
       plugins: [
         copy({
-          hook: 'writeBundle',
+          hook: "writeBundle",
           targets: [
-            { src: './manifest.json', dest: './dist/' },
-            { src: './DESCRIPTION.md', dest: './dist/' },
-            { src: './SETUP.md', dest: './dist/' },
-            { src: './icon.svg', dest: './dist/' },
-            { src: './docs', dest: './dist/' },
+            { src: "./manifest.json", dest: "./dist/" },
+            { src: "./DESCRIPTION.md", dest: "./dist/" },
+            { src: "./SETUP.md", dest: "./dist/" },
+            { src: "./icon.svg", dest: "./dist/" },
+            { src: "./docs", dest: "./dist/" },
           ],
         }),
       ],

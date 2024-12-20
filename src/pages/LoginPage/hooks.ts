@@ -15,7 +15,7 @@ import {
 } from "@/services/zoom";
 import { defaultLoginError } from "./constants";
 import type { OAuth2StaticCallbackUrl } from "@deskpro/app-sdk";
-import type { TicketContext } from "@/types";
+import type { TicketData, Settings } from "@/types";
 
 type UseLogin = () => {
   isAuth: boolean;
@@ -27,9 +27,7 @@ type UseLogin = () => {
 const useLogin: UseLogin = () => {
   const key = useMemo(() => uuidv4(), []);
   const { client } = useDeskproAppClient();
-  const { context } = useDeskproLatestAppContext() as {
-    context: TicketContext;
-  };
+  const { context } = useDeskproLatestAppContext<TicketData, Settings>();
   const { asyncErrorHandler } = useAsyncError();
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
