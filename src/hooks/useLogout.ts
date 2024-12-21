@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
-import { deleteAccessTokenService } from "../services/deskpro";
-import { revokeAccessTokenService } from "../services/zoom";
+import { deleteAccessTokenService } from "@/services/deskpro";
+import { revokeAccessTokenService } from "@/services/zoom";
 
 type UseLogout = () => {
     isLoading: boolean,

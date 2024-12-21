@@ -5,12 +5,12 @@ import {
   useDeskproElements,
   useDeskproAppClient,
 } from "@deskpro/app-sdk";
-import { useSetTitle, useAsyncError } from "../../hooks";
-import { createMeetingService } from "../../services/zoom";
-import { getScheduleValues } from "../../components/MeetingForm";
-import { ScheduleMeetingForm } from "../../components";
+import { useSetTitle, useAsyncError } from "@/hooks";
+import { createMeetingService } from "@/services/zoom";
+import { getScheduleValues } from "@/components/MeetingForm";
+import { ScheduleMeetingForm } from "@/components";
 import type { FC } from "react";
-import type { ScheduleFormProps } from "../../components/MeetingForm";
+import type { ScheduleFormProps } from "@/components/MeetingForm";
 
 const CreateScheduleMeetingPage: FC = () => {
   const navigate = useNavigate();

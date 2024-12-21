@@ -1,15 +1,16 @@
 import { occursMonthlyValidator } from "../utils";
+import type { FormValues } from "../types";
 
 describe("endDatetimeValidator", () => {
   test("should validation successfully", () => {
-    expect(occursMonthlyValidator({ recurring: false, recurringType: 3 })).toBeTruthy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 1 })).toBeTruthy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 2 })).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: false, recurringType: 3 } satisfies Partial<FormValues>)).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 1 } satisfies Partial<FormValues>)).toBeTruthy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 2 } satisfies Partial<FormValues>)).toBeTruthy();
     expect(occursMonthlyValidator({
       recurring: true,
       recurringType: 3,
       occursMonthly: 1,
-    })).toBeTruthy();
+    } satisfies Partial<FormValues>)).toBeTruthy();
   });
 
   test("should validation failed", () => {
@@ -17,7 +18,7 @@ describe("endDatetimeValidator", () => {
       recurring: true,
       recurringType: 3,
       occursMonthly: 0,
-    })).toBeFalsy();
-    expect(occursMonthlyValidator({ recurring: true, recurringType: 3 })).toBeFalsy();
+    } satisfies Partial<FormValues>)).toBeFalsy();
+    expect(occursMonthlyValidator({ recurring: true, recurringType: 3 } satisfies Partial<FormValues>)).toBeFalsy();
   });
 });

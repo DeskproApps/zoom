@@ -1,21 +1,20 @@
-import { has } from "lodash";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack, Input, Checkbox } from "@deskpro/deskpro-ui";
 import { DateInput } from "@deskpro/app-sdk";
-import { DAYS, DAY_NAMES } from "../../constants";
-import { getTimeZoneOptions, getOption } from "../../utils";
+import { DAYS, DAY_NAMES } from "@/constants";
+import { getTimeZoneOptions, getOption } from "@/utils";
 import {
   getInitScheduleValues,
   scheduleValidationSchema,
   getRepeatIntervalOptions,
   getOccursMonthlyOptions,
 } from "./utils";
-import { ErrorBlock } from "../Error";
-import { Label, Select, Button, Container } from "../common";
+import { ErrorBlock } from "@/components/Error";
+import { Label, Select, Button, Container } from "@/components/common";
 import { recurrence } from "./types";
 import type { FC } from "react";
-import type { RecurrenceTypes } from "../../services/zoom/types";
+import type { RecurrenceTypes } from "@/services/zoom/types";
 import type { ScheduleFormProps, ScheduleFormValidationSchema } from "./types";
 
 const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
@@ -63,7 +62,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             variant="inline"
             inputsize="small"
             placeholder="Add Value"
-            error={has(errors, ["topic", "message"])}
+            error={Boolean(errors?.topic?.message)}
             value={topic}
             {...register("topic")}
           />
@@ -74,7 +73,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             enableTime
             id="datetime"
             placeholder="DD/MM/YYYY at HH:mm"
-            error={has(errors, ["datetime", "message"])}
+            error={Boolean(errors?.datetime?.message)}
             onChange={(date) => setValue("datetime", date[0])}
           />
         </Label>
@@ -84,7 +83,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             id="timezone"
             value={timezone}
             showInternalSearch
-            error={has(errors, ["timezone", "message"])}
+            error={Boolean(errors?.timezone?.message)}
             options={getTimeZoneOptions()}
             onChange={(option) => setValue("timezone", option.value)}
           />
@@ -104,7 +103,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             <Select
               id="recurringType"
               value={recurringType}
-              error={has(errors, ["recurringType", "message"])}
+              error={Boolean(errors?.recurringType?.message)}
               options={[
                 getOption<number/*RecurrenceTypes*/>(recurrence.DAILY, "Daily"),
                 getOption<number/*RecurrenceTypes*/>(recurrence.WEEKLY, "Weekly"),
@@ -120,7 +119,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             <Select
               id="repeatInterval"
               value={repeatInterval}
-              error={has(errors, ["repeatInterval", "message"])}
+              error={Boolean(errors?.repeatInterval?.message)}
               options={getRepeatIntervalOptions(
                 recurringType as RecurrenceTypes
               )}
@@ -135,7 +134,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
               id="occursWeekly"
               value={occursWeekly}
               closeOnSelect={false}
-              error={has(errors, ["occursWeekly", "message"])}
+              error={Boolean(errors?.occursWeekly?.message)}
               options={Object.keys(DAYS).map((day) => ({
                 ...getOption<number>(DAYS[day], DAY_NAMES[day]),
                 description: day,
@@ -162,7 +161,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
               id="occursMonthly"
               value={occursMonthly}
               options={getOccursMonthlyOptions()}
-              error={has(errors, ["occursMonthly", "message"])}
+              error={Boolean(errors?.occursMonthly?.message)}
               onChange={(o) => setValue("occursMonthly", o.value)}
             />
           </Label>
@@ -173,7 +172,7 @@ const ScheduleMeetingForm: FC<ScheduleFormProps> = ({
             <DateInput
               id="endDatetime"
               placeholder="DD/MM/YYYY at HH:mm"
-              error={has(errors, ["endDatetime", "message"])}
+              error={Boolean(errors?.endDatetime?.message)}
               onChange={(date) => setValue("endDatetime", date[0])}
             />
           </Label>

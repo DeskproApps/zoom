@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_PATH } from "../../constants";
+import { ACCESS_TOKEN_PATH } from "@/constants";
 import type { IDeskproClient } from "@deskpro/app-sdk";
 
 const deleteAccessTokenService = (client: IDeskproClient) => {

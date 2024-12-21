@@ -1,22 +1,21 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { get, has, concat } from "lodash";
 import {
   useDeskproAppClient,
   useDeskproLatestAppContext,
 } from "@deskpro/app-sdk";
-import { useAsyncError } from "../../hooks";
-import { setAccessTokenService, setRefreshTokenService } from "../../services/deskpro";
+import { useAsyncError } from "@/hooks";
+import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
 import {
   isAccessToken,
   isErrorMessage,
   getAccessTokenService,
   getCurrentUserService,
-} from "../../services/zoom";
+} from "@/services/zoom";
 import { defaultLoginError } from "./constants";
 import type { OAuth2StaticCallbackUrl } from "@deskpro/app-sdk";
-import type { TicketContext } from "../../types";
+import type { TicketData, Settings } from "@/types";
 
 type UseLogin = () => {
   isAuth: boolean;
@@ -28,9 +27,7 @@ type UseLogin = () => {
 const useLogin: UseLogin = () => {
   const key = useMemo(() => uuidv4(), []);
   const { client } = useDeskproAppClient();
-  const { context } = useDeskproLatestAppContext() as {
-    context: TicketContext;
-  };
+  const { context } = useDeskproLatestAppContext<TicketData, Settings>();
   const { asyncErrorHandler } = useAsyncError();
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -39,8 +36,8 @@ const useLogin: UseLogin = () => {
   const [callback, setCallback] = useState<
     OAuth2StaticCallbackUrl | undefined
   >();
-  const clientId = get(context, ["settings", "client_id"]);
-  const callbackUrl = get(callback, ["callbackUrl"]);
+  const clientId = context?.settings?.client_id;
+  const callbackUrl = callback?.callbackUrl;
 
   const onSignIn = useCallback(() => {
     if (!client || !callback?.poll || !callback.callbackUrl) {
@@ -58,10 +55,10 @@ const useLogin: UseLogin = () => {
       )
       .then(([access, refresh]) => access.isSuccess && refresh.isSuccess
         ? Promise.resolve()
-        : Promise.reject(concat(access.errors, refresh.errors)))
+        : Promise.reject(([] as string[]).concat(access.errors, refresh.errors)))
       .then(() => getCurrentUserService(client))
       .then((user) => {
-        if (!has(user, ["id"])) {
+        if (!user?.id) {
           throw new Error("Can't find current user");
         }
           setIsAuth(true);
