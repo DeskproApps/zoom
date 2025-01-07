@@ -1,4 +1,4 @@
-import type { Dict, DateTime } from "../../types";
+import type { Dict, DateTime } from "@/types";
 
 export type OAuthToken = {
   token_type: "bearer",
@@ -61,6 +61,7 @@ export type MeetingItem = {
   timezone: string,
   created_at: DateTime,
   join_url: string,
+  recurrence?: Recurrence,
 };
 
 export type Meetings = {
@@ -108,4 +109,5 @@ export type MeetingDetails = {
   settings: Dict< never>,
   recurrence: Recurrence,
   pre_schedule: boolean,
+  start_time: string,
 };

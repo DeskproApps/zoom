@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { scheduleValidationSchema } from "./utils";
+import { scheduleValidationSchema, scheduleValidationSchemaRaw } from "./utils";
 import type { SubmitHandler } from "react-hook-form";
-import type { DateTime } from "../../types";
-import type { MeetingTypes, MeetingDetails, Recurrence } from "../../services/zoom/types";
+import type { DateTime } from "@/types";
+import type { MeetingTypes, MeetingDetails, Recurrence } from "@/services/zoom/types";
 
-export { MeetingTypeMap } from "../../services/zoom/types";
+export { MeetingTypeMap } from "@/services/zoom/types";
 
 export enum recurrence {
   DAILY = 1,
@@ -13,6 +13,8 @@ export enum recurrence {
 }
 
 export type ScheduleFormValidationSchema = z.infer<typeof scheduleValidationSchema>;
+
+export type FormValues = z.infer<typeof scheduleValidationSchemaRaw>;
 
 export type ScheduleMeetingValues = {
   type: MeetingTypes,

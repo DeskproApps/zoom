@@ -1,11 +1,10 @@
 import { cleanup, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { getMeetingService } from "../../../../../services/zoom";
+import { getMeetingService } from "@/services/zoom";
 import { Recurring } from "../Recurring";
-import { render } from "../../../../../../testing";
-import mockRecurringMeeting from "../../../../../../testing/mocks/mockRecurringMeeting84350791442.json";
+import { render, mockRecurringMeeting84350791442 as mockRecurringMeeting } from "@/testing";
 
-jest.mock("../../../../../services/zoom/getMeetingService");
+jest.mock("@/services/zoom/getMeetingService");
 
 describe("Recurring", () => {
   afterEach(() => {

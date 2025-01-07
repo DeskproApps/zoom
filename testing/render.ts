@@ -1,5 +1,4 @@
 import { createElement } from "react";
-import { isString } from "lodash";
 import {
   RenderResult,
   render as testingLibraryRender,
@@ -58,7 +57,7 @@ const wrap = <P>(node: ReactElement<P>, options?: WrapperOptions): ReactElement<
   }
 
   if (options?.router) {
-    if (isString(options?.router)) {
+    if (typeof options?.router === "string") {
       window.history.pushState({}, "", `#${options.router}`)
     }
 

@@ -1,10 +1,10 @@
 import { proxyFetch } from "@deskpro/app-sdk";
 import { refreshTokenService } from "./refreshTokenService";
-import { REST_URL, ACCESS_TOKEN } from "../../constants";
-import { getQueryParams } from "../../utils";
-import { setAccessTokenService, setRefreshTokenService } from "../deskpro";
+import { REST_URL, ACCESS_TOKEN } from "@/constants";
+import { getQueryParams } from "@/utils";
+import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
 import { ZoomError } from "./ZoomError";
-import type { Request, FetchOptions } from "../../types";
+import type { Request } from "@/types";
 
 const baseRequest: Request = async (client, {
   url,
@@ -20,7 +20,7 @@ const baseRequest: Request = async (client, {
   const params = getQueryParams(queryParams);
 
   const requestUrl = `${baseUrl}${params}`;
-  const options: FetchOptions = {
+  const options: RequestInit = {
     method,
     headers: {
       "Authorization": `Bearer ${ACCESS_TOKEN}`,

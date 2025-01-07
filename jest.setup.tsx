@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "regenerator-runtime/runtime";
-import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
 import { TextDecoder, TextEncoder } from "util";
 import React from "react";
 import { lightTheme } from "@deskpro/deskpro-ui";

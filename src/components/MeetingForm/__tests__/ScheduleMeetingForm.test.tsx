@@ -1,7 +1,7 @@
 import { act, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ScheduleMeetingForm} from "../ScheduleMeetingForm";
-import { render } from "../../../../testing";
+import { render } from "@/testing";
 
 describe("ScheduleMeetingForm", () => {
   afterEach(() => {
