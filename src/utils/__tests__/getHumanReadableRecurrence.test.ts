@@ -1,5 +1,5 @@
 import { getHumanReadableRecurrence } from "../getHumanReadableRecurrence";
-import type { Recurrence } from "../../services/zoom/types";
+import type { Recurrence } from "@/services/zoom/types";
 
 const emptyRecurrence: Recurrence = {};
 const everyDay: Recurrence = { type: 1, repeat_interval: 1, end_date_time: "2023-07-07T12:15:00Z" };

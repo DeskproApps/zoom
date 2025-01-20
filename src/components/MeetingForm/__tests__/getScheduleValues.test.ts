@@ -1,4 +1,5 @@
 import { getScheduleValues } from "../utils";
+import type { FormValues } from "../types";
 
 describe("getScheduleValues", () => {
   test("should return value for creation schedule meeting", () => {
@@ -7,7 +8,7 @@ describe("getScheduleValues", () => {
       topic: "test",
       timezone: "Europe/Kiev",
       datetime: new Date("2021-01-01T00:00:00.000Z"),
-    } as never)).toStrictEqual({
+    } satisfies Partial<FormValues>)).toStrictEqual({
       type: 2,
       topic: "test",
       timezone: "Europe/Kiev",
@@ -24,7 +25,7 @@ describe("getScheduleValues", () => {
       recurringType: 1,
       repeatInterval: 2,
       endDatetime: new Date("2023-12-31T00:00:00.000Z"),
-    } as never)).toStrictEqual({
+    } satisfies Partial<FormValues>)).toStrictEqual({
       type: 8,
       topic: "test",
       timezone: "Europe/London",
@@ -47,7 +48,7 @@ describe("getScheduleValues", () => {
       repeatInterval: 1,
       endDatetime: new Date("2023-12-31T00:00:00.000Z"),
       occursWeekly: [2, 3, 5, 6],
-    } as never)).toStrictEqual({
+    } satisfies Partial<FormValues>)).toStrictEqual({
       type: 8,
       topic: "test",
       timezone: "Europe/London",

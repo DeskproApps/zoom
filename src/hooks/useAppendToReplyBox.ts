@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useDeskproAppClient } from "@deskpro/app-sdk";
-import { nbsp } from "../constants";
-import type { MeetingItem, MeetingDetails } from "../services/zoom/types";
+import { nbsp } from "@/constants";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 
 type UseAppendToReplyBox = () => {
   insertInviteIntoReplyBox: (meeting: MeetingItem|MeetingDetails) => Promise<void>,

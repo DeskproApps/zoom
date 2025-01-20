@@ -5,11 +5,11 @@ import {
   Button,
   ZoomLogo,
   TwoProperties,
-} from "../../../common";
-import { format } from "../../../../utils/date";
-import { DATETIME_FORMAT } from "../../../../constants";
+} from "@/components/common";
+import { format } from "@/utils/date";
+import { DATETIME_FORMAT } from "@/constants";
 import type { FC } from "react";
-import type { MeetingProps } from "../../types";
+import type { MeetingProps } from "@/components/Home/types";
 
 const Instant: FC<MeetingProps> = ({ meeting, onDelete, onInsertLink }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

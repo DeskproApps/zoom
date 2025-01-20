@@ -1,22 +1,21 @@
-import { useMemo, useCallback } from "react";
-import { get, size, isEmpty, uniq, flatten } from "lodash";
+import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueryWithClient, useDeskproAppClient } from "@deskpro/app-sdk";
 import {
   setInstantMeetingService,
   getInstantMeetingsService,
-} from "../../services/deskpro";
+} from "@/services/deskpro";
 import {
   getMeetingService,
   getMeetingsService,
   createMeetingService,
-} from "../../services/zoom";
-import { useAsyncError, useQueriesWithClient } from "../../hooks";
-import { getSortedMeetings } from "../../utils";
-import { MeetingTypeMap } from "../../services/zoom/types";
-import { QueryKey } from "../../query";
+} from "@/services/zoom";
+import { useAsyncError, useQueriesWithClient } from "@/hooks";
+import { getSortedMeetings } from "@/utils";
+import { MeetingTypeMap } from "@/services/zoom/types";
+import { QueryKey } from "@/query";
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { MeetingItem, MeetingDetails } from "../../services/zoom/types";
+import type { MeetingItem, MeetingDetails } from "@/services/zoom/types";
 import type { UseMeetings, UseCreateInstantMeeting } from "./types";
 
 const useMeetings: UseMeetings = () => {
@@ -29,34 +28,34 @@ const useMeetings: UseMeetings = () => {
     (client) => getInstantMeetingsService(client),
   );
 
-  const scheduleMeetings = (get(meetings, ["data", "meetings"], []))
+  const scheduleMeetings = (meetings?.data?.meetings ?? [])
     .filter((m: MeetingItem) => m.type === MeetingTypeMap.SCHEDULE);
 
-  const recurrenceMeetingIds = uniq((get(meetings, ["data", "meetings"], []))
+  const recurrenceMeetingIds = [...new Set(meetings?.data?.meetings ?? [])]
     .filter((m: MeetingItem) => m.type === MeetingTypeMap.RECURRING)
-    .map((m: MeetingItem) => m.id));
+    .map((m: MeetingItem) => m.id);
 
   const recurrenceMeetingsData = useQueriesWithClient(recurrenceMeetingIds.map((id: MeetingItem["id"]) => ({
     queryKey: [QueryKey.MEETINGS, id],
     queryFn: (client: IDeskproClient) => getMeetingService(client, id),
-    enabled: size(recurrenceMeetingIds) > 0,
+    enabled: (recurrenceMeetingIds?.length ?? 0) > 0,
     useErrorBoundary: false,
   })));
 
-  const recurrenceMeetings: MeetingDetails[] = useMemo(() => flatten(recurrenceMeetingsData
-    .map<MeetingDetails>((m) => get(m as never, ["data"]))
-    .filter((m?: MeetingDetails) => !isEmpty(m))
-    .map((m) => m?.occurrences?.map((o) => ({
-        ...m,
-        id: Number(o.occurrence_id),
-        start_time: o.start_time,
-      }))
-    )), [recurrenceMeetingsData]);
+  const recurrenceMeetings = recurrenceMeetingsData
+    .map((meeting) => meeting?.data)
+    .filter((meeting) => meeting !== undefined)
+    .map((meeting) => (meeting?.occurrences ?? []).map((o) => ({
+      ...meeting,
+      id: Number(o.occurrence_id),
+      start_time: o.start_time,
+    })))
+    .flat() as MeetingDetails[];
 
   return {
     isLoading: [meetings, instantMeetings, ...recurrenceMeetingsData].every(({ isLoading }) => isLoading),
     meetings: [
-      ...get(instantMeetings, ["data"], []).map((meeting) => meeting.data) as MeetingItem[],
+      ...(instantMeetings?.data ?? []).map((meeting) => meeting.data) as MeetingItem[],
       ...getSortedMeetings(
         scheduleMeetings,
         recurrenceMeetings,
@@ -81,7 +80,7 @@ const useCreateInstantMeeting: UseCreateInstantMeeting = () => {
         if (isSuccess) {
           return queryClient.invalidateQueries();
         } else {
-          throw new Error(get(errors, [0]));
+          throw new Error(errors?.[0]);
         }
       })
       .catch(asyncErrorHandler);

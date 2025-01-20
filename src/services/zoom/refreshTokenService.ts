@@ -1,5 +1,5 @@
 import { baseRequest } from "./baseRequest";
-import { REFRESH_TOKEN } from "../../constants";
+import { REFRESH_TOKEN } from "@/constants";
 import type { IDeskproClient } from "@deskpro/app-sdk";
 import type { OAuthToken } from "./types";
 

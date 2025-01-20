@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { waitFor, renderHook } from "@testing-library/react";
 import { useCheckIsAuth } from "../hooks";
-import { getCurrentUserService } from "../../../services/zoom";
-import { useLogout } from "../../../hooks";
-import mockCurrentUser from "../../../../testing/mocks/mockCurrentUser.json";
+import { getCurrentUserService } from "@/services/zoom";
+import { useLogout } from "@/hooks";
+import { mockCurrentUser } from "@/testing";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: jest.fn(),
 }));
 
-jest.mock("../../../services/zoom/getCurrentUserService");
-jest.mock("../../../hooks/useLogout");
+jest.mock("@/services/zoom/getCurrentUserService");
+jest.mock("@/hooks/useLogout");
 
 describe("useCheckIsAuth", () => {
   test("should go to the main page if we have access token and receive user data", async () => {

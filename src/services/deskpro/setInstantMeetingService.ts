@@ -1,5 +1,5 @@
 import type { IDeskproClient } from "@deskpro/app-sdk";
-import type { MeetingDetails } from "../zoom/types";
+import type { MeetingDetails } from "@/services/zoom/types";
 
 const setInstantMeetingService = (
   client: IDeskproClient,

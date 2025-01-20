@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { get, toLower } from "lodash";
 import {
   faCheck,
   faCaretDown,
@@ -13,7 +12,7 @@ import type {
   DropdownTargetProps,
   DivAsInputWithDisplayProps,
 } from "@deskpro/deskpro-ui";
-import type { Option } from "../../../types";
+import type { Option } from "@/types";
 
 type Props<T> = Pick<DropdownProps<T, HTMLElement>, "closeOnSelect"> & {
   id: string;
@@ -47,7 +46,7 @@ const Select = <T,>({
         .join(", ");
     } else {
       const o = options.find((o) => o.value === value);
-      return get(o, ["label"], value);
+      return o?.label ?? value;
     }
   }, [value, options]) as ReactNode;
 
@@ -72,7 +71,7 @@ const Select = <T,>({
       }}
       options={options
         .filter((o) =>
-          toLower(get(o, ["label"], "") as string).includes(input.toLowerCase())
+          (o?.label as string ?? '').toLowerCase().includes(input.toLowerCase())
         )
         .map((o) => ({
           ...o,
