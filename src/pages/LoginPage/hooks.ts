@@ -1,9 +1,7 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { createSearchParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 import {
-  useDeskproAppClient,
   useDeskproLatestAppContext,
+  useInitialisedDeskproAppClient,
 } from "@deskpro/app-sdk";
 import { useAsyncError } from "@/hooks";
 import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
@@ -14,8 +12,8 @@ import {
   getCurrentUserService,
 } from "@/services/zoom";
 import { defaultLoginError } from "./constants";
-import type { OAuth2StaticCallbackUrl } from "@deskpro/app-sdk";
 import type { TicketData, Settings } from "@/types";
+import type { OAuth2Result } from "@deskpro/app-sdk";
 
 type UseLogin = () => {
   isAuth: boolean;
@@ -25,79 +23,72 @@ type UseLogin = () => {
 };
 
 const useLogin: UseLogin = () => {
-  const key = useMemo(() => uuidv4(), []);
-  const { client } = useDeskproAppClient();
   const { context } = useDeskproLatestAppContext<TicketData, Settings>();
   const { asyncErrorHandler } = useAsyncError();
-
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [authLink, setAuthLink] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [callback, setCallback] = useState<
-    OAuth2StaticCallbackUrl | undefined
-  >();
-  const clientId = context?.settings?.client_id;
-  const callbackUrl = callback?.callbackUrl;
 
-  const onSignIn = useCallback(() => {
-    if (!client || !callback?.poll || !callback.callbackUrl) {
+  useInitialisedDeskproAppClient(async (client) => {
+    const clientId = context?.settings?.client_id;
+
+    if (!clientId) {
+      setIsLoading(false);
       return;
     }
 
-    setTimeout(() => setIsLoading(true), 1000);
+    const oauth2 = await client.startOauth2Local(
+      ({ state, callbackUrl }) => `https://zoom.us/oauth/authorize?response_type=code&client_id=${clientId}&state=${state}&redirect_uri=${callbackUrl}`,
+      /code=(?<code>[\d\w-]+)/,
+      async (code: string): Promise<OAuth2Result> => {
+        // Extract the callback URL from the authorization URL
+        const url = new URL(oauth2.authorizationUrl);
+        const redirectUri = url.searchParams.get("redirect_uri");
 
-    callback
-      .poll()
-      .then(({ token }) => getAccessTokenService(client, token, callback.callbackUrl))
-      .then((data) => isAccessToken(data)
-        ? Promise.all([setAccessTokenService(client, data), setRefreshTokenService(client, data)])
-        : Promise.reject(isErrorMessage(data) ? data.errorMessage : defaultLoginError)
-      )
-      .then(([access, refresh]) => access.isSuccess && refresh.isSuccess
-        ? Promise.resolve()
-        : Promise.reject(([] as string[]).concat(access.errors, refresh.errors)))
-      .then(() => getCurrentUserService(client))
-      .then((user) => {
+        if (!redirectUri) {
+          throw new Error("Failed to get callback URL");
+        }
+
+        const data = await getAccessTokenService(client, code, redirectUri);
+
+        if (!isAccessToken(data)) {
+          throw new Error(isErrorMessage(data) ? data.errorMessage : defaultLoginError);
+        }
+
+        const [access, refresh] = await Promise.all([
+          setAccessTokenService(client, data),
+          setRefreshTokenService(client, data),
+        ]);
+
+        if (!access.isSuccess || !refresh.isSuccess) {
+          throw new Error(([] as string[]).concat(access.errors, refresh.errors).join(", "));
+        }
+
+        const user = await getCurrentUserService(client);
         if (!user?.id) {
           throw new Error("Can't find current user");
         }
-          setIsAuth(true);
-      })
-      .catch(asyncErrorHandler)
-      .finally(() => setIsLoading(false));
-  }, [callback, client, setIsLoading, asyncErrorHandler]);
 
-  /** set callback */
-  useEffect(() => {
-    if (!callback && client) {
-      client
-        .oauth2()
-        .getGenericCallbackUrl(
-          key,
-          /code=(?<token>[\d\w-]+)/,
-          /state=(?<key>.+)/
-        )
-        .then(setCallback);
-    }
-  }, [client, key, callback]);
+        return { data };
+      }
+    );
 
-  /** set authLink */
-  useEffect(() => {
-    if (key && callbackUrl && clientId) {
-      setAuthLink(
-        `https://zoom.us/oauth/authorize?${createSearchParams([
-          ["response_type", "code"],
-          ["client_id", clientId],
-          ["state", key],
-          ["redirect_uri", callbackUrl],
-        ])}`
-      );
-      setIsLoading(false);
-    } else {
-      setAuthLink("");
-      setIsLoading(true);
+    setAuthLink(oauth2.authorizationUrl);
+    setIsLoading(false);
+
+    try {
+      await oauth2.poll();
+      setIsAuth(true);
+    } catch (error) {
+      asyncErrorHandler(error instanceof Error ? error : new Error(String(error)));
     }
-  }, [key, callbackUrl, clientId]);
+  });
+
+  const onSignIn = () => {
+    if (authLink) {
+      window.open(authLink, "_blank");
+    }
+  };
 
   return { isAuth, authLink, onSignIn, isLoading };
 };
