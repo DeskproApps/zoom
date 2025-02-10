@@ -1,6 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import { P1 } from "@deskpro/deskpro-ui";
 import {
   LoadingSpinner,
@@ -8,6 +7,7 @@ import {
 } from "@deskpro/app-sdk";
 import { CopyToClipboardInput } from "@/components/common";
 import type { FC } from "react";
+import type { OAuth2Result } from "@deskpro/app-sdk";
 
 const Description = styled(P1)`
     margin-top: 8px;
@@ -17,14 +17,22 @@ const Description = styled(P1)`
 
 const AdminPage: FC = () => {
   const [callbackUrl, setCallbackUrl] = useState<string|null>(null);
-  const key = useMemo(() => uuidv4(), []);
 
+  useInitialisedDeskproAppClient(async (client) => {
+    const oauth2 = await client.startOauth2Local(
+      ({ state, callbackUrl }) => `https://zoom.us/oauth/authorize?response_type=code&client_id=xxx&state=${state}&redirect_uri=${callbackUrl}`,
+      /code=(?<code>[0-9a-f]+)/,
+      async (): Promise<OAuth2Result> => ({ data: { access_token: "", refresh_token: "" } })
+    );
 
-  useInitialisedDeskproAppClient((client) => {
-    client.oauth2()
-      .getAdminGenericCallbackUrl(key, /code=(?<token>[0-9a-f]+)/, /state=(?<key>.+)/)
-      .then(({ callbackUrl }) => setCallbackUrl(callbackUrl));
-  }, [key]);
+    // Extract the callback URL from the authorization URL
+    const url = new URL(oauth2.authorizationUrl);
+    const redirectUri = url.searchParams.get("redirect_uri");
+
+    if (redirectUri) {
+      setCallbackUrl(redirectUri);
+    }
+  });
 
   if (!callbackUrl) {
     return (<LoadingSpinner/>);

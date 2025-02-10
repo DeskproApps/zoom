@@ -41,10 +41,11 @@ const baseRequest: Request = async (client, {
   let res = await dpFetch(requestUrl, options);
 
   if (res.status === 401) {
+    // Retry if the issue was because the access token expired.
     const data = await refreshTokenService(client);
 
-    await setAccessTokenService(client, data);
-    await setRefreshTokenService(client, data);
+    await setAccessTokenService(client, data.access_token);
+    await setRefreshTokenService(client, data.refresh_token);
 
     res = await dpFetch(requestUrl, options);
   }
