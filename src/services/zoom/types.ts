@@ -1,7 +1,6 @@
 import type { Dict, DateTime } from "@/types";
 
 export type OAuthToken = {
-  token_type: "bearer",
   access_token: string,
   refresh_token: string,
   expires_in: number,

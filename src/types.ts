@@ -33,6 +33,7 @@ export type Request = <T>(
 
 /** Deskpro types */
 export type Settings = {
+  use_deskpro_saas?: boolean,
   client_id?: string,
 };
 
