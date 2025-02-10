@@ -73,7 +73,9 @@ const useLogin: UseLogin = () => {
 
       const [access, refresh] = await Promise.all([
         setAccessTokenService(client, result.data.access_token),
-        setRefreshTokenService(client, result.data.refresh_token!),
+        result.data.refresh_token
+          ? setRefreshTokenService(client, result.data.refresh_token)
+          : Promise.resolve({ isSuccess: true, errors: [], }),
       ]);
 
       if (!access.isSuccess || !refresh.isSuccess) {
