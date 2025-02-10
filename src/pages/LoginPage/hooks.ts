@@ -90,7 +90,7 @@ const useLogin: UseLogin = () => {
     } catch (error) {
       asyncErrorHandler(error instanceof Error ? error : new Error(String(error)));
     }
-  });
+  }, [context?.settings.client_id, context?.settings.use_deskpro_saas]);
 
   const onSignIn = () => {
     if (authLink) {
