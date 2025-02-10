@@ -14,7 +14,6 @@ import {
 import { defaultLoginError } from "./constants";
 import type { TicketData, Settings } from "@/types";
 import type { OAuth2Result } from "@deskpro/app-sdk";
-import { OAuthToken } from "@/services/zoom/types";
 
 type UseLogin = () => {
   isAuth: boolean;
