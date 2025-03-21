@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { act, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { LoginPage } from "../LoginPage";
 import { render } from "@/testing";
 import { useLogin } from "../hooks";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -15,8 +14,7 @@ describe("LoginPage", () => {
   test("render", async () => {
     (useLogin as jest.Mock).mockImplementation(() => ({
       error: null,
-      isAuth: false,
-      authLink: "https://call-back.url/?code=123",
+      authUrl: "https://call-back.url/?code=123",
       onSignIn: jest.fn(),
       isLoading: false,
     }));
@@ -32,9 +30,8 @@ describe("LoginPage", () => {
     const onSignIn = jest.fn();
     (useLogin as jest.Mock).mockImplementation(() => ({
       error: null,
-      isAuth: false,
       isLoading: false,
-      authLink: "https://call-back.url/?code=123",
+      authUrl: "https://call-back.url/?code=123",
       onSignIn,
     }));
     const { findByRole } = render(<LoginPage />, { wrappers: { theme: true } });
