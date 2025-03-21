@@ -1,6 +1,6 @@
-import { Container, AnchorButton } from "@/components/common";
+import { AnchorButton } from "@/components/common";
 import { ErrorBlock } from "@/components";
-import { H3 } from "@deskpro/deskpro-ui";
+import { H3, Stack } from "@deskpro/deskpro-ui";
 import { useDeskproElements } from "@deskpro/app-sdk";
 import { useLogin } from "./hooks";
 import { useSetTitle } from "@/hooks";
@@ -17,7 +17,7 @@ const LoginPage: FC = () => {
   });
 
   return (
-    <Container>
+    <Stack padding={12} vertical gap={12} role="alert">
       <H3>Log into your Zoom Account.</H3>
       <AnchorButton
         intent="secondary"
@@ -30,7 +30,7 @@ const LoginPage: FC = () => {
       />
 
       {error && (<div style={{ width: "100%" }}><ErrorBlock text={error} /></div>)}
-    </Container>
+    </Stack>
   );
 };
 
