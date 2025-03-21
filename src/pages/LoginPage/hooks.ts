@@ -30,13 +30,13 @@ const useLogin: UseLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useInitialisedDeskproAppClient(async (client) => {
-    if (context?.settings.use_deskpro_saas === undefined) {
+    if (context?.settings === undefined) {
       // Make sure settings have loaded.
       return;
     }
     const clientId = context?.settings.client_id;
-    const mode = context?.settings.use_deskpro_saas ? 'global' : 'local';
-    if (mode === 'local' && typeof clientId !== 'string') {
+    const mode = context?.settings.use_advanced_connect === false ? 'global' : 'local';
+    if (mode === 'local' && (typeof clientId !== 'string' || clientId.trim() === "")) {
       // Local mode requires a clientId.
       return;
     }
@@ -90,7 +90,7 @@ const useLogin: UseLogin = () => {
     } catch (error) {
       asyncErrorHandler(error instanceof Error ? error : new Error(String(error)));
     }
-  }, [context?.settings.client_id, context?.settings.use_deskpro_saas]);
+  }, [context?.settings.client_id, context?.settings.use_advanced_connect]);
 
   const onSignIn = () => {
     if (authLink) {
