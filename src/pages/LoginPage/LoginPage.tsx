@@ -1,20 +1,13 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { H3 } from "@deskpro/deskpro-ui";
-import { Title, useDeskproElements } from "@deskpro/app-sdk";
-import { useSetTitle } from "@/hooks";
+import { AnchorButton } from "@/components/common";
+import { ErrorBlock } from "@/components";
+import { H3, Stack } from "@deskpro/deskpro-ui";
+import { useDeskproElements } from "@deskpro/app-sdk";
 import { useLogin } from "./hooks";
-import { Container, AnchorButton } from "@/components/common";
+import { useSetTitle } from "@/hooks";
 import type { FC } from "react";
 
 const LoginPage: FC = () => {
-  const navigate = useNavigate();
-  const {
-    isAuth,
-    authLink,
-    onSignIn,
-    isLoading,
-  } = useLogin();
+  const { onSignIn, authUrl, isLoading, error } = useLogin();
 
   useSetTitle("Zoom Meetings");
 
@@ -23,25 +16,21 @@ const LoginPage: FC = () => {
     registerElement("refresh", { type: "refresh_button" });
   });
 
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/home");
-    }
-  }, [isAuth, navigate]);
-
   return (
-    <Container>
-      <Title as={H3} title="Log into your Zoom Account" />
+    <Stack padding={12} vertical gap={12} role="alert">
+      <H3>Log into your Zoom Account.</H3>
       <AnchorButton
         intent="secondary"
         text="Log In"
         target="_blank"
-        href={authLink}
+        href={authUrl ?? "#"}
         onClick={onSignIn}
         loading={isLoading}
-        disabled={isLoading}
+        disabled={!authUrl || isLoading}
       />
-    </Container>
+
+      {error && (<div style={{ width: "100%" }}><ErrorBlock text={error} /></div>)}
+    </Stack>
   );
 };
 

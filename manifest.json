@@ -9,19 +9,31 @@
   "hasDevMode": true,
   "serveUrl": "https://apps-cdn.deskpro-service.com/__name__/__version__",
   "targets": [{ "target": "ticket_sidebar", "entrypoint": "index.html" }],
+  "secrets": "SMEkhJoGvqgiXxPNDne4o+YHmr6X/fsKwQ8Gbzs6gGZAlnyql+HGxW7rqIg7flz0+bU+tdKnt40l3SnK1acmdySlaTlBI/Jvt/cHTsp56lxaArYy44PG2FrgxMcrk6EXUZHWORVHDZ6kcg1PwiAb5bBsOw8DH4tvn+Rm9WVewyaQPlVXnzKhqU/HrFE8KJjTKnfVyBprx3KBxoc/1Y3GBwsMs40Q51NjTnKMj2b3X+o+srknWcU/c4VvYGE8lIYYb6erBLYFGs5koa4UysmKigk2V4FUTpHTYWdS3hI/jQuvtpIj7/Zy1XXrBtLEt12st1iD8MO3vBYcYPR4bsopgSnBHIr8qXkNPLSlJe41NLwp3O4ctJcTY56yulOtjntYtYVWyLfUNioACnqUZujwbQiZeuxCD/nyRBZ0kV+/UmunQG+FDBxLhRfF5M6Ns5cF8ZkGu7eSfwURzLWPx14T7Poqdbs1AKwpO8NVVqKS+pchXWZucA2uP/LlXxJS430uOGjGRphli/FpwgX3Or2XAoOWAGMOUsOvttHD/V7PeGDkR8CpDJoVmkn+yyboj7kXh6foJf5o7v64jd5nNAVy0FYW518OOp/r3eGybcGqgxFI7bX9rhP62cALDc4ajFe5hoL64e4gLP3orn2EkejFbjG1BWfudZYhhgjlF8IywxI=",
   "settings": {
+    "use_advanced_connect": {
+      "title": "Advanced Connect",
+      "description": "Follow the setup guide and use your credentials to connect the app to Deskpro.",
+      "type": "boolean",
+      "default": false,
+      "isRequired": false,
+      "isBackendOnly": false,
+      "order": 5
+    },
     "client_id": {
       "title": "Client ID",
       "type": "string",
-      "isRequired": true,
+      "isRequired": false,
       "isBackendOnly": false,
+      "condition": "settings.use_advanced_connect != false",
       "order": 10
     },
     "client_secret": {
       "title": "Client secret",
       "type": "string",
-      "isRequired": true,
+      "isRequired": false,
       "isBackendOnly": true,
+      "condition": "settings.use_advanced_connect != false",
       "order": 20
     },
     "callback_url": {
@@ -30,6 +42,7 @@
       "options": { "entrypoint": "#/admin/callback", "height": "75px" },
       "isRequired": false,
       "isBackendOnly": true,
+      "condition": "settings.use_advanced_connect != false",
       "order": 30
     }
   },

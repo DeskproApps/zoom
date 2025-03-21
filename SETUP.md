@@ -31,10 +31,10 @@ then also click __"Continue"__ a  couple time to navigate to __"Scopes"__.
 and here we need to __"+ Add"__ the following scopes:
 
 * Meeting
-  * View all user meetings (*meeting:read:admin*)
-  * View and manage all user meetings (*meeting:write:admin*)
+  * View all user meetings (*meeting:read:meeting:admin*, *meeting:read:list_meetings:admin*)
+  * View and manage all user meetings (*meeting:write:meeting:admin*, *meeting:delete:meeting:admin*)
 * User
-  * View all user information (*user:read:admin*)
+  * View all user information (*user:read:user:admin*)
 
 Ok, head back to Deskpro and enter your __Client ID__ and __Client secret__ into the app settings form.
 
