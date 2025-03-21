@@ -1,33 +1,28 @@
-import { useState } from "react";
-import {
-  useDeskproLatestAppContext,
-  useInitialisedDeskproAppClient,
-} from "@deskpro/app-sdk";
-import { useAsyncError } from "@/hooks";
-import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
-import {
-  isAccessToken,
-  isErrorMessage,
-  getAccessTokenService,
-  getCurrentUserService,
-} from "@/services/zoom";
 import { defaultLoginError } from "./constants";
+import { isAccessToken, isErrorMessage, getAccessTokenService, getCurrentUserService } from "@/services/zoom";
+import { setAccessTokenService, setRefreshTokenService } from "@/services/deskpro";
+import { useCallback, useState } from "react";
+import { useDeskproLatestAppContext, useInitialisedDeskproAppClient } from "@deskpro/app-sdk";
+import { useNavigate } from "react-router-dom";
+import type { IOAuth2, OAuth2Result } from "@deskpro/app-sdk";
 import type { TicketData, Settings } from "@/types";
-import type { OAuth2Result } from "@deskpro/app-sdk";
 
-type UseLogin = () => {
-  isAuth: boolean;
-  authLink: string;
-  isLoading: boolean;
-  onSignIn: () => void;
+interface UseLogin {
+  onSignIn: () => void,
+  authUrl: string | null,
+  error: null | string,
+  isLoading: boolean,
 };
 
-const useLogin: UseLogin = () => {
+export function useLogin(): UseLogin {
+  const [authUrl, setAuthUrl] = useState<string | null>(null)
+  const [error, setError] = useState<null | string>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isPolling, setIsPolling] = useState(false)
+  const [oAuth2Context, setOAuth2Context] = useState<IOAuth2 | null>(null)
+
+  const navigate = useNavigate()
   const { context } = useDeskproLatestAppContext<TicketData, Settings>();
-  const { asyncErrorHandler } = useAsyncError();
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [authLink, setAuthLink] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useInitialisedDeskproAppClient(async (client) => {
     if (context?.settings === undefined) {
@@ -38,16 +33,17 @@ const useLogin: UseLogin = () => {
     const mode = context?.settings.use_advanced_connect === false ? 'global' : 'local';
     if (mode === 'local' && (typeof clientId !== 'string' || clientId.trim() === "")) {
       // Local mode requires a clientId.
+      setError("A client ID is required");
       return;
     }
 
-    const oauth2 = mode === 'local'
+    const oAuth2Response = mode === 'local'
       ? await client.startOauth2Local(
         ({ state, callbackUrl }) => `https://zoom.us/oauth/authorize?response_type=code&client_id=${clientId}&state=${state}&redirect_uri=${callbackUrl}`,
         /code=(?<code>[\d\w-]+)/,
         async (code: string): Promise<OAuth2Result> => {
           // Extract the callback URL from the authorization URL
-          const url = new URL(oauth2.authorizationUrl);
+          const url = new URL(oAuth2Response.authorizationUrl);
           const redirectUri = url.searchParams.get("redirect_uri");
 
           if (!redirectUri) {
@@ -65,40 +61,63 @@ const useLogin: UseLogin = () => {
       )
       : await client.startOauth2Global("GKHUwXzTsa3QJsm8Dhp8w");
 
-    setAuthLink(oauth2.authorizationUrl);
-    setIsLoading(false);
-
-    try {
-      const result = await oauth2.poll();
-
-      const [access, refresh] = await Promise.all([
-        setAccessTokenService(client, result.data.access_token),
-        result.data.refresh_token
-          ? setRefreshTokenService(client, result.data.refresh_token)
-          : Promise.resolve({ isSuccess: true, errors: [], }),
-      ]);
-
-      if (!access.isSuccess || !refresh.isSuccess) {
-        throw new Error(([] as string[]).concat(access.errors, refresh.errors).join(", "));
-      }
-
-      const user = await getCurrentUserService(client);
-      if (!user?.id) {
-        throw new Error("Can't find current user");
-      }
-      setIsAuth(true);
-    } catch (error) {
-      asyncErrorHandler(error instanceof Error ? error : new Error(String(error)));
-    }
+    setAuthUrl(oAuth2Response.authorizationUrl);
+    setOAuth2Context(oAuth2Response);
   }, [context?.settings.client_id, context?.settings.use_advanced_connect]);
 
-  const onSignIn = () => {
-    if (authLink) {
-      window.open(authLink, "_blank");
+
+  useInitialisedDeskproAppClient((client) => {
+    if (!oAuth2Context) {
+      return
     }
-  };
 
-  return { isAuth, authLink, onSignIn, isLoading };
+    const startPolling = async () => {
+      try {
+        const result = await oAuth2Context.poll();
+
+        const [access, refresh] = await Promise.all([
+          setAccessTokenService(client, result.data.access_token),
+          result.data.refresh_token
+            ? setRefreshTokenService(client, result.data.refresh_token)
+            : Promise.resolve({ isSuccess: true, errors: [], }),
+        ]);
+
+        if (!access.isSuccess || !refresh.isSuccess) {
+          throw new Error(([] as string[]).concat(access.errors, refresh.errors).join(", "));
+        }
+
+        try {
+          const user = await getCurrentUserService(client);
+          if (!user?.id) {
+            throw new Error()
+          }
+        } catch {
+          throw new Error("Can't find current user");
+        }
+
+        navigate("/home")
+
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Unknown error");
+
+      } finally {
+        setIsLoading(false)
+        setIsPolling(false)
+      }
+    }
+
+    if (isPolling) {
+      void startPolling()
+    }
+  }, [isPolling, oAuth2Context, navigate])
+
+
+  const onSignIn = useCallback(() => {
+    setIsLoading(true);
+    setIsPolling(true);
+    window.open(authUrl ?? "", '_blank');
+  }, [setIsLoading, authUrl]);
+
+
+  return { authUrl, onSignIn, error, isLoading }
 };
-
-export { useLogin };
