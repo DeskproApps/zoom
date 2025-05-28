@@ -1,17 +1,12 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { FallbackProps } from "react-error-boundary";
 import { Stack } from "@deskpro/deskpro-ui";
 import { ZoomError } from "@/services/zoom";
 import { ErrorBlock } from "@/components/Error/ErrorBlock";
 import { Container, Button } from "@/components/common";
-import type { FC } from "react";
+import { FallbackRender } from "@sentry/react";
 
-type Props = Omit<FallbackProps, "error"> & {
-    error: Error,
-};
-
-const ErrorFallback: FC<Props> = ({ resetErrorBoundary, error }) => {
+const ErrorFallback: FallbackRender = ({ resetError, error }) => {
   const navigate = useNavigate();
 
   let message = "There was an error!";
@@ -19,9 +14,9 @@ const ErrorFallback: FC<Props> = ({ resetErrorBoundary, error }) => {
   const nativeErrorMessage = error;
 
   const toLogin = useCallback(() => {
-    resetErrorBoundary();
+    resetError();
     navigate("/login");
-  }, [navigate, resetErrorBoundary]);
+  }, [navigate, resetError]);
 
   if (error instanceof ZoomError) {
     const { status, data } = error;
