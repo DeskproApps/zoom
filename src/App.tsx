@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import * as Sentry from '@sentry/react';
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 import { match } from "ts-pattern";
@@ -22,6 +21,7 @@ import {
 import { ErrorFallback } from "./components";
 import type { FC } from "react";
 import type { EventPayload } from "./types";
+import { ErrorBoundary } from "@sentry/react";
 
 const App: FC = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const App: FC = () => {
 
   return (
     <Suspense fallback={<LoadingSpinner/>}>
-      <Sentry.ErrorBoundary onReset={reset} fallback={ErrorFallback}>
+      <ErrorBoundary onReset={reset} fallback={ErrorFallback}>
         <Routes>
           <Route path="/admin/callback" element={<AdminPage/>} />
           <Route path="/login" element={<LoginPage/>} />
@@ -71,7 +71,7 @@ const App: FC = () => {
           <Route path="/create-schedule-meeting" element={<CreateScheduleMeetingPage/>} />
           <Route index element={<LoadingAppPage/>} />
         </Routes>
-      </Sentry.ErrorBoundary>
+      </ErrorBoundary>
     </Suspense>
   );
 }
