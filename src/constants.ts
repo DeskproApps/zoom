@@ -14,11 +14,6 @@ export const ACCESS_TOKEN = `[user[${ACCESS_TOKEN_PATH}]]`;
 export const REFRESH_TOKEN_PATH = "oauth/global/refresh_token";
 export const REFRESH_TOKEN = `[user[${REFRESH_TOKEN_PATH}]]`;
 
-export const placeholders = {
-  client_id: "__client_id__",
-  client_secret: "__client_secret__",
-};
-
 /** Zoom */
 export const REST_URL = "https://api.zoom.us/v2";
 
