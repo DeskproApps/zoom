@@ -40,7 +40,19 @@
         "methods": ["GET", "POST", "DELETE"],
         "timeout": 20
       },
-      { "url": "https://zoom.us/oauth/.*", "methods": ["POST"], "timeout": 20 }
+      {
+        "url": "https://zoom.us/oauth/.*",
+        "methods": ["POST"],
+        "timeout": 20,
+        "settingsInjection": {
+          "client_id": {
+            "header": ["Authorization"]
+          },
+          "client_secret": {
+            "header": ["Authorization"]
+          }
+        }
+      }
     ]
   }
 }
